@@ -60,34 +60,60 @@ export default function FaceLogo({ size = "md", className = "", showBlushHint = 
           priority
         />
 
-        {/* CUTE BLUSH OVERLAY ON CHEEKS */}
+        {/* CUTE BLUSH OVERLAY WITH PINK CHEEK HATCH LINES */}
         <AnimatePresence>
           {isBlushing && (
             <>
-              {/* Left Cheek Blush Spot */}
+              {/* Rosy Glow Spot - Left Cheek */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 0.75, scale: 1 }}
+                animate={{ opacity: 0.85, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
-                transition={{ duration: 0.3 }}
-                className="absolute top-[58%] left-[28%] h-7 w-9 rounded-full bg-rose-500/70 blur-md pointer-events-none"
+                transition={{ duration: 0.25 }}
+                className="absolute top-[55%] left-[24%] h-8 w-10 rounded-full bg-rose-500/80 blur-sm pointer-events-none z-10"
               />
 
-              {/* Right Cheek Blush Spot */}
+              {/* Pink Small Anime Blush Lines - Left Cheek */}
+              <motion.div
+                initial={{ opacity: 0, x: -5 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="absolute top-[58%] left-[26%] z-20 flex gap-1 transform -rotate-12 pointer-events-none"
+              >
+                <div className="h-4 w-1 bg-rose-300 rounded-full shadow-[0_0_8px_#f43f5e]" />
+                <div className="h-5 w-1 bg-pink-400 rounded-full shadow-[0_0_8px_#f43f5e]" />
+                <div className="h-4 w-1 bg-rose-300 rounded-full shadow-[0_0_8px_#f43f5e]" />
+              </motion.div>
+
+              {/* Rosy Glow Spot - Right Cheek */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 0.75, scale: 1 }}
+                animate={{ opacity: 0.85, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
-                transition={{ duration: 0.3 }}
-                className="absolute top-[58%] right-[28%] h-7 w-9 rounded-full bg-rose-500/70 blur-md pointer-events-none"
+                transition={{ duration: 0.25 }}
+                className="absolute top-[55%] right-[24%] h-8 w-10 rounded-full bg-rose-500/80 blur-sm pointer-events-none z-10"
               />
 
-              {/* Rosy Glow Tint */}
+              {/* Pink Small Anime Blush Lines - Right Cheek */}
+              <motion.div
+                initial={{ opacity: 0, x: 5 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="absolute top-[58%] right-[26%] z-20 flex gap-1 transform rotate-12 pointer-events-none"
+              >
+                <div className="h-4 w-1 bg-rose-300 rounded-full shadow-[0_0_8px_#f43f5e]" />
+                <div className="h-5 w-1 bg-pink-400 rounded-full shadow-[0_0_8px_#f43f5e]" />
+                <div className="h-4 w-1 bg-rose-300 rounded-full shadow-[0_0_8px_#f43f5e]" />
+              </motion.div>
+
+              {/* Overall Rosy Glow Tint */}
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.3 }}
+                animate={{ opacity: 0.35 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-radial from-rose-500/40 via-pink-500/10 to-transparent pointer-events-none rounded-full"
+                className="absolute inset-0 bg-radial from-rose-500/50 via-pink-500/15 to-transparent pointer-events-none rounded-full"
               />
 
               {/* Floating Hearts & Sparkles */}
@@ -95,8 +121,8 @@ export default function FaceLogo({ size = "md", className = "", showBlushHint = 
                 initial={{ opacity: 0, y: 10, scale: 0.6 }}
                 animate={{ opacity: 1, y: -15, scale: 1 }}
                 exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.6 }}
-                className="absolute -top-1 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 text-rose-400 drop-shadow-md pointer-events-none"
+                transition={{ duration: 0.5 }}
+                className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1 text-rose-400 drop-shadow-lg pointer-events-none"
               >
                 <Heart className="h-4 w-4 fill-current text-rose-500 animate-bounce" />
                 <Sparkles className="h-3.5 w-3.5 text-pink-300" />
