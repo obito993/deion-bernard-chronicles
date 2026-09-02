@@ -9,9 +9,10 @@ interface FaceLogoProps {
   size?: "sm" | "md" | "lg" | "xl" | "full";
   className?: string;
   showBlushHint?: boolean;
+  disabled?: boolean;
 }
 
-export default function FaceLogo({ size = "md", className = "", showBlushHint = false }: FaceLogoProps) {
+export default function FaceLogo({ size = "md", className = "", showBlushHint = false, disabled = false }: FaceLogoProps) {
   const [isBlushing, setIsBlushing] = useState(false);
 
   const sizeClasses = {
@@ -23,6 +24,7 @@ export default function FaceLogo({ size = "md", className = "", showBlushHint = 
   };
 
   const handleTouch = () => {
+    if (disabled) return;
     setIsBlushing(true);
     setTimeout(() => setIsBlushing(false), 2500);
   };
@@ -30,8 +32,8 @@ export default function FaceLogo({ size = "md", className = "", showBlushHint = 
   return (
     <div
       onClick={handleTouch}
-      onMouseEnter={() => setIsBlushing(true)}
-      onMouseLeave={() => setIsBlushing(false)}
+      onMouseEnter={() => !disabled && setIsBlushing(true)}
+      onMouseLeave={() => !disabled && setIsBlushing(false)}
       onTouchStart={handleTouch}
       className={`relative cursor-pointer overflow-hidden rounded-full transition-all duration-300 ${sizeClasses[size]} ${className}`}
       title="Touch/Hover Deion's face to make him blush! 😊"

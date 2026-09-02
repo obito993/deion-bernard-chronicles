@@ -29,7 +29,7 @@ export default function HomePage() {
 
           {/* HERO SECTION */}
           <section className="relative mx-auto max-w-7xl px-4 pt-12 pb-16 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-            {/* FACE-SKETCH LOGO (TOUCH TO BLUSH) */}
+            {/* FACE-SKETCH LOGO */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -37,9 +37,6 @@ export default function HomePage() {
               className="mb-4 flex flex-col items-center"
             >
               <FaceLogo size="lg" />
-              <span className="mt-2 font-mono text-[10px] text-brand-orange/90 tracking-widest uppercase font-semibold">
-                ✦ TOUCH MY FACE TO MAKE ME BLUSH 😊
-              </span>
             </motion.div>
 
             {/* MAIN HEADINGS */}

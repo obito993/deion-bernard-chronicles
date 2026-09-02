@@ -152,7 +152,7 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
                 transition={{ duration: 1, ease: "easeOut" }}
                 className="relative h-full w-full rounded-full border-4 border-white shadow-[0_0_40px_rgba(255,255,255,0.6)]"
               >
-                <FaceLogo size="full" />
+                <FaceLogo size="full" disabled={true} />
               </motion.div>
             </div>
 
