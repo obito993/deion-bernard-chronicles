@@ -192,67 +192,123 @@ export default function VisualThumbnail({ type, className = "" }: ThumbnailProps
         </div>
       );
 
-    // PROJECTS — REAL UPLOADED SCREENSHOTS
+    // PROJECTS — REAL UPLOADED SCREENSHOTS WITH BOLD PROMINENT TITLE BANNERS
     case "ai-tool-box":
       return (
-        <div className={`relative h-full w-full overflow-hidden rounded-xl bg-black ${className}`}>
+        <div className={`relative h-full w-full overflow-hidden rounded-xl bg-black border border-brand-orange/40 ${className}`}>
           <Image
             src="/media/project-aitoolbox.png"
             alt="AI Toolbox — 100+ AI Tools Dashboard"
             fill
             className="object-cover object-center transition-transform duration-500 hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-          <div className="absolute bottom-3 left-3 right-3 font-mono text-xs text-white font-bold tracking-wider">
-            AI TOOLBOX • 100+ AI TOOLS
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+          
+          {/* Top Project Tag */}
+          <div className="absolute top-3 left-3 z-10">
+            <span className="font-mono text-[10px] font-bold text-black bg-brand-orange px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
+              PROJECT 01
+            </span>
+          </div>
+
+          {/* Prominent Bottom Title Banner */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/90 to-transparent space-y-1">
+            <h3 className="font-display text-xl sm:text-2xl font-black text-white tracking-wider drop-shadow-md">
+              01_ AI TOOL BOX
+            </h3>
+            <p className="font-mono text-xs text-brand-orange font-bold tracking-widest uppercase">
+              100+ FULL-STACK AI UTILITIES &amp; ADMIN DASHBOARD
+            </p>
           </div>
         </div>
       );
 
     case "spam-detection-website":
       return (
-        <div className={`relative h-full w-full overflow-hidden rounded-xl bg-black ${className}`}>
+        <div className={`relative h-full w-full overflow-hidden rounded-xl bg-black border border-brand-orange/40 ${className}`}>
           <Image
             src="/media/project-spam.png"
             alt="Spam Detection Website — ML-Powered Detection Dashboard"
             fill
             className="object-cover object-center transition-transform duration-500 hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-          <div className="absolute bottom-3 left-3 right-3 font-mono text-xs text-white font-bold tracking-wider">
-            SPAM DETECTION • ML PIPELINE
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+
+          {/* Top Project Tag */}
+          <div className="absolute top-3 left-3 z-10">
+            <span className="font-mono text-[10px] font-bold text-black bg-brand-orange px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
+              PROJECT 02
+            </span>
+          </div>
+
+          {/* Prominent Bottom Title Banner */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/90 to-transparent space-y-1">
+            <h3 className="font-display text-xl sm:text-2xl font-black text-white tracking-wider drop-shadow-md">
+              02_ SPAM DETECTION WEBSITE
+            </h3>
+            <p className="font-mono text-xs text-brand-orange font-bold tracking-widest uppercase">
+              PYTHON ML PIPELINE &amp; ETL CLASSIFICATION
+            </p>
           </div>
         </div>
       );
 
     case "virtuoso-ai":
       return (
-        <div className={`relative h-full w-full overflow-hidden rounded-xl bg-black ${className}`}>
+        <div className={`relative h-full w-full overflow-hidden rounded-xl bg-black border border-brand-orange/40 ${className}`}>
           <Image
             src="/media/project-virtuoso.png"
             alt="Virtuoso AI — AI-Powered Music Learning Platform"
             fill
             className="object-cover object-center transition-transform duration-500 hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-          <div className="absolute bottom-3 left-3 right-3 font-mono text-xs text-white font-bold tracking-wider">
-            VIRTUOSO AI • MUSIC LEARNING
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+
+          {/* Top Project Tag */}
+          <div className="absolute top-3 left-3 z-10">
+            <span className="font-mono text-[10px] font-bold text-black bg-brand-orange px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
+              PROJECT 03
+            </span>
+          </div>
+
+          {/* Prominent Bottom Title Banner */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/90 to-transparent space-y-1">
+            <h3 className="font-display text-xl sm:text-2xl font-black text-white tracking-wider drop-shadow-md">
+              03_ VIRTUOSO AI
+            </h3>
+            <p className="font-mono text-xs text-brand-orange font-bold tracking-widest uppercase">
+              AI MUSIC LEARNING PLATFORM &amp; FASTAPI
+            </p>
           </div>
         </div>
       );
 
     case "automatic-seating-allocation":
       return (
-        <div className={`relative h-full w-full overflow-hidden rounded-xl bg-black ${className}`}>
+        <div className={`relative h-full w-full overflow-hidden rounded-xl bg-black border border-brand-orange/40 ${className}`}>
           <Image
             src="/media/project-seating.png"
             alt="Automatic Seating Allocation — Examination Hall Management System"
             fill
             className="object-cover object-center transition-transform duration-500 hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-          <div className="absolute bottom-3 left-3 right-3 font-mono text-xs text-white font-bold tracking-wider">
-            AUTOMATIC SEATING ALLOCATION
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+
+          {/* Top Project Tag */}
+          <div className="absolute top-3 left-3 z-10">
+            <span className="font-mono text-[10px] font-bold text-black bg-brand-orange px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
+              PROJECT 04
+            </span>
+          </div>
+
+          {/* Prominent Bottom Title Banner */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/90 to-transparent space-y-1">
+            <h3 className="font-display text-xl sm:text-2xl font-black text-white tracking-wider drop-shadow-md">
+              04_ AUTOMATIC SEATING ALLOCATION
+            </h3>
+            <p className="font-mono text-xs text-brand-orange font-bold tracking-widest uppercase">
+              EXAM HALL AUTOMATION &amp; 95% ACCURACY
+            </p>
           </div>
         </div>
       );
