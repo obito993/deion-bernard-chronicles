@@ -60,34 +60,34 @@ export default function FaceLogo({ size = "md", className = "", showBlushHint = 
           priority
         />
 
-        {/* STYLE #5 ANIME BLUSH OVERLAY: SOFT ROSY CHEEK OVALS */}
+        {/* STYLE #5 COMPACT MINI CHEEK OVALS */}
         <AnimatePresence>
           {isBlushing && (
             <>
-              {/* Left Cheek - Soft Rosy Oval Spot (Style #5) */}
+              {/* Left Cheek - Small Compact Rosy Oval */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.4 }}
-                animate={{ opacity: 0.85, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.4 }}
-                transition={{ duration: 0.3 }}
-                className="absolute top-[54%] left-[26%] h-6 w-9 rounded-full bg-rose-400/85 blur-[3px] pointer-events-none z-10 shadow-[0_0_12px_#f43f5e]"
+                initial={{ opacity: 0, scale: 0.3 }}
+                animate={{ opacity: 0.9, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.3 }}
+                transition={{ duration: 0.25 }}
+                className="absolute top-[54%] left-[31%] h-3.5 w-5 rounded-full bg-rose-400/90 blur-[1.5px] pointer-events-none z-10 shadow-[0_0_8px_#f43f5e]"
               />
 
-              {/* Right Cheek - Soft Rosy Oval Spot (Style #5) */}
+              {/* Right Cheek - Small Compact Rosy Oval */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.4 }}
-                animate={{ opacity: 0.85, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.4 }}
-                transition={{ duration: 0.3 }}
-                className="absolute top-[54%] right-[26%] h-6 w-9 rounded-full bg-rose-400/85 blur-[3px] pointer-events-none z-10 shadow-[0_0_12px_#f43f5e]"
+                initial={{ opacity: 0, scale: 0.3 }}
+                animate={{ opacity: 0.9, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.3 }}
+                transition={{ duration: 0.25 }}
+                className="absolute top-[54%] right-[31%] h-3.5 w-5 rounded-full bg-rose-400/90 blur-[1.5px] pointer-events-none z-10 shadow-[0_0_8px_#f43f5e]"
               />
 
-              {/* Subtle Ambient Rosy Glow */}
+              {/* Soft Ambient Tint */}
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.35 }}
+                animate={{ opacity: 0.25 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-radial from-rose-500/40 via-pink-500/10 to-transparent pointer-events-none rounded-full"
+                className="absolute inset-0 bg-radial from-rose-500/35 via-pink-500/10 to-transparent pointer-events-none rounded-full"
               />
 
               {/* Floating Hearts & Sparkles */}
