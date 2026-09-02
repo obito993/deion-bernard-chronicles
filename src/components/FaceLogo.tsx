@@ -60,60 +60,60 @@ export default function FaceLogo({ size = "md", className = "", showBlushHint = 
           priority
         />
 
-        {/* CUTE BLUSH OVERLAY WITH PINK CHEEK HATCH LINES */}
+        {/* CUTE ANIME BLUSH LINES (POSITIONED PRECISELY ON CHEEKS INSIDE THE FACE) */}
         <AnimatePresence>
           {isBlushing && (
             <>
-              {/* Rosy Glow Spot - Left Cheek */}
+              {/* Rosy Glow Spot - Left Cheek (Inward on cheek) */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 0.85, scale: 1 }}
+                animate={{ opacity: 0.8, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.25 }}
-                className="absolute top-[55%] left-[24%] h-8 w-10 rounded-full bg-rose-500/80 blur-sm pointer-events-none z-10"
+                className="absolute top-[52%] left-[34%] h-5 w-7 rounded-full bg-rose-500/70 blur-xs pointer-events-none z-10"
               />
 
               {/* Pink Small Anime Blush Lines - Left Cheek */}
               <motion.div
-                initial={{ opacity: 0, x: -5 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 2 }}
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                className="absolute top-[58%] left-[26%] z-20 flex gap-1 transform -rotate-12 pointer-events-none"
+                transition={{ duration: 0.2 }}
+                className="absolute top-[51%] left-[34%] z-20 flex gap-0.5 transform -rotate-12 pointer-events-none"
               >
-                <div className="h-4 w-1 bg-rose-300 rounded-full shadow-[0_0_8px_#f43f5e]" />
-                <div className="h-5 w-1 bg-pink-400 rounded-full shadow-[0_0_8px_#f43f5e]" />
-                <div className="h-4 w-1 bg-rose-300 rounded-full shadow-[0_0_8px_#f43f5e]" />
+                <div className="h-3 w-0.5 bg-rose-400 rounded-full shadow-[0_0_5px_#f43f5e]" />
+                <div className="h-3.5 w-0.5 bg-pink-300 rounded-full shadow-[0_0_5px_#f43f5e]" />
+                <div className="h-3 w-0.5 bg-rose-400 rounded-full shadow-[0_0_5px_#f43f5e]" />
               </motion.div>
 
-              {/* Rosy Glow Spot - Right Cheek */}
+              {/* Rosy Glow Spot - Right Cheek (Inward on cheek) */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 0.85, scale: 1 }}
+                animate={{ opacity: 0.8, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.25 }}
-                className="absolute top-[55%] right-[24%] h-8 w-10 rounded-full bg-rose-500/80 blur-sm pointer-events-none z-10"
+                className="absolute top-[52%] right-[34%] h-5 w-7 rounded-full bg-rose-500/70 blur-xs pointer-events-none z-10"
               />
 
               {/* Pink Small Anime Blush Lines - Right Cheek */}
               <motion.div
-                initial={{ opacity: 0, x: 5 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 2 }}
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                className="absolute top-[58%] right-[26%] z-20 flex gap-1 transform rotate-12 pointer-events-none"
+                transition={{ duration: 0.2 }}
+                className="absolute top-[51%] right-[34%] z-20 flex gap-0.5 transform rotate-12 pointer-events-none"
               >
-                <div className="h-4 w-1 bg-rose-300 rounded-full shadow-[0_0_8px_#f43f5e]" />
-                <div className="h-5 w-1 bg-pink-400 rounded-full shadow-[0_0_8px_#f43f5e]" />
-                <div className="h-4 w-1 bg-rose-300 rounded-full shadow-[0_0_8px_#f43f5e]" />
+                <div className="h-3 w-0.5 bg-rose-400 rounded-full shadow-[0_0_5px_#f43f5e]" />
+                <div className="h-3.5 w-0.5 bg-pink-300 rounded-full shadow-[0_0_5px_#f43f5e]" />
+                <div className="h-3 w-0.5 bg-rose-400 rounded-full shadow-[0_0_5px_#f43f5e]" />
               </motion.div>
 
               {/* Overall Rosy Glow Tint */}
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.35 }}
+                animate={{ opacity: 0.3 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-radial from-rose-500/50 via-pink-500/15 to-transparent pointer-events-none rounded-full"
+                className="absolute inset-0 bg-radial from-rose-500/40 via-pink-500/10 to-transparent pointer-events-none rounded-full"
               />
 
               {/* Floating Hearts & Sparkles */}
