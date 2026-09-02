@@ -60,58 +60,32 @@ export default function FaceLogo({ size = "md", className = "", showBlushHint = 
           priority
         />
 
-        {/* CUTE ANIME BLUSH LINES (POSITIONED PRECISELY ON CHEEKS INSIDE THE FACE) */}
+        {/* STYLE #5 ANIME BLUSH OVERLAY: SOFT ROSY CHEEK OVALS */}
         <AnimatePresence>
           {isBlushing && (
             <>
-              {/* Rosy Glow Spot - Left Cheek (Inward on cheek) */}
+              {/* Left Cheek - Soft Rosy Oval Spot (Style #5) */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 0.8, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5 }}
-                transition={{ duration: 0.25 }}
-                className="absolute top-[52%] left-[34%] h-5 w-7 rounded-full bg-rose-500/70 blur-xs pointer-events-none z-10"
+                initial={{ opacity: 0, scale: 0.4 }}
+                animate={{ opacity: 0.85, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.4 }}
+                transition={{ duration: 0.3 }}
+                className="absolute top-[54%] left-[26%] h-6 w-9 rounded-full bg-rose-400/85 blur-[3px] pointer-events-none z-10 shadow-[0_0_12px_#f43f5e]"
               />
 
-              {/* Pink Small Anime Blush Lines - Left Cheek */}
+              {/* Right Cheek - Soft Rosy Oval Spot (Style #5) */}
               <motion.div
-                initial={{ opacity: 0, y: 2 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="absolute top-[51%] left-[34%] z-20 flex gap-0.5 transform -rotate-12 pointer-events-none"
-              >
-                <div className="h-3 w-0.5 bg-rose-400 rounded-full shadow-[0_0_5px_#f43f5e]" />
-                <div className="h-3.5 w-0.5 bg-pink-300 rounded-full shadow-[0_0_5px_#f43f5e]" />
-                <div className="h-3 w-0.5 bg-rose-400 rounded-full shadow-[0_0_5px_#f43f5e]" />
-              </motion.div>
-
-              {/* Rosy Glow Spot - Right Cheek (Inward on cheek) */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 0.8, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5 }}
-                transition={{ duration: 0.25 }}
-                className="absolute top-[52%] right-[34%] h-5 w-7 rounded-full bg-rose-500/70 blur-xs pointer-events-none z-10"
+                initial={{ opacity: 0, scale: 0.4 }}
+                animate={{ opacity: 0.85, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.4 }}
+                transition={{ duration: 0.3 }}
+                className="absolute top-[54%] right-[26%] h-6 w-9 rounded-full bg-rose-400/85 blur-[3px] pointer-events-none z-10 shadow-[0_0_12px_#f43f5e]"
               />
 
-              {/* Pink Small Anime Blush Lines - Right Cheek */}
-              <motion.div
-                initial={{ opacity: 0, y: 2 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="absolute top-[51%] right-[34%] z-20 flex gap-0.5 transform rotate-12 pointer-events-none"
-              >
-                <div className="h-3 w-0.5 bg-rose-400 rounded-full shadow-[0_0_5px_#f43f5e]" />
-                <div className="h-3.5 w-0.5 bg-pink-300 rounded-full shadow-[0_0_5px_#f43f5e]" />
-                <div className="h-3 w-0.5 bg-rose-400 rounded-full shadow-[0_0_5px_#f43f5e]" />
-              </motion.div>
-
-              {/* Overall Rosy Glow Tint */}
+              {/* Subtle Ambient Rosy Glow */}
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.3 }}
+                animate={{ opacity: 0.35 }}
                 exit={{ opacity: 0 }}
                 className="absolute inset-0 bg-radial from-rose-500/40 via-pink-500/10 to-transparent pointer-events-none rounded-full"
               />
