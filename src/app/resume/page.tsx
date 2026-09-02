@@ -12,8 +12,10 @@ export default function ResumePage() {
   const [showModal, setShowModal] = useState(false);
 
   const handleDownload = () => {
-    // Generate/Trigger print mode to save as PDF or view formatted printable sheet
-    window.print();
+    const link = document.createElement("a");
+    link.href = "/deion-resume.pdf";
+    link.download = "DEION_DANIEL_BERNARD_RESUME.pdf";
+    link.click();
   };
 
   return (
@@ -54,13 +56,14 @@ export default function ResumePage() {
               <span>VIEW FULL RESUME</span>
             </button>
 
-            <button
-              onClick={handleDownload}
+            <a
+              href="/deion-resume.pdf"
+              download="DEION_DANIEL_BERNARD_RESUME.pdf"
               className="flex items-center gap-2 rounded-full bg-brand-orange px-6 py-2.5 font-mono text-xs font-bold text-black hover:bg-white transition-all shadow-[0_0_20px_rgba(255,85,0,0.4)]"
             >
               <Download className="h-4 w-4" />
               <span>DOWNLOAD RESUME</span>
-            </button>
+            </a>
           </div>
         </section>
 
@@ -224,38 +227,39 @@ export default function ResumePage() {
       {/* VIEW RESUME FULLSCREEN MODAL */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-xl">
-          <div className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-brand-orange/40 bg-surface-card p-6 sm:p-8 space-y-6">
+          <div className="relative max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-2xl border border-brand-orange/40 bg-surface-card p-6 sm:p-8 space-y-6">
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <h3 className="font-display text-xl font-bold text-white">
-                DEION BERNARD — OFFICIAL RESUME VIEW
-              </h3>
-              <button
-                onClick={() => setShowModal(false)}
-                className="rounded-full bg-white/10 px-4 py-1.5 font-mono text-xs text-white hover:bg-brand-orange hover:text-black font-bold"
-              >
-                CLOSE
-              </button>
+              <div>
+                <span className="font-mono text-xs text-brand-orange font-bold">OFFICIAL DOCUMENT VIEWER</span>
+                <h3 className="font-display text-xl font-bold text-white">
+                  DEION DANIEL BERNARD — RESUME
+                </h3>
+              </div>
+              <div className="flex items-center gap-3">
+                <a
+                  href="/deion-resume.pdf"
+                  download="DEION_DANIEL_BERNARD_RESUME.pdf"
+                  className="rounded-full bg-brand-orange px-4 py-1.5 font-mono text-xs font-bold text-black hover:bg-white transition-all flex items-center gap-1.5"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  <span>DOWNLOAD</span>
+                </a>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="rounded-full bg-white/10 px-4 py-1.5 font-mono text-xs text-white hover:bg-red-500 hover:text-white font-bold transition-all"
+                >
+                  CLOSE
+                </button>
+              </div>
             </div>
-            <div className="space-y-6 font-mono text-xs text-gray-300">
-              <p className="text-white text-sm font-sans font-bold">
-                {resumeData.personalInfo.fullName} | {resumeData.personalInfo.title}
-              </p>
-              <div className="space-y-2 border-l-2 border-brand-orange pl-4">
-                <p className="font-bold text-white">Education:</p>
-                {resumeData.education.map((e, idx) => (
-                  <p key={idx}>{e.degree} — {e.institution} ({e.score})</p>
-                ))}
-              </div>
-              <div className="space-y-2 border-l-2 border-brand-orange pl-4">
-                <p className="font-bold text-white">Internship:</p>
-                <p>{resumeData.internship.company} — {resumeData.internship.role} ({resumeData.internship.period})</p>
-              </div>
-              <div className="space-y-2 border-l-2 border-brand-orange pl-4">
-                <p className="font-bold text-white">4 Official Resume Projects:</p>
-                {projectsData.map((p) => (
-                  <p key={p.id}>• {p.title} ({p.tools.join(", ")})</p>
-                ))}
-              </div>
+
+            {/* EMBEDDED OFFICIAL PDF PREVIEW */}
+            <div className="w-full h-[65vh] rounded-xl border border-white/15 overflow-hidden bg-black">
+              <iframe
+                src="/deion-resume.pdf#toolbar=0"
+                className="w-full h-full border-none"
+                title="Deion Bernard Official Resume PDF"
+              />
             </div>
           </div>
         </div>

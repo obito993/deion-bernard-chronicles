@@ -302,9 +302,9 @@ export default function HomePage() {
                   </div>
                 </Link>
 
-                {/* PORTAL 8: CREATIVE SPACE (LAB & EXPERIMENTS) */}
+                {/* PORTAL 8: CREATIVE SPACE (SKETCH & CANVAS STUDIO) */}
                 <Link
-                  href="/about#interests"
+                  href="/creative"
                   data-cursor-text="LAB"
                   className="horizontal-scroll-item group relative h-[320px] w-[280px] sm:w-[340px] flex flex-col justify-between rounded-2xl border border-white/15 bg-gradient-to-b from-surface-card to-black p-6 transition-all duration-300 hover:border-brand-orange hover:shadow-[0_0_30px_rgba(255,85,0,0.3)] hover:-translate-y-2"
                 >

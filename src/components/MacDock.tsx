@@ -37,7 +37,7 @@ const dockItems: DockItem[] = [
   },
   {
     label: "CREATIVE SPACE",
-    href: "/about#interests",
+    href: "/creative",
     icon: <Sparkles className="h-6 w-6" />,
     bg: "bg-black",
     iconColor: "text-amber-400",

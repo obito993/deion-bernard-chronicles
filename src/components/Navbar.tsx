@@ -12,11 +12,12 @@ export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Strictly Home, About Me, Resume, Contact
+  // Top nav items: Home, About Me, Resume, Projects, Contact
   const navItems = [
     { label: "HOME", href: "/" },
     { label: "ABOUT ME", href: "/about" },
     { label: "RESUME", href: "/resume" },
+    { label: "PROJECTS", href: "/projects" },
     { label: "CONTACT", href: "/contact" },
   ];
 
