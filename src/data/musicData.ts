@@ -34,7 +34,7 @@ export const musicData: SongItem[] = [
     year: "1965",
     personalNote:
       "One of the most vocal-heavy, emotionally soaring tracks ever recorded. The iconic tenor buildup towards the climax demonstrates raw passion and dynamic vocal range.",
-    spotifyUrl: "https://open.spotify.com/track/2YsYo02qkW0bKk8pGvE79N",
+    spotifyUrl: "https://open.spotify.com/track/2qhASBzpbFhPRtrnZ5lLnz",
     youtubeUrl: "https://www.youtube.com/watch?v=IYj2hex99gY",
     coverVisual: "unchained-melody",
   },
@@ -47,7 +47,7 @@ export const musicData: SongItem[] = [
     year: "1984",
     personalNote:
       "An iconic 80s rock ballad filled with heartfelt lyricism, signature rasp, and uplifting melodies that never age.",
-    spotifyUrl: "https://open.spotify.com/track/08mG3Y1vhkPENj5cMsOvjU",
+    spotifyUrl: "https://open.spotify.com/track/7Ewz6bJ97vUqk5HdkvguFQ",
     youtubeUrl: "https://www.youtube.com/watch?v=s6TtwR2Dbjg",
     coverVisual: "heaven-bryan-adams",
   },
@@ -60,7 +60,7 @@ export const musicData: SongItem[] = [
     year: "1999",
     personalNote:
       "The gold standard of pop vocal harmonies. The bridge, modulation, and tight multi-part vocal arrangements make it a vocal masterpiece.",
-    spotifyUrl: "https://open.spotify.com/track/18xeawPKsDFWjE2mHPhmU7",
+    spotifyUrl: "https://open.spotify.com/track/47BBI51FKFwOMlIiX6m8ya",
     youtubeUrl: "https://www.youtube.com/watch?v=4fndeDfaWCg",
     coverVisual: "i-want-it-that-way",
   },
@@ -73,7 +73,7 @@ export const musicData: SongItem[] = [
     year: "1960",
     personalNote:
       "A soulful classic highlighting acoustic warmth, rich vocal harmonies, and steady emotional sincerity.",
-    spotifyUrl: "https://open.spotify.com/track/1a2V7M9wX3T4WqA1P2Z2n3",
+    spotifyUrl: "https://open.spotify.com/track/0Tjdbd83LEAWrA0atsXMDJ",
     youtubeUrl: "https://www.youtube.com/watch?v=lvA-F85C_f0",
     coverVisual: "let-it-be-me",
   },
