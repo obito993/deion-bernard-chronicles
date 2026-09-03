@@ -68,8 +68,21 @@ export function HeroAudioProvider({ children }: { children: React.ReactNode }) {
         await audio.play();
         setIsPlaying(true);
       } catch {
-        // Autoplay blocked by browser policy - allow user to click play manually
+        // If browser blocks initial autoplay without interaction,
+        // attach a one-time global user-interaction listener so music starts as soon as user touches/clicks anywhere!
         setIsPlaying(false);
+        const handleUserInteraction = () => {
+          if (audioRef.current && audioRef.current.paused) {
+            audioRef.current
+              .play()
+              .then(() => setIsPlaying(true))
+              .catch(() => setIsPlaying(false));
+          }
+          window.removeEventListener("pointerdown", handleUserInteraction);
+          window.removeEventListener("keydown", handleUserInteraction);
+        };
+        window.addEventListener("pointerdown", handleUserInteraction, { once: true });
+        window.addEventListener("keydown", handleUserInteraction, { once: true });
       }
     };
 

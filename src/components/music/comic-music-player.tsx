@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Play, Pause, Disc, ExternalLink, Volume2, VolumeX, Music } from "lucide-react";
 import Sticker from "@/components/comic/Sticker";
 import ActionBurst from "@/components/comic/ActionBurst";
+import { useHeroAudio } from "@/context/HeroAudioContext";
 
 export interface SongTrack {
   id: string;
@@ -31,6 +32,7 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
   const [duration, setDuration] = useState(30);
   const [isMuted, setIsMuted] = useState(false);
 
+  const heroAudio = useHeroAudio();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const currentTrack = tracks[currentTrackIndex];
@@ -50,6 +52,10 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
       setIsPlaying(false);
       setProgress(0);
       if (onPlaybackChange) onPlaybackChange(false);
+      // Resume hero background theme when song preview ends!
+      if (heroAudio) {
+        heroAudio.playAudio();
+      }
     };
 
     audio.addEventListener("timeupdate", updateTime);
@@ -59,12 +65,18 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
       audio.removeEventListener("timeupdate", updateTime);
       audio.removeEventListener("ended", handleEnded);
     };
-  }, [onPlaybackChange]);
+  }, [onPlaybackChange, heroAudio]);
 
   const togglePlay = (index?: number) => {
     if (index !== undefined && index !== currentTrackIndex) {
       setCurrentTrackIndex(index);
       setIsPlaying(true);
+
+      // Pause hero background theme when song preview starts!
+      if (heroAudio) {
+        heroAudio.pauseAudio();
+      }
+
       if (audioRef.current) {
         audioRef.current.src = tracks[index].previewUrl;
         audioRef.current.play().catch(() => setIsPlaying(false));
@@ -77,7 +89,17 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
       audioRef.current?.pause();
       setIsPlaying(false);
       if (onPlaybackChange) onPlaybackChange(false);
+
+      // Resume hero background theme when song preview is paused!
+      if (heroAudio) {
+        heroAudio.playAudio();
+      }
     } else {
+      // Pause hero background theme when song preview starts!
+      if (heroAudio) {
+        heroAudio.pauseAudio();
+      }
+
       if (audioRef.current) {
         if (!audioRef.current.src || audioRef.current.src !== currentTrack.previewUrl) {
           audioRef.current.src = currentTrack.previewUrl;

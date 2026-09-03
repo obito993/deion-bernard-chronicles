@@ -27,19 +27,19 @@ export default function JournalHeroCharacter() {
               className="absolute -top-12 z-30"
             >
               <SpeechBubble position="bottom-left" bgColor="yellow" speaker="DOCTOR STRANGE">
-                EVERY STORY HAS A CHAPTER.
+                EVERY STORY HAS A CHAPTER. 🔮
               </SpeechBubble>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <div className="relative h-28 w-24 sm:h-36 sm:w-28">
+        {/* TRANSPARENT DOCTOR STRANGE CUTOUT WITH ZERO WHITE BACKGROUND */}
+        <div className="relative h-32 w-28 sm:h-44 sm:w-36 filter drop-shadow-[6px_6px_0px_#000000]">
           <Image
-            src="/media/marvel-doctor-strange.jpg"
+            src="/media/marvel-doctor-strange-transparent.png"
             alt="Doctor Strange Mystical Hero"
             fill
             className="object-contain"
-            style={{ mixBlendMode: "multiply" }}
             priority
           />
         </div>

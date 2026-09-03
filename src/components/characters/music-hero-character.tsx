@@ -23,6 +23,7 @@ export default function MusicHeroCharacter({ isPlaying }: MusicHeroCharacterProp
             : { y: [0, -8, 0] }
         }
         transition={{ duration: isPlaying ? 0.6 : 3, repeat: Infinity, ease: "easeInOut" }}
+        whileHover={{ scale: 1.08 }}
         className="relative flex flex-col items-center cursor-pointer"
       >
         <AnimatePresence>
@@ -34,19 +35,19 @@ export default function MusicHeroCharacter({ isPlaying }: MusicHeroCharacterProp
               className="absolute -top-12 z-30"
             >
               <SpeechBubble position="bottom-left" bgColor="yellow" speaker="THOR">
-                {isPlaying ? "NOW PLAYING! FEEL THE SOUND THUNDER!" : "RETRO SOUNDTRACK IN SESSION!"}
+                {isPlaying ? "NOW PLAYING! FEEL THE SOUND THUNDER!" : "RETRO SOUNDTRACK IN SESSION! ⚡"}
               </SpeechBubble>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <div className="relative h-28 w-24 sm:h-36 sm:w-28">
+        {/* TRANSPARENT THOR CUTOUT WITH ZERO WHITE BACKGROUND */}
+        <div className="relative h-32 w-28 sm:h-44 sm:w-36 filter drop-shadow-[6px_6px_0px_#000000]">
           <Image
-            src="/media/marvel-thor.jpg"
+            src="/media/marvel-thor-transparent.png"
             alt="Thor Mythic Lightning Hero"
             fill
             className="object-contain"
-            style={{ mixBlendMode: "multiply" }}
             priority
           />
         </div>

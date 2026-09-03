@@ -26,20 +26,20 @@ export default function ResumeHeroCharacter() {
               exit={{ opacity: 0 }}
               className="absolute -top-12 z-30"
             >
-              <SpeechBubble position="bottom-left" bgColor="yellow" speaker="CAPTAIN AMERICA">
-                CHARACTER FILE VERIFIED!
+              <SpeechBubble position="bottom-left" bgColor="yellow" speaker="IRON MAN">
+                IRON MAN — DOSSIER POWERED UP! 🚀
               </SpeechBubble>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <div className="relative h-28 w-24 sm:h-36 sm:w-28">
+        {/* TRANSPARENT IRON MAN CUTOUT WITH ZERO WHITE BACKGROUND */}
+        <div className="relative h-32 w-28 sm:h-44 sm:w-36 filter drop-shadow-[6px_6px_0px_#000000]">
           <Image
-            src="/media/marvel-captain-america.jpg"
-            alt="Captain America Shield Guardian"
+            src="/media/marvel-ironman-transparent.png"
+            alt="Iron Man Powered Hero"
             fill
             className="object-contain"
-            style={{ mixBlendMode: "multiply" }}
             priority
           />
         </div>
