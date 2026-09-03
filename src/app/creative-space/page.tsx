@@ -8,6 +8,8 @@ import ActionBurst from "@/components/comic/ActionBurst";
 import ComicButton from "@/components/comic/ComicButton";
 import { Sparkles, Terminal, Palette, Cpu, Compass, ArrowRight } from "lucide-react";
 
+import CreativeHeroCharacter from "@/components/characters/creative-hero-character";
+
 export default function CreativeSpacePage() {
   const experiments = [
     {
@@ -62,8 +64,11 @@ export default function CreativeSpacePage() {
               &quot;THE PANELS BEYOND THE MAIN STORY.&quot;
             </p>
           </div>
-          <div className="hidden lg:block">
-            <ActionBurst text="BONUS ISSUE!" color="yellow" size="md" rotate={8} />
+          <div className="flex items-center gap-4">
+            <CreativeHeroCharacter />
+            <div className="hidden lg:block">
+              <ActionBurst text="BONUS ISSUE!" color="yellow" size="md" rotate={8} />
+            </div>
           </div>
         </div>
       </section>

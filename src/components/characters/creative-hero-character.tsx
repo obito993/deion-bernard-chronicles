@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import SpeechBubble from "@/components/comic/SpeechBubble";
 
-export default function MoviesHeroCharacter() {
+export default function CreativeHeroCharacter() {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -13,8 +13,8 @@ export default function MoviesHeroCharacter() {
       <motion.div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        animate={{ y: [0, -12, 0] }}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
         whileHover={{ scale: 1.08 }}
         className="relative flex flex-col items-center cursor-pointer"
       >
@@ -26,18 +26,18 @@ export default function MoviesHeroCharacter() {
               exit={{ opacity: 0 }}
               className="absolute -top-14 z-30"
             >
-              <SpeechBubble position="bottom-left" bgColor="yellow" speaker="VENOM">
-                WE ARE VENOM! READY FOR MOVIE NIGHT! 🍿
+              <SpeechBubble position="bottom-left" bgColor="yellow" speaker="BATMAN">
+                I AM BATMAN. CREATING IN THE SHADOWS. 🦇
               </SpeechBubble>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* FLOATING TRANSPARENT VENOM CUTOUT */}
+        {/* FLOATING TRANSPARENT BATMAN CUTOUT */}
         <div className="relative h-32 w-28 sm:h-44 sm:w-36 filter drop-shadow-[6px_6px_0px_#000000]">
           <Image
-            src="/media/hero-venom-transparent.png"
-            alt="Venom Watchlist Hero"
+            src="/media/hero-batman-transparent.png"
+            alt="Batman Creative Space Hero"
             fill
             className="object-contain"
             priority

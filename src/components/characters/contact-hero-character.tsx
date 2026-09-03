@@ -1,28 +1,51 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import SpeechBubble from "@/components/comic/SpeechBubble";
-import { ThumbsUp } from "lucide-react";
 
 export default function ContactHeroCharacter({ submitted }: { submitted?: boolean }) {
-  return (
-    <div className="relative inline-block my-4">
-      <motion.div
-        animate={submitted ? { scale: [1, 1.2, 1] } : {}}
-        className="relative flex flex-col items-center select-none"
-      >
-        {submitted && (
-          <div className="mb-2">
-            <SpeechBubble position="bottom-left" bgColor="yellow" speaker="TEAM-UP HERO">
-              THUMBS UP! MESSAGE SENT!
-            </SpeechBubble>
-          </div>
-        )}
+  const [hovered, setHovered] = useState(false);
 
-        <div className="flex items-center gap-2 rounded-xl border-3 border-black bg-comic-red px-4 py-2 text-white shadow-comic-lg">
-          <ThumbsUp className="h-6 w-6 text-comic-yellow" />
-          <span className="font-comic text-xl">TEAM-UP HERO</span>
+  return (
+    <div className="relative inline-block my-2 select-none">
+      <motion.div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        animate={
+          submitted
+            ? { scale: [1, 1.15, 1], y: [0, -15, 0] }
+            : { y: [0, -10, 0] }
+        }
+        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+        whileHover={{ scale: 1.08 }}
+        className="relative flex flex-col items-center cursor-pointer"
+      >
+        <AnimatePresence>
+          {(hovered || submitted) && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="absolute -top-14 z-30"
+            >
+              <SpeechBubble position="bottom-left" bgColor="yellow" speaker="CAPTAIN AMERICA">
+                {submitted ? "MESSAGE RECEIVED! TEAM-UP ASSEMBLED!" : "CAPTAIN AMERICA — READY FOR THE TEAM-UP!"}
+              </SpeechBubble>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* FLOATING TRANSPARENT CAPTAIN AMERICA CUTOUT */}
+        <div className="relative h-32 w-28 sm:h-44 sm:w-36 filter drop-shadow-[6px_6px_0px_#000000]">
+          <Image
+            src="/media/hero-captain-america-transparent.png"
+            alt="Captain America Team-Up Hero"
+            fill
+            className="object-contain"
+            priority
+          />
         </div>
       </motion.div>
     </div>
