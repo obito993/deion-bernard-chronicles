@@ -2,47 +2,49 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import FaceLogo from "@/components/FaceLogo";
+import Image from "next/image";
+import ActionBurst from "@/components/comic/ActionBurst";
+import CaptionBox from "@/components/comic/CaptionBox";
+import SpeechBubble from "@/components/comic/SpeechBubble";
 
 interface IntroAnimationProps {
   onComplete: () => void;
 }
 
+type Step = "empty" | "hello" | "bonjour" | "vanakkam" | "merge" | "sketch" | "name" | "flip" | "done";
+
 export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
-  const [step, setStep] = useState<"hello" | "bonjour" | "vanakkam" | "dark" | "sketch" | "name" | "done">("hello");
+  const [step, setStep] = useState<Step>("empty");
 
   useEffect(() => {
-    // Check if intro has already been viewed in this session
-    const hasSeenIntro = typeof window !== "undefined" && sessionStorage.getItem("deion_intro_seen");
+    // Check session storage
+    const hasSeenIntro = typeof window !== "undefined" && sessionStorage.getItem("deion_comic_intro_seen");
     if (hasSeenIntro) {
       onComplete();
       return;
     }
 
-    const t1 = setTimeout(() => setStep("bonjour"), 900);
-    const t2 = setTimeout(() => setStep("vanakkam"), 1800);
-    const t3 = setTimeout(() => setStep("dark"), 2700);
-    const t4 = setTimeout(() => setStep("sketch"), 3200);
-    const t5 = setTimeout(() => setStep("name"), 4400);
-    const t6 = setTimeout(() => {
+    const t1 = setTimeout(() => setStep("hello"), 1500);       // Panel 01: HELLO
+    const t2 = setTimeout(() => setStep("bonjour"), 4200);     // Panel 02: BONJOUR
+    const t3 = setTimeout(() => setStep("vanakkam"), 6800);    // Panel 03: வணக்கம்
+    const t4 = setTimeout(() => setStep("merge"), 9800);       // Merge panels
+    const t5 = setTimeout(() => setStep("sketch"), 11200);    // Hero sketch reveal
+    const t6 = setTimeout(() => setStep("name"), 13500);      // DEION BERNARD / ISSUE #001
+    const t7 = setTimeout(() => setStep("flip"), 15500);      // Page flip transition
+    const t8 = setTimeout(() => {
       setStep("done");
-      sessionStorage.setItem("deion_intro_seen", "true");
+      sessionStorage.setItem("deion_comic_intro_seen", "true");
       onComplete();
-    }, 6200);
+    }, 16500);
 
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
-      clearTimeout(t5);
-      clearTimeout(t6);
+      [t1, t2, t3, t4, t5, t6, t7, t8].forEach(clearTimeout);
     };
   }, [onComplete]);
 
   const handleSkip = () => {
     if (typeof window !== "undefined") {
-      sessionStorage.setItem("deion_intro_seen", "true");
+      sessionStorage.setItem("deion_comic_intro_seen", "true");
     }
     setStep("done");
     onComplete();
@@ -51,133 +53,232 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
   if (step === "done") return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.8 }}
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-brand-orange text-white selection:bg-black selection:text-white overflow-hidden"
-    >
-      {/* Background radial glow */}
-      <div className="absolute inset-0 bg-radial from-white/20 via-transparent to-transparent pointer-events-none blur-3xl opacity-40 animate-pulse-slow" />
-
-      {/* Skip Intro Button */}
-      <button
-        onClick={handleSkip}
-        className="absolute top-8 right-8 z-50 flex items-center gap-2 rounded-full border border-white/40 bg-black/20 px-4 py-2 text-xs font-mono tracking-widest text-white backdrop-blur-md transition-all hover:bg-white hover:text-brand-orange hover:font-bold shadow-lg"
+    <AnimatePresence>
+      <motion.div
+        key="comic-intro-overlay"
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0, scale: 1.05 }}
+        transition={{ duration: 0.8 }}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-comic-cream text-black overflow-hidden font-sans select-none"
       >
-        <span>SKIP INTRO</span>
-        <span>→</span>
-      </button>
+        {/* Halftone Background Pattern */}
+        <div className="absolute inset-0 bg-halftone opacity-15 pointer-events-none" />
 
-      <AnimatePresence mode="wait">
-        {step === "hello" && (
-          <motion.div
-            key="hello"
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 1.05 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-center"
-          >
-            <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-widest text-white drop-shadow-md">
-              HELLO
-            </h1>
-            <p className="mt-4 font-mono text-xs text-white/90 tracking-widest uppercase font-bold">
-              English
-            </p>
-          </motion.div>
-        )}
+        {/* Outer Ink Border Drawing Animation */}
+        <motion.div
+          initial={{ scaleX: 0, scaleY: 0 }}
+          animate={{ scaleX: 1, scaleY: 1 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+          className="absolute inset-4 sm:inset-8 border-4 border-black pointer-events-none shadow-comic-lg rounded-2xl bg-comic-cream/50"
+        />
 
-        {step === "bonjour" && (
-          <motion.div
-            key="bonjour"
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 1.05 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-center"
-          >
-            <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-widest text-white drop-shadow-md">
-              BONJOUR
-            </h1>
-            <p className="mt-4 font-mono text-xs text-white/90 tracking-widest uppercase font-bold">
-              Français
-            </p>
-          </motion.div>
-        )}
+        {/* SKIP INTRO BUTTON */}
+        <button
+          onClick={handleSkip}
+          className="absolute top-6 right-6 z-50 flex items-center gap-2 rounded-lg border-3 border-black bg-comic-yellow px-4 py-2 text-xs font-black uppercase tracking-widest text-black shadow-comic transition-all hover:bg-comic-red hover:text-white active:translate-x-1 active:translate-y-1 active:shadow-comic-pressed"
+        >
+          <span>SKIP INTRO</span>
+          <span>→</span>
+        </button>
 
-        {step === "vanakkam" && (
-          <motion.div
-            key="vanakkam"
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 1.05 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-center"
-          >
-            <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-widest text-white drop-shadow-md">
-              வணக்கம்
-            </h1>
-            <p className="mt-4 font-mono text-xs text-white/90 tracking-widest uppercase font-bold">
-              Tamil • தமிழ்
-            </p>
-          </motion.div>
-        )}
+        {/* SEQUENCE PANELS */}
+        <div className="relative z-10 w-full max-w-4xl px-4 text-center flex flex-col items-center justify-center">
+          
+          {/* STEP 0: EMPTY COMIC PAGE */}
+          {step === "empty" && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="space-y-4"
+            >
+              <CaptionBox chapterNumber="ISSUE #000 • THE STORY BEGINS" bgColor="yellow">
+                &quot;EVERY STORY STARTS WITH A SINGLE PANEL...&quot;
+              </CaptionBox>
+              <p className="font-mono text-xs text-gray-500 uppercase tracking-widest animate-pulse font-bold">
+                [ DRAWING THE COMIC WORLD... ]
+              </p>
+            </motion.div>
+          )}
 
-        {step === "dark" && (
-          <motion.div
-            key="dark"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="h-full w-full bg-brand-orange"
-          />
-        )}
+          {/* STEP 1: PANEL 01 — HELLO */}
+          {step === "hello" && (
+            <motion.div
+              key="panel-hello"
+              initial={{ scale: 0.4, rotate: -15, opacity: 0 }}
+              animate={{ scale: 1, rotate: -2, opacity: 1 }}
+              exit={{ scale: 1.1, rotate: 10, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="relative w-full max-w-xl rounded-2xl border-4 border-black bg-comic-white p-8 sm:p-12 shadow-comic-xl bg-speed-lines"
+            >
+              <div className="absolute -top-6 -left-6">
+                <ActionBurst text="WHOOSH!" color="yellow" size="md" rotate={-12} />
+              </div>
+              <div className="absolute -top-5 right-6">
+                <SpeechBubble position="bottom-left" bgColor="yellow" speaker="COMIC HERO">
+                  HELLO!
+                </SpeechBubble>
+              </div>
 
-        {(step === "sketch" || step === "name") && (
-          <motion.div
-            key="sketch-container"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex flex-col items-center justify-center p-6 text-center max-w-xl"
-          >
-            {/* Blushing Face Logo */}
-            <div className="relative mb-8 h-48 w-48 md:h-56 md:w-56 overflow-hidden rounded-full p-2">
-              <motion.div
-                initial={{ rotate: -90, scale: 0.8, opacity: 0 }}
-                animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="relative h-full w-full rounded-full border-4 border-white shadow-[0_0_40px_rgba(255,255,255,0.6)]"
-              >
-                <FaceLogo size="full" disabled={true} />
-              </motion.div>
-            </div>
-
-            {step === "name" && (
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-                className="space-y-3"
-              >
-                <h2 className="font-display text-4xl md:text-6xl font-black tracking-wider text-white">
-                  DEION BERNARD
-                </h2>
-                <div className="h-1 w-24 bg-white mx-auto shadow-md" />
-                <p className="font-mono text-sm md:text-base text-white font-bold tracking-wide">
-                  Computer Science Graduate
+              <div className="my-6">
+                <h1 className="font-comic text-7xl sm:text-9xl text-comic-red text-shadow-comic-lg tracking-wider uppercase">
+                  HELLO
+                </h1>
+                <p className="font-mono text-xs font-black text-black tracking-widest uppercase mt-2">
+                  PAGE 01 — THE BEGINNING
                 </p>
-                <p className="font-mono text-xs md:text-sm text-white/90 tracking-widest uppercase font-semibold">
-                  Developer • AI Enthusiast • Creator
+              </div>
+
+              <div className="mt-4 inline-block border-2 border-black bg-comic-yellow px-4 py-1 font-mono text-xs font-black uppercase shadow-comic-sm">
+                SPEAKER: DEION BERNARD
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 2: PANEL 02 — BONJOUR */}
+          {step === "bonjour" && (
+            <motion.div
+              key="panel-bonjour"
+              initial={{ x: 300, rotate: 15, opacity: 0 }}
+              animate={{ x: 0, rotate: 2, opacity: 1 }}
+              exit={{ x: -300, rotate: -15, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 250, damping: 22 }}
+              className="relative w-full max-w-xl rounded-2xl border-4 border-black bg-comic-violet p-8 sm:p-12 shadow-comic-xl"
+            >
+              <div className="absolute -top-6 -right-6">
+                <ActionBurst text="POW!" color="red" size="md" rotate={10} />
+              </div>
+
+              <div className="my-6">
+                <h1 className="font-comic text-7xl sm:text-9xl text-black text-shadow-yellow tracking-wider uppercase">
+                  BONJOUR
+                </h1>
+                <p className="font-mono text-xs font-black text-black tracking-widest uppercase mt-2">
+                  PAGE 02 — A NEW CHAPTER (Français)
                 </p>
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+              </div>
+
+              <div className="mt-4 inline-block border-2 border-black bg-white px-4 py-1 font-mono text-xs font-black uppercase shadow-comic-sm">
+                EXPANDING THE HORIZON
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 3: PANEL 03 — வணக்கம் */}
+          {step === "vanakkam" && (
+            <motion.div
+              key="panel-vanakkam"
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, rotate: -1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="relative w-full max-w-xl rounded-2xl border-4 border-black bg-comic-yellow p-8 sm:p-12 shadow-comic-xl"
+            >
+              <div className="absolute -top-7 left-10">
+                <ActionBurst text="KABOOM!" color="red" size="md" rotate={-8} />
+              </div>
+
+              <div className="my-6">
+                {/* Tamil Text rendered accurately */}
+                <h1 className="font-sans text-6xl sm:text-8xl font-black text-black text-shadow-red tracking-wide">
+                  வணக்கம்
+                </h1>
+                <p className="font-mono text-xs font-black text-black tracking-widest uppercase mt-3">
+                  PAGE 03 — MY ROOTS (Tamil • தமிழ்)
+                </p>
+              </div>
+
+              <div className="mt-4 inline-block border-2 border-black bg-comic-red px-4 py-1 font-mono text-xs font-black text-white uppercase shadow-comic-sm">
+                CULTURE &amp; HERITAGE
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 4: MERGING PANELS */}
+          {step === "merge" && (
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="space-y-4"
+            >
+              <CaptionBox chapterNumber="ISSUE #000" bgColor="violet">
+                PANELS ASSEMBLING INTO A SINGLE PAGE...
+              </CaptionBox>
+              <div className="flex justify-center gap-2">
+                <span className="h-4 w-12 border-2 border-black bg-comic-red shadow-comic-sm animate-pulse" />
+                <span className="h-4 w-12 border-2 border-black bg-comic-yellow shadow-comic-sm animate-pulse" />
+                <span className="h-4 w-12 border-2 border-black bg-comic-violet shadow-comic-sm animate-pulse" />
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 5 & 6: HERO CHARACTER REVEAL */}
+          {(step === "sketch" || step === "name") && (
+            <motion.div
+              key="panel-sketch"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="relative flex flex-col items-center justify-center p-6 text-center max-w-xl"
+            >
+              {/* COMIC HERO REVEAL */}
+              <div className="relative mb-6 h-56 w-56 sm:h-64 sm:w-64 rounded-full border-4 border-black bg-black p-1 shadow-comic-xl overflow-hidden">
+                <motion.div
+                  initial={{ scale: 0.7, rotate: -20, opacity: 0 }}
+                  animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  className="relative h-full w-full rounded-full overflow-hidden"
+                >
+                  <Image
+                    src="/media/deion-intro-circle.jpg"
+                    alt="Deion Bernard — Comic Character"
+                    fill
+                    className="object-cover object-center"
+                    priority
+                  />
+                </motion.div>
+                <div className="absolute inset-0 bg-halftone opacity-10 pointer-events-none rounded-full" />
+              </div>
+
+              {step === "name" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="space-y-3"
+                >
+                  <div className="inline-block border-2 border-black bg-comic-red px-3 py-1 font-mono text-xs font-black uppercase text-white shadow-comic-sm">
+                    ISSUE #001
+                  </div>
+                  <h2 className="font-comic text-5xl sm:text-7xl font-black tracking-wider text-black text-shadow-yellow">
+                    DEION BERNARD
+                  </h2>
+                  <p className="font-mono text-sm sm:text-base font-black text-black uppercase tracking-wide">
+                    &quot;MEET THE MAIN CHARACTER.&quot;
+                  </p>
+                  <p className="font-mono text-xs font-bold text-gray-700 uppercase tracking-widest">
+                    COMPUTER SCIENCE GRADUATE • DEVELOPER • CREATOR
+                  </p>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+
+          {/* STEP 7: PAGE FLIP TRANSITION */}
+          {step === "flip" && (
+            <motion.div
+              initial={{ rotateY: 0 }}
+              animate={{ rotateY: 90, opacity: 0 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="fixed inset-0 bg-comic-yellow flex items-center justify-center border-4 border-black"
+            >
+              <h1 className="font-comic text-6xl text-black">OPENING STINGER...</h1>
+            </motion.div>
+          )}
+
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }

@@ -1,107 +1,115 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { useParams, notFound } from "next/navigation";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import VisualThumbnail from "@/components/VisualThumbnails";
+import { notFound, useParams } from "next/navigation";
+import ComicPanel from "@/components/comic/ComicPanel";
+import ComicButton from "@/components/comic/ComicButton";
+import Sticker from "@/components/comic/Sticker";
+import SpeechBubble from "@/components/comic/SpeechBubble";
 import { blogsData } from "@/data/blogsData";
-import { ArrowLeft, ArrowRight, Clock, Calendar, Share2 } from "lucide-react";
+import { ArrowLeft, BookOpen, PenTool, CheckCircle2 } from "lucide-react";
 
-export default function SingleBlogPage() {
+export default function BlogDetailPage() {
   const params = useParams();
-  const slug = params.slug as string;
+  const slug = params?.slug as string;
 
-  const currentIndex = blogsData.findIndex((b) => b.slug === slug);
-  if (currentIndex === -1) {
-    return notFound();
+  const blog = blogsData.find((b) => b.slug === slug);
+
+  if (!blog) {
+    return (
+      <div className="min-h-screen bg-comic-cream p-12 text-center font-sans">
+        <h1 className="font-comic text-6xl text-black">CHAPTER NOT FOUND</h1>
+        <Link href="/blogs" className="mt-4 inline-block font-mono text-sm underline font-bold">
+          ← BACK TO JOURNAL
+        </Link>
+      </div>
+    );
   }
 
-  const blog = blogsData[currentIndex];
-  const nextBlog = blogsData[(currentIndex + 1) % blogsData.length];
-
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-brand-orange selection:text-black">
-      <Navbar />
+    <div className="min-h-screen bg-comic-cream text-black pb-24 font-sans relative overflow-hidden">
+      <div className="absolute inset-0 bg-paper opacity-40 pointer-events-none" />
 
-      <main className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8 space-y-12">
-        {/* BACK TO BLOGS BUTTON */}
-        <div>
-          <Link
-            href="/blogs"
-            className="inline-flex items-center gap-2 font-mono text-xs text-gray-400 hover:text-brand-orange transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>BACK TO ALL BLOGS</span>
+      {/* BACK NAVIGATION BAR */}
+      <section className="border-b-4 border-black bg-comic-yellow py-4 px-4 shadow-comic-sm">
+        <div className="mx-auto max-w-5xl flex items-center justify-between">
+          <Link href="/blogs">
+            <button className="flex items-center gap-2 rounded border-2 border-black bg-white px-3 py-1.5 font-mono text-xs font-black uppercase shadow-comic-sm hover:bg-comic-paper">
+              <ArrowLeft className="h-4 w-4" />
+              <span>BACK TO JOURNAL</span>
+            </button>
           </Link>
+          <div className="flex items-center gap-2">
+            <Sticker text={blog.number} variant="red" rotate={-2} />
+            <span className="font-mono text-xs font-black uppercase tracking-widest text-black hidden sm:inline">
+              SKETCHBOOK PAGE
+            </span>
+          </div>
         </div>
+      </section>
 
-        {/* HERO HEADER */}
-        <article className="space-y-8">
-          <div className="space-y-4">
-            <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
-              <span className="font-bold text-brand-orange bg-brand-orange/10 px-3 py-1 rounded-full border border-brand-orange/30">
-                {blog.category}
-              </span>
-              <span className="flex items-center gap-1 text-gray-400">
-                <Clock className="h-3.5 w-3.5" />
-                {blog.readTime}
-              </span>
-              <span className="flex items-center gap-1 text-gray-400">
-                <Calendar className="h-3.5 w-3.5" />
-                {blog.date}
-              </span>
-            </div>
-
-            <h1 className="font-display text-4xl sm:text-6xl font-black text-white tracking-tight">
+      {/* SKETCHBOOK ARTICLE CONTAINER */}
+      <main className="mx-auto max-w-5xl px-4 pt-8 sm:px-6 space-y-8">
+        <ComicPanel bgColor="white" shadowSize="xl" className="p-6 sm:p-12 border-4 border-black relative">
+          
+          {/* HEADER TITLE */}
+          <div className="border-b-4 border-black pb-4 mb-6">
+            <span className="font-mono text-xs font-black uppercase text-comic-red tracking-widest block">
+              {blog.category}
+            </span>
+            <h1 className="font-comic text-5xl sm:text-7xl font-black text-black leading-none mt-1">
               {blog.title}
             </h1>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {blog.doodles.map((d, i) => (
+                <Sticker key={i} text={d} variant="yellow" rotate={i % 2 === 0 ? 2 : -2} />
+              ))}
+            </div>
           </div>
 
-          {/* LARGE HERO THUMBNAIL */}
-          <div className="h-72 sm:h-96 w-full overflow-hidden rounded-2xl border border-white/15">
-            <VisualThumbnail type={blog.slug} className="h-full w-full" />
+          {/* TOP IMAGE & SPEECH BUBBLE */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mb-8">
+            <div className="md:col-span-6 relative h-64 sm:h-80 w-full rounded-xl border-4 border-black bg-white overflow-hidden shadow-comic-lg">
+              <Image src={blog.image} alt={blog.title} fill className="object-cover" priority />
+            </div>
+            <div className="md:col-span-6 space-y-4">
+              <SpeechBubble position="bottom-left" bgColor="yellow" speaker="AUTHOR NOTES">
+                {blog.intro}
+              </SpeechBubble>
+            </div>
           </div>
 
-          {/* ARTICLE BODY */}
-          <div className="space-y-6 font-mono text-sm sm:text-base text-gray-300 leading-relaxed pt-6 border-t border-white/10">
-            {blog.fullContent.map((paragraph, idx) => (
-              <p key={idx} className="first-letter:text-3xl first-letter:font-bold first-letter:text-brand-orange">
-                {paragraph}
-              </p>
+          {/* STORY PARAGRAPHS AS SKETCHBOOK NOTES */}
+          <div className="space-y-6 font-mono text-sm sm:text-base font-bold leading-relaxed text-black">
+            {blog.fullStory.map((paragraph, index) => (
+              <div
+                key={index}
+                className="border-l-4 border-black pl-4 py-2 bg-comic-paper/60 rounded-r shadow-comic-sm"
+              >
+                <p>{paragraph}</p>
+              </div>
             ))}
           </div>
-        </article>
 
-        {/* NEXT BLOG & FOOTER NAV */}
-        <div className="pt-12 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <Link
-            href="/blogs"
-            className="inline-flex items-center gap-2 font-mono text-xs text-gray-400 hover:text-white"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>ALL ARTICLES</span>
-          </Link>
+          {/* SKETCHBOOK FOOTER ANNOTATION */}
+          <div className="mt-10 pt-6 border-t-3 border-black flex flex-wrap items-center justify-between font-mono text-xs font-black text-gray-700">
+            <span>WRITTEN BY DEION BERNARD</span>
+            <span>CHAPTER COMPLETE ★</span>
+          </div>
 
-          <Link
-            href={`/blogs/${nextBlog.slug}`}
-            className="group flex items-center gap-3 rounded-2xl border border-brand-orange/30 bg-surface-card p-4 hover:border-brand-orange transition-all"
-          >
-            <div className="text-right">
-              <span className="font-mono text-[10px] text-brand-orange tracking-widest font-bold block">
-                NEXT BLOG ARTICLE
-              </span>
-              <span className="font-display text-base font-bold text-white group-hover:text-brand-orange transition-colors">
-                {nextBlog.title}
-              </span>
-            </div>
-            <ArrowRight className="h-5 w-5 text-brand-orange group-hover:translate-x-1 transition-transform" />
+        </ComicPanel>
+
+        <div className="flex justify-between items-center">
+          <Link href="/blogs">
+            <ComicButton variant="yellow" size="md">
+              <ArrowLeft className="h-4 w-4" />
+              <span>RETURN TO ALL JOURNALS</span>
+            </ComicButton>
           </Link>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

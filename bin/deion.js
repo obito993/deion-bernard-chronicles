@@ -1,28 +1,37 @@
 #!/usr/bin/env node
 
 const facts = [
-  "✦ Fact: Deion speaks Tamil, French and English.",
-  "✦ Interest: Deion enjoys movies, music, games, learning and adventures.",
-  "✦ Developer: Deion enjoys building software, AI and web projects.",
-  "✦ Education: Computer Science Graduate from Patrician College (8.5/10 CGPA).",
-  "✦ Vocalist: Tenor & Bass vocalist who won 2nd prize in Western Music Competitions.",
-  "✦ Project: Built AI Tool Box with 100+ AI utilities using Next.js 15 & TypeScript.",
-  "✦ Project: Engineered Automatic Seating Allocation reducing exam schedule time by 70% for 300+ students.",
-  "✦ Project: Built Virtuoso AI - an AI-powered music learning platform with real-time audio analysis."
+  "⚡ Deion Daniel Bernard graduated with a Bachelor of Computer Science from Patrician College, Chennai (CGPA: 8.5/10).",
+  "🎤 Won 2nd prize in Western Music Competitions as a Tenor & Bass vocalist with the Shamrocks music ensemble!",
+  "🎯 Selected player for the College Carrom Team, showcasing focus, discipline, and strategic calculation.",
+  "🚀 Built AI Tool Box with 100+ automated web tools using Next.js 15, TypeScript, and Tailwind CSS.",
+  "🎵 Created Virtuoso AI, an acoustic music learning platform that analyzes pitch and rhythm through microphone input.",
+  "📊 Engineered an Automatic Seating Allocation engine for 300+ students, saving 70% scheduling time.",
+  "🔍 Worked as a Software Testing Intern (QA Tester) at 8QUEENS Software Technologies.",
+  "🌐 Speaks 3 languages: English, Tamil (தமிழ்), and French (Français)!",
+  "📜 Holds certifications from Google (Data Analytics & AI), IBM (Web Dev), HP LIFE (Data Science), and MongoDB.",
+  "🍿 Big movie fan! Favorites include Interstellar, Titanic, Inception, Endgame, Shutter Island, and Spider-Man."
 ];
 
 const randomFact = facts[Math.floor(Math.random() * facts.length)];
 
 console.log(`
-╭──────────────────────────────────────────────────╮
-│                 DEION BERNARD                    │
-│   Computer Science Graduate • Developer • AI     │
-╰──────────────────────────────────────────────────╯
+============================================================
+              THE DEION BERNARD CHRONICLES
+============================================================
+           [ ISSUE #001 • COMIC CLI TERMINAL ]
 
-${randomFact}
+  Deion Daniel Bernard — Computer Science Graduate & Developer
+  Location: Chennai, India
+  Languages: English | Tamil (தமிழ்) | French (Français)
 
-Run 'npx deion' again for another fact.
-Website: https://deionbernard.com
-Email:   deionbernard3322@gmail.com
-GitHub:  https://github.com/deionbernard
+  ----------------------------------------------------------
+  RANDOM DOSSIER FACT:
+  ${randomFact}
+  ----------------------------------------------------------
+
+  Visit the interactive comic portfolio website:
+  https://deionbernard.com (or local server)
+
+============================================================
 `);

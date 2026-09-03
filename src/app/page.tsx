@@ -1,340 +1,258 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import IntroAnimation from "@/components/IntroAnimation";
+import HeroStinger from "@/components/characters/hero-stinger";
+import SpiderWebSwing from "@/components/characters/spider-web-swing";
 import TerminalCard from "@/components/TerminalCard";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FaceLogo from "@/components/FaceLogo";
-import MacDock from "@/components/MacDock";
-import { ArrowUpRight, Sparkles, FolderGit2, BookOpen, Film, Music, User, FileText, Mail, Layers } from "lucide-react";
+import Sticker from "@/components/comic/Sticker";
+import ActionBurst from "@/components/comic/ActionBurst";
+import ComicPanel from "@/components/comic/ComicPanel";
+import DeionCharacterPanel from "@/components/home/DeionCharacterPanel";
+import { User, FileText, Mail, FolderGit2, ArrowRight } from "lucide-react";
 
 export default function HomePage() {
   const [introFinished, setIntroFinished] = useState(false);
+  const [stingerFinished, setStingerFinished] = useState(false);
 
   return (
     <>
+      {/* STEP 1: ISSUE #000 INTRO SEQUENCE */}
       {!introFinished && <IntroAnimation onComplete={() => setIntroFinished(true)} />}
 
-      <div className="min-h-screen bg-black text-white selection:bg-brand-orange selection:text-black pb-24">
-        <Navbar />
+      {/* STEP 2: SPIDER-HERO STINGER (2-4s, ONLY AFTER INTRO) */}
+      {introFinished && !stingerFinished && (
+        <HeroStinger onComplete={() => setStingerFinished(true)} />
+      )}
 
-        <main className="relative overflow-hidden">
-          {/* Background Ambient Glowing Orbs */}
-          <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-brand-orange/15 blur-[120px]" />
-          <div className="pointer-events-none absolute top-[600px] left-10 h-[350px] w-[350px] rounded-full bg-brand-orange/10 blur-[100px]" />
+      {/* STEP 3: FULL-SCREEN CINEMATIC SPIDER-MAN WEB SWING */}
+      {introFinished && stingerFinished && <SpiderWebSwing />}
 
-          {/* HERO SECTION */}
-          <section className="relative mx-auto max-w-7xl px-4 pt-12 pb-16 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-            {/* FACE-SKETCH LOGO */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="mb-4 flex flex-col items-center"
-            >
-              <FaceLogo size="lg" />
-            </motion.div>
+      <div className="min-h-screen bg-comic-cream text-black pb-24 font-sans relative overflow-hidden">
+        {/* Halftone Background Pattern */}
+        <div className="absolute inset-0 bg-halftone opacity-10 pointer-events-none" />
 
-            {/* MAIN HEADINGS */}
-            <motion.h1
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white"
-            >
-              DEION BERNARD
-            </motion.h1>
+        {/* TOP COVER HEADER ISSUE BADGE */}
+        <div className="border-b-4 border-black bg-comic-yellow py-2 px-4 shadow-comic-sm">
+          <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between font-mono text-xs font-black uppercase tracking-widest text-black">
+            <div className="flex items-center gap-2">
+              <span className="bg-comic-red text-white px-2 py-0.5 border border-black shadow-comic-sm">
+                ISSUE #001
+              </span>
+              <span>THE DEVELOPER CHRONICLES</span>
+            </div>
+            <div className="hidden sm:flex items-center gap-4">
+              <span>TAGLINE: BUILD. LEARN. CREATE. EXPLORE.</span>
+              <span className="text-comic-red font-comic text-sm">★ SPECIAL COLLECTOR&apos;S EDITION ★</span>
+            </div>
+          </div>
+        </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-3 space-y-1"
-            >
-              <p className="font-mono text-sm sm:text-base text-gray-300 font-medium tracking-wide">
-                Computer Science Graduate
-              </p>
-              <p className="font-mono text-xs sm:text-sm text-brand-orange tracking-widest uppercase font-semibold">
-                Developer • AI Enthusiast • Creator
-              </p>
-            </motion.div>
+        {/* ─── HERO SECTION — THE COMIC BOOK FRONT COVER ─── */}
+        <section className="relative mx-auto max-w-7xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+          <ComicPanel bgColor="paper" shadowSize="xl" className="p-6 sm:p-12 overflow-visible bg-speed-lines">
+
+            {/* STICKERS DECORATION */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              <Sticker text="BUILD." variant="red" rotate={-6} />
+              <Sticker text="LEARN." variant="yellow" rotate={4} />
+              <Sticker text="CREATE." variant="violet" rotate={-3} />
+              <Sticker text="EXPLORE." variant="white" rotate={5} />
+              <div className="ml-auto hidden sm:block">
+                <ActionBurst text="NEW ISSUE!" color="yellow" size="sm" rotate={8} />
+              </div>
+            </div>
+
+            {/* MAIN COVER GRID: LEFT TYPOGRAPHY ←→ RIGHT CHARACTER */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+              {/* ── LEFT: HERO TYPOGRAPHY & CTAs ── */}
+              <div className="lg:col-span-7 space-y-6 text-center lg:text-left order-2 lg:order-1">
+
+                <div className="inline-block border-3 border-black bg-comic-yellow px-3 py-1 font-mono text-xs font-black uppercase tracking-widest shadow-comic-sm">
+                  ★ THE MAIN CHARACTER HAS ARRIVED ★
+                </div>
+
+                <h1 className="font-comic text-6xl sm:text-8xl lg:text-9xl font-black tracking-wider text-black text-shadow-red leading-none uppercase">
+                  DEION<br />BERNARD
+                </h1>
+
+                <div className="space-y-3">
+                  <h2 className="font-mono text-lg sm:text-2xl font-black uppercase tracking-wide text-black border-l-4 border-comic-red pl-3 inline-block">
+                    COMPUTER SCIENCE GRADUATE
+                  </h2>
+                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                    <Sticker text="DEVELOPER" variant="yellow" rotate={-2} />
+                    <Sticker text="AI ENTHUSIAST" variant="violet" rotate={2} />
+                    <Sticker text="CREATOR" variant="red" rotate={-1} />
+                  </div>
+                </div>
+
+                <p className="font-mono text-xs sm:text-sm font-bold text-gray-800 max-w-xl leading-relaxed mx-auto lg:mx-0">
+                  Welcome to my interactive comic book portfolio. Step inside to read my origin story, inspect my inventions, explore my sketchbook journal, and team up on new projects!
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                  <Link href="/about">
+                    <button className="px-6 py-3 border-3 border-black bg-comic-yellow font-comic text-xl text-black shadow-comic hover:bg-white active:translate-x-1 active:translate-y-1 active:shadow-comic-pressed transition-all">
+                      READ ORIGIN STORY →
+                    </button>
+                  </Link>
+                  <Link href="/projects">
+                    <button className="px-6 py-3 border-3 border-black bg-comic-violet font-comic text-xl text-black shadow-comic hover:bg-white active:translate-x-1 active:translate-y-1 active:shadow-comic-pressed transition-all">
+                      INSPECT INVENTIONS →
+                    </button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* ── RIGHT: DEION CHARACTER PHOTO PANEL + THOUGHT BUBBLE ── */}
+              <div className="lg:col-span-5 flex justify-center lg:justify-end order-1 lg:order-2 pb-8 lg:pb-0">
+                <DeionCharacterPanel />
+              </div>
+
+            </div>
 
             {/* NPX TERMINAL COMPONENT */}
-            <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="mt-10 w-full flex justify-center"
-            >
+            <div className="mt-12 pt-8 border-t-3 border-black flex justify-center">
               <TerminalCard />
-            </motion.div>
-          </section>
-
-          {/* HORIZONTAL DESTINATIONS PORTALS */}
-          <section className="relative py-16 border-t border-white/10 bg-surface/50 space-y-16">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="font-mono text-xs font-bold tracking-widest text-brand-orange uppercase">
-                    INTERACTIVE PORTALS
-                  </span>
-                  <h2 className="font-display text-2xl sm:text-4xl font-black text-white">
-                    EXPLORE DEION&apos;S WORLD
-                  </h2>
-                </div>
-                <div className="hidden sm:flex items-center gap-2 font-mono text-xs text-gray-400">
-                  <span>SWIPE / SCROLL HORIZONTALLY</span>
-                  <span className="text-brand-orange">→</span>
-                </div>
-              </div>
             </div>
 
-            {/* FIRST GROUP: CORE PROFESSIONAL (ABOUT, RESUME, CONTACT, PROJECTS) */}
-            <div className="space-y-4">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <span className="font-mono text-xs text-gray-400 uppercase tracking-widest font-bold">
-                  GROUP 01 — CORE PROFESSIONAL
-                </span>
+          </ComicPanel>
+        </section>
+
+        {/* ─── CORE PORTFOLIO STORY PORTALS ─── */}
+        <section className="relative py-12 border-t-4 border-black bg-comic-cream space-y-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between border-b-3 border-black pb-4">
+              <div>
+                <Sticker text="MAIN STORY" variant="yellow" rotate={-2} />
+                <h2 className="font-comic text-4xl sm:text-6xl font-black text-black mt-2">
+                  EXPLORE THE CHRONICLES
+                </h2>
               </div>
-
-              <div className="no-scrollbar horizontal-scroll-container px-4 sm:px-6 lg:px-8 space-x-6 pb-4">
-                {/* PORTAL 1: ABOUT ME */}
-                <Link
-                  href="/about"
-                  data-cursor-text="OPEN"
-                  className="horizontal-scroll-item group relative h-[320px] w-[280px] sm:w-[340px] flex flex-col justify-between rounded-2xl border border-white/15 bg-gradient-to-b from-surface-card to-black p-6 transition-all duration-300 hover:border-brand-orange hover:shadow-[0_0_30px_rgba(255,85,0,0.3)] hover:-translate-y-2"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-brand-orange font-bold">01 / PORTAL</span>
-                    <div className="h-10 w-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white group-hover:border-brand-orange group-hover:bg-brand-orange group-hover:text-black transition-all">
-                      <User className="h-5 w-5" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-display text-3xl font-extrabold text-white group-hover:text-brand-orange transition-colors">
-                      ABOUT ME
-                    </h3>
-                    <p className="mt-2 font-mono text-xs text-gray-400">
-                      Who I am, Tamil • French • English languages, journey & passions.
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10 font-mono text-xs text-gray-300 group-hover:text-white">
-                    <span>EXPLORE BIOGRAPHY</span>
-                    <ArrowUpRight className="h-4 w-4 text-brand-orange transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </div>
-                </Link>
-
-                {/* PORTAL 2: RESUME */}
-                <Link
-                  href="/resume"
-                  data-cursor-text="VIEW"
-                  className="horizontal-scroll-item group relative h-[320px] w-[280px] sm:w-[340px] flex flex-col justify-between rounded-2xl border border-white/15 bg-gradient-to-b from-surface-card to-black p-6 transition-all duration-300 hover:border-brand-orange hover:shadow-[0_0_30px_rgba(255,85,0,0.3)] hover:-translate-y-2"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-brand-orange font-bold">02 / PORTAL</span>
-                    <div className="h-10 w-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white group-hover:border-brand-orange group-hover:bg-brand-orange group-hover:text-black transition-all">
-                      <FileText className="h-5 w-5" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-display text-3xl font-extrabold text-white group-hover:text-brand-orange transition-colors">
-                      RESUME
-                    </h3>
-                    <p className="mt-2 font-mono text-xs text-gray-400">
-                      Patrician College, 8QUEENS Internship, Certifications & Skills.
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10 font-mono text-xs text-gray-300 group-hover:text-white">
-                    <span>VIEW DIGITAL RESUME</span>
-                    <ArrowUpRight className="h-4 w-4 text-brand-orange transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </div>
-                </Link>
-
-                {/* PORTAL 3: CONTACT */}
-                <Link
-                  href="/contact"
-                  data-cursor-text="CONNECT"
-                  className="horizontal-scroll-item group relative h-[320px] w-[280px] sm:w-[340px] flex flex-col justify-between rounded-2xl border border-white/15 bg-gradient-to-b from-surface-card to-black p-6 transition-all duration-300 hover:border-brand-orange hover:shadow-[0_0_30px_rgba(255,85,0,0.3)] hover:-translate-y-2"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-brand-orange font-bold">03 / PORTAL</span>
-                    <div className="h-10 w-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white group-hover:border-brand-orange group-hover:bg-brand-orange group-hover:text-black transition-all">
-                      <Mail className="h-5 w-5" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-display text-3xl font-extrabold text-white group-hover:text-brand-orange transition-colors">
-                      CONTACT
-                    </h3>
-                    <p className="mt-2 font-mono text-xs text-gray-400">
-                      Email, Phone (+91 9080325507), Chennai location & form.
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10 font-mono text-xs text-gray-300 group-hover:text-white">
-                    <span>START CONVERSATION</span>
-                    <ArrowUpRight className="h-4 w-4 text-brand-orange transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </div>
-                </Link>
-
-                {/* PORTAL 4: PROJECTS */}
-                <Link
-                  href="/projects"
-                  data-cursor-text="EXPLORE"
-                  className="horizontal-scroll-item group relative h-[320px] w-[280px] sm:w-[340px] flex flex-col justify-between rounded-2xl border border-brand-orange/40 bg-gradient-to-b from-brand-orange/10 via-surface-card to-black p-6 transition-all duration-300 hover:border-brand-orange hover:shadow-[0_0_35px_rgba(255,85,0,0.4)] hover:-translate-y-2"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-brand-orange font-bold">04 / PORTAL</span>
-                    <div className="h-10 w-10 rounded-full border border-brand-orange/50 bg-brand-orange/20 flex items-center justify-center text-brand-orange group-hover:bg-brand-orange group-hover:text-black transition-all">
-                      <FolderGit2 className="h-5 w-5" />
-                    </div>
-                  </div>
-                  <div>
-                    <span className="font-mono text-[10px] text-brand-orange tracking-widest font-bold">4 REPOSITORIES</span>
-                    <h3 className="font-display text-3xl font-extrabold text-white group-hover:text-brand-orange transition-colors">
-                      PROJECTS
-                    </h3>
-                    <p className="mt-2 font-mono text-xs text-gray-400">
-                      AI Tool Box, Spam Detector, Virtuoso AI, Seating Allocator.
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10 font-mono text-xs text-gray-300 group-hover:text-white">
-                    <span>BROWSE ALL 4 PROJECTS</span>
-                    <ArrowUpRight className="h-4 w-4 text-brand-orange transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </div>
-                </Link>
+              <div className="hidden sm:flex items-center gap-2 font-mono text-xs font-black text-gray-700 uppercase">
+                <span>SELECT A CHAPTER TO BEGIN</span>
+                <span className="text-comic-red">→</span>
               </div>
             </div>
+          </div>
 
-            {/* SECOND GROUP: CREATIVE & PERSONAL ARCHIVES (BLOGS, MOVIES, SONGS, CREATIVE SPACE) */}
-            <div className="space-y-4 pt-6 border-t border-white/10">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <span className="font-mono text-xs text-gray-400 uppercase tracking-widest font-bold">
-                  GROUP 02 — CREATIVE & PERSONAL ARCHIVES
-                </span>
-              </div>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-              {/* SECOND GROUP PORTAL CARDS */}
-              <div className="no-scrollbar horizontal-scroll-container px-4 sm:px-6 lg:px-8 space-x-6 pb-6">
-                {/* PORTAL 5: BLOGS */}
-                <Link
-                  href="/blogs"
-                  data-cursor-text="READ"
-                  className="horizontal-scroll-item group relative h-[320px] w-[280px] sm:w-[340px] flex flex-col justify-between rounded-2xl border border-white/15 bg-gradient-to-b from-surface-card to-black p-6 transition-all duration-300 hover:border-brand-orange hover:shadow-[0_0_30px_rgba(255,85,0,0.3)] hover:-translate-y-2"
+              {/* PORTAL 1: ABOUT ME */}
+              <Link href="/about">
+                <ComicPanel
+                  bgColor="white"
+                  shadowSize="lg"
+                  tilt="slight-left"
+                  badgeText="CHAPTER 01"
+                  badgeBg="bg-comic-violet"
+                  className="h-[300px] p-6 flex flex-col justify-between group hover:bg-comic-paper transition-all"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-brand-orange font-bold">05 / PORTAL</span>
-                    <div className="h-10 w-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white group-hover:border-brand-orange group-hover:bg-brand-orange group-hover:text-black transition-all">
-                      <BookOpen className="h-5 w-5" />
-                    </div>
+                  <div className="flex items-center justify-between border-b-2 border-black pb-3">
+                    <span className="font-mono text-xs font-black text-comic-violet">ORIGIN STORY</span>
+                    <User className="h-6 w-6 text-black group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <h3 className="font-display text-3xl font-extrabold text-white group-hover:text-brand-orange transition-colors">
-                      BLOGS
-                    </h3>
-                    <p className="mt-2 font-mono text-xs text-gray-400">
-                      Reading, Gaming, Continuous Learning, Gym & Outdoor Adventures.
+                    <h3 className="font-comic text-3xl text-black group-hover:text-comic-red transition-colors">ABOUT ME</h3>
+                    <p className="mt-2 font-mono text-xs font-bold text-gray-700">
+                      Who I am, CS degree, languages (Tamil • English • French), skills &amp; passions.
                     </p>
                   </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10 font-mono text-xs text-gray-300 group-hover:text-white">
-                    <span>READ 5 ARTICLES</span>
-                    <ArrowUpRight className="h-4 w-4 text-brand-orange transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <div className="flex items-center justify-between border-t-2 border-black pt-3 font-mono text-xs font-black">
+                    <span>READ ORIGIN</span>
+                    <ArrowRight className="h-4 w-4 text-black group-hover:translate-x-1 transition-transform" />
                   </div>
-                </Link>
+                </ComicPanel>
+              </Link>
 
-                {/* PORTAL 6: MOVIES (RED CINEMATIC THEME) */}
-                <Link
-                  href="/movies"
-                  data-cursor-text="CINEMA"
-                  className="horizontal-scroll-item group relative h-[320px] w-[280px] sm:w-[340px] flex flex-col justify-between rounded-2xl border border-movie-red/40 bg-gradient-to-b from-movie-red/10 via-surface-card to-black p-6 transition-all duration-300 hover:border-movie-red hover:shadow-[0_0_35px_rgba(229,9,20,0.4)] hover:-translate-y-2"
+              {/* PORTAL 2: RESUME */}
+              <Link href="/resume">
+                <ComicPanel
+                  bgColor="yellow"
+                  shadowSize="lg"
+                  tilt="slight-right"
+                  badgeText="CHAPTER 02"
+                  badgeBg="bg-comic-red text-white"
+                  className="h-[300px] p-6 flex flex-col justify-between group hover:bg-comic-cream transition-all"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-movie-red font-bold">06 / CINEMATIC</span>
-                    <div className="h-10 w-10 rounded-full border border-movie-red/50 bg-movie-red/20 flex items-center justify-center text-movie-red group-hover:bg-movie-red group-hover:text-white transition-all">
-                      <Film className="h-5 w-5" />
-                    </div>
+                  <div className="flex items-center justify-between border-b-2 border-black pb-3">
+                    <span className="font-mono text-xs font-black text-black">CLASSIFIED FILE</span>
+                    <FileText className="h-6 w-6 text-black group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <span className="font-mono text-[10px] text-movie-red tracking-widest font-bold">CINEMATIC RED REVEAL</span>
-                    <h3 className="font-display text-3xl font-extrabold text-white group-hover:text-movie-red transition-colors">
-                      MOVIES
-                    </h3>
-                    <p className="mt-2 font-mono text-xs text-gray-400">
-                      Interstellar, Titanic, Inception, Endgame, Shutter Island, No Way Home.
+                    <h3 className="font-comic text-3xl text-black group-hover:text-comic-red transition-colors">RESUME</h3>
+                    <p className="mt-2 font-mono text-xs font-bold text-black">
+                      Patrician College, 8QUEENS QA Tester Internship, Certifications &amp; Skills.
                     </p>
                   </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10 font-mono text-xs text-gray-300 group-hover:text-white">
-                    <span>ENTER MOVIE THEATRE</span>
-                    <ArrowUpRight className="h-4 w-4 text-movie-red transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <div className="flex items-center justify-between border-t-2 border-black pt-3 font-mono text-xs font-black">
+                    <span>INSPECT DOSSIER</span>
+                    <ArrowRight className="h-4 w-4 text-black group-hover:translate-x-1 transition-transform" />
                   </div>
-                </Link>
+                </ComicPanel>
+              </Link>
 
-                {/* PORTAL 7: MUSIC / SONGS */}
-                <Link
-                  href="/music"
-                  data-cursor-text="LISTEN"
-                  className="horizontal-scroll-item group relative h-[320px] w-[280px] sm:w-[340px] flex flex-col justify-between rounded-2xl border border-white/15 bg-gradient-to-b from-surface-card to-black p-6 transition-all duration-300 hover:border-brand-orange hover:shadow-[0_0_30px_rgba(255,85,0,0.3)] hover:-translate-y-2"
+              {/* PORTAL 3: PROJECTS */}
+              <Link href="/projects">
+                <ComicPanel
+                  bgColor="violet"
+                  shadowSize="lg"
+                  tilt="slight-left"
+                  badgeText="CHAPTER 03"
+                  badgeBg="bg-comic-yellow"
+                  className="h-[300px] p-6 flex flex-col justify-between group transition-all"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-brand-orange font-bold">07 / AUDIO</span>
-                    <div className="h-10 w-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white group-hover:border-brand-orange group-hover:bg-brand-orange group-hover:text-black transition-all">
-                      <Music className="h-5 w-5" />
-                    </div>
+                  <div className="flex items-center justify-between border-b-2 border-black pb-3">
+                    <span className="font-mono text-xs font-black text-black">INVENTOR&apos;S LAB</span>
+                    <FolderGit2 className="h-6 w-6 text-black group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <span className="font-mono text-[10px] text-brand-orange tracking-widest font-bold">TENOR & BASS VOCALIST</span>
-                    <h3 className="font-display text-3xl font-extrabold text-white group-hover:text-brand-orange transition-colors">
-                      SONGS / MUSIC
-                    </h3>
-                    <p className="mt-2 font-mono text-xs text-gray-400">
-                      Can&apos;t Help Falling in Love, Unchained Melody, Heaven, BSB & Everly.
+                    <h3 className="font-comic text-3xl text-black group-hover:text-comic-red transition-colors">MY INVENTIONS</h3>
+                    <p className="mt-2 font-mono text-xs font-bold text-black">
+                      AI Tool Box, Spam Detection, Virtuoso AI, &amp; Automatic Seating Allocation.
                     </p>
                   </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10 font-mono text-xs text-gray-300 group-hover:text-white">
-                    <span>EXPLORE MUSIC ARCHIVE</span>
-                    <ArrowUpRight className="h-4 w-4 text-brand-orange transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <div className="flex items-center justify-between border-t-2 border-black pt-3 font-mono text-xs font-black">
+                    <span>EXPLORE LAB</span>
+                    <ArrowRight className="h-4 w-4 text-black group-hover:translate-x-1 transition-transform" />
                   </div>
-                </Link>
+                </ComicPanel>
+              </Link>
 
-                {/* PORTAL 8: CREATIVE SPACE (SKETCH & CANVAS STUDIO) */}
-                <Link
-                  href="/creative"
-                  data-cursor-text="LAB"
-                  className="horizontal-scroll-item group relative h-[320px] w-[280px] sm:w-[340px] flex flex-col justify-between rounded-2xl border border-white/15 bg-gradient-to-b from-surface-card to-black p-6 transition-all duration-300 hover:border-brand-orange hover:shadow-[0_0_30px_rgba(255,85,0,0.3)] hover:-translate-y-2"
+              {/* PORTAL 4: CONTACT */}
+              <Link href="/contact">
+                <ComicPanel
+                  bgColor="red"
+                  shadowSize="lg"
+                  tilt="slight-right"
+                  badgeText="CHAPTER 07"
+                  badgeBg="bg-comic-yellow"
+                  className="h-[300px] p-6 flex flex-col justify-between group transition-all"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-brand-orange font-bold">08 / CREATIVE SPACE</span>
-                    <div className="h-10 w-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white group-hover:border-brand-orange group-hover:bg-brand-orange group-hover:text-black transition-all">
-                      <Sparkles className="h-5 w-5" />
-                    </div>
+                  <div className="flex items-center justify-between border-b-2 border-black pb-3">
+                    <span className="font-mono text-xs font-black text-yellow-300">TEAM-UP FINALE</span>
+                    <Mail className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <h3 className="font-display text-3xl font-extrabold text-white group-hover:text-brand-orange transition-colors">
-                      CREATIVE SPACE
-                    </h3>
-                    <p className="mt-2 font-mono text-xs text-gray-400">
-                      Personal philosophy, Tenor vocalist achievements & Western ensemble.
+                    <h3 className="font-comic text-3xl text-white group-hover:text-comic-yellow transition-colors">LET&apos;S TEAM UP!</h3>
+                    <p className="mt-2 font-mono text-xs font-bold text-white/90">
+                      Got an idea? Send a message directly to Deion (+91 9080325507).
                     </p>
                   </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10 font-mono text-xs text-gray-300 group-hover:text-white">
-                    <span>ENTER CREATIVE SPACE</span>
-                    <ArrowUpRight className="h-4 w-4 text-brand-orange transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <div className="flex items-center justify-between border-t-2 border-black pt-3 font-mono text-xs font-black text-white">
+                    <span>SEND MESSAGE</span>
+                    <ArrowRight className="h-4 w-4 text-white group-hover:translate-x-1 transition-transform" />
                   </div>
-                </Link>
-              </div>
+                </ComicPanel>
+              </Link>
+
             </div>
-          </section>
-        </main>
-
-        {/* ========================================================================= */}
-        {/* macOS-STYLE ANIMATED ORANGE DOCK — CENTERED BOTTOM (HOME ONLY)           */}
-        {/* ========================================================================= */}
-        {introFinished && <MacDock />}
-
-        <Footer />
+          </div>
+        </section>
       </div>
     </>
   );

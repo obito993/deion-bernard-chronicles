@@ -1,159 +1,146 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import VisualThumbnail from "@/components/VisualThumbnails";
+import Image from "next/image";
+import ComicPanel from "@/components/comic/ComicPanel";
+import ComicButton from "@/components/comic/ComicButton";
+import Sticker from "@/components/comic/Sticker";
+import ActionBurst from "@/components/comic/ActionBurst";
+import MoviesHeroCharacter from "@/components/characters/movies-hero-character";
+import { InfiniteMovingCards, InfiniteContentCard } from "@/components/ui/infinite-moving-cards";
 import { moviesData } from "@/data/moviesData";
-import { Film, Play, Star, Sparkles, Eye, ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Film } from "lucide-react";
 
 export default function MoviesPage() {
-  const [isRevealed, setIsRevealed] = useState(false);
+  const [moviesRevealed, setMoviesRevealed] = useState(true);
+
+  // Transform movies into InfiniteContentCard items
+  const movieCards: InfiniteContentCard[] = moviesData.map((m, idx) => ({
+    id: m.id,
+    title: m.title,
+    subtitle: `${m.year} • ${m.genre}`,
+    image: m.image,
+    category: `MOVIE ISSUE #${idx + 1}`,
+    description: m.description,
+    href: `#movie-${m.id}`,
+    badge: "WATCHLIST",
+    color: m.color,
+  }));
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-movie-red selection:text-white bg-cinema-noise">
-      <Navbar />
+    <div className="min-h-screen bg-comic-dark text-white pb-24 font-sans relative overflow-hidden">
+      {/* Cinema background overlay */}
+      <div className="absolute inset-0 bg-halftone opacity-15 pointer-events-none" />
 
-      <main className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 space-y-16">
-        {/* CINEMATIC PAGE HEADER */}
-        <section className="text-center space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-movie-red/40 bg-movie-red/10 px-4 py-1.5 font-mono text-xs font-bold text-movie-red shadow-[0_0_20px_rgba(229,9,20,0.4)]">
-            <Film className="h-4 w-4" />
-            <span>CINEMATIC ARCHIVE & FILM COLLECTION</span>
-          </div>
-
-          <h1 className="font-display text-4xl sm:text-7xl font-black text-white tracking-tight">
-            MY FAVORITE MOVIES
-          </h1>
-
-          <p className="font-mono text-xs sm:text-sm text-gray-300 max-w-xl mx-auto">
-            A curated theater of groundbreaking storytelling, visionary directors, emotional soundscapes, and unforgettable cinematic moments that inspire Deion&apos;s creative world.
-          </p>
-
-          {/* VERY LARGE ROUNDED RED BUTTON */}
-          <div className="pt-4 flex justify-center">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsRevealed(!isRevealed)}
-              className="group relative flex items-center gap-4 rounded-full bg-movie-red px-8 py-5 font-mono text-sm sm:text-base font-black text-white shadow-[0_0_40px_rgba(229,9,20,0.7)] transition-all hover:bg-red-600 border-2 border-white/20"
-            >
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white">
-                {isRevealed ? <Eye className="h-5 w-5" /> : <Play className="h-5 w-5 fill-current" />}
-              </div>
-              <span className="tracking-widest uppercase">
-                {isRevealed ? "HIDE FAVORITE MOVIES" : "REVEAL MY FAVORITE MOVIES"}
+      {/* HEADER BAR */}
+      <section className="relative border-b-4 border-black bg-comic-red py-8 px-4 text-white shadow-comic-sm">
+        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <Sticker text="CHAPTER 05" variant="yellow" rotate={-2} />
+              <span className="font-mono text-xs font-black uppercase tracking-widest text-yellow-300">
+                CINEMA ISSUE
               </span>
-              <ChevronDown
-                className={`h-5 w-5 transition-transform duration-300 ${
-                  isRevealed ? "rotate-180" : ""
-                }`}
-              />
-            </motion.button>
+            </div>
+            <h1 className="font-comic text-6xl sm:text-8xl font-black tracking-wider text-white text-shadow-comic uppercase mt-1">
+              MY WATCHLIST
+            </h1>
+            <p className="font-mono text-xs sm:text-sm font-bold text-yellow-300 border-l-4 border-black pl-3 mt-1">
+              &quot;The movies that made the cut. Cinematic stories that inspire grand vision.&quot;
+            </p>
           </div>
-        </section>
+          <div className="flex items-center gap-4">
+            <MoviesHeroCharacter />
+            <ActionBurst text="CINEMA!" color="yellow" size="md" rotate={8} />
+          </div>
+        </div>
+      </section>
 
-        {/* MOVIES COLLECTION (VERTICAL 2-COLUMN ITEMS) */}
-        <AnimatePresence>
-          {isRevealed ? (
-            <motion.section
-              key="movies-collection"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -40 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="space-y-16 pt-8 border-t border-movie-red/30"
+      {/* INFINITE MOVING CARDS SECTION FOR MOVIES */}
+      <section className="py-12 border-b-4 border-black bg-comic-dark space-y-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          <Sticker text="INFINITE MOVIE STRIP" variant="yellow" rotate={-1} />
+          <span className="font-mono text-xs font-black text-gray-400 uppercase">
+            CONTINUOUSLY MOVING COMIC STRIP →
+          </span>
+        </div>
+
+        <InfiniteMovingCards items={movieCards} direction="right" speed="slow" />
+      </section>
+
+      {/* DETAILED MOVIES LIST CONTAINER */}
+      <div className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8 space-y-12">
+        <div className="flex items-center justify-between border-b-2 border-comic-red pb-3">
+          <Sticker text="ALL-TIME FAVORITE CINEMA ARCHIVE" variant="yellow" rotate={-1} />
+          <span className="font-mono text-xs font-black text-gray-400">DESKTOP: IMAGE LEFT • CONTENT RIGHT</span>
+        </div>
+
+        {moviesData.map((movie, index) => (
+          <div key={movie.id} id={`movie-${movie.id}`}>
+            <ComicPanel
+              bgColor={movie.color === "red" ? "red" : movie.color === "yellow" ? "yellow" : "dark"}
+              shadowSize="xl"
+              badgeText={`MOVIE #${index + 1}`}
+              badgeBg="bg-comic-red text-white"
+              className="p-6 sm:p-10 border-4 border-black"
             >
-              {moviesData.map((movie, index) => (
-                <motion.article
-                  key={movie.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch rounded-2xl border border-movie-red/30 bg-gradient-to-br from-surface-card via-black to-red-950/20 p-6 sm:p-8 shadow-[0_0_30px_rgba(229,9,20,0.15)] hover:border-movie-red hover:shadow-[0_0_45px_rgba(229,9,20,0.35)] transition-all"
-                >
-                  {/* LEFT COLUMN: LARGE CINEMATIC MOVIE THUMBNAIL */}
-                  <div
-                    data-cursor-text="CINEMA"
-                    className="lg:col-span-5 h-72 sm:h-96 lg:h-auto min-h-[300px] w-full overflow-hidden rounded-xl"
-                  >
-                    <VisualThumbnail type={movie.posterVisual} className="h-full w-full" />
+              {/* DESKTOP LAYOUT: IMAGE LEFT, CONTENT RIGHT */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                {/* LEFT: OFFICIAL COVER ARTWORK */}
+                <div className="lg:col-span-4 relative flex justify-center">
+                  <div className="relative w-full h-80 sm:h-96 rounded-xl border-4 border-black bg-black overflow-hidden shadow-comic-lg">
+                    <Image
+                      src={movie.image}
+                      alt={movie.title}
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-halftone opacity-10 pointer-events-none" />
+                  </div>
+                </div>
+
+                {/* RIGHT: MOVIE INFORMATION */}
+                <div className="lg:col-span-8 space-y-4">
+                  <div className="border-b-3 border-black pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs font-black uppercase text-comic-yellow bg-black px-2 py-0.5 border border-black shadow-comic-sm">
+                        {movie.year}
+                      </span>
+                      <span className="font-mono text-xs font-bold uppercase text-gray-300">
+                        {movie.genre}
+                      </span>
+                    </div>
+                    <h2 className="font-comic text-4xl sm:text-6xl text-white leading-none mt-2">
+                      {movie.title}
+                    </h2>
                   </div>
 
-                  {/* RIGHT COLUMN: INFORMATION & PERSONAL NOTE */}
-                  <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-xs font-bold text-movie-red tracking-widest">
-                          {movie.number} — {movie.year}
-                        </span>
-                        <div className="flex items-center gap-1 font-mono text-xs text-yellow-400 font-bold bg-white/5 px-2.5 py-1 rounded border border-white/10">
-                          <Star className="h-3.5 w-3.5 fill-current" />
-                          <span>{movie.rating}</span>
-                        </div>
-                      </div>
-
-                      <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white">
-                        {movie.title}
-                      </h2>
-
-                      <p className="font-mono text-xs text-gray-400">
-                        DIRECTED BY <strong className="text-white">{movie.director.toUpperCase()}</strong>
-                      </p>
-
-                      <div className="flex flex-wrap gap-2 pt-1">
-                        {movie.genre.map((g) => (
-                          <span
-                            key={g}
-                            className="font-mono text-[11px] bg-movie-red/10 border border-movie-red/30 text-movie-red px-2.5 py-0.5 rounded-full font-bold"
-                          >
-                            {g}
-                          </span>
-                        ))}
-                      </div>
-
-                      <p className="font-mono text-xs sm:text-sm text-gray-300 leading-relaxed pt-2">
-                        {movie.description}
-                      </p>
-                    </div>
-
-                    {/* WHY I LIKE IT AREA */}
-                    <div className="rounded-xl border border-movie-red/40 bg-black/80 p-4 space-y-2">
-                      <h4 className="font-mono text-xs font-bold text-movie-red tracking-widest uppercase flex items-center gap-1.5">
-                        <Sparkles className="h-3.5 w-3.5" />
-                        WHY DEION LOVES THIS FILM
-                      </h4>
-                      <p className="font-mono text-xs text-gray-200 leading-relaxed italic">
-                        &quot;{movie.whyILikeIt}&quot;
-                      </p>
-                    </div>
+                  <div className="bg-black/70 border-2 border-black p-4 rounded text-white shadow-comic-sm space-y-1">
+                    <span className="font-mono text-[11px] font-black uppercase text-comic-yellow block">
+                      SPOILER-FREE DESCRIPTION:
+                    </span>
+                    <p className="font-mono text-xs sm:text-sm font-bold text-gray-200 leading-relaxed">
+                      {movie.description}
+                    </p>
                   </div>
-                </motion.article>
-              ))}
-            </motion.section>
-          ) : (
-            <motion.div
-              key="movies-placeholder"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="rounded-2xl border border-dashed border-movie-red/40 bg-surface-card/40 p-12 text-center space-y-4"
-            >
-              <Film className="h-16 w-16 text-movie-red mx-auto animate-pulse" />
-              <h3 className="font-display text-2xl font-bold text-white">
-                THEATER IS READY
-              </h3>
-              <p className="font-mono text-xs text-gray-400 max-w-md mx-auto">
-                Press the red <strong className="text-movie-red">&quot;REVEAL MY FAVORITE MOVIES&quot;</strong> button above to illuminate the film collection with dramatic cinematic animations.
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </main>
 
-      <Footer />
+                  <div className="border-l-4 border-comic-yellow pl-4 py-2 bg-black/80 rounded-r text-white">
+                    <span className="font-mono text-[11px] font-black uppercase text-comic-red block">
+                      WHY I LIKE IT:
+                    </span>
+                    <p className="font-mono text-xs sm:text-sm font-bold leading-relaxed text-yellow-100">
+                      {movie.whyILikeIt}
+                    </p>
+                  </div>
+
+                </div>
+
+              </div>
+            </ComicPanel>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

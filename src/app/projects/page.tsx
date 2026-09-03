@@ -1,135 +1,167 @@
 "use client";
 
 import React from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import VisualThumbnail from "@/components/VisualThumbnails";
+import Image from "next/image";
+import ComicPanel from "@/components/comic/ComicPanel";
+import ComicButton from "@/components/comic/ComicButton";
+import Sticker from "@/components/comic/Sticker";
+import ActionBurst from "@/components/comic/ActionBurst";
+import ProjectsHeroCharacter from "@/components/characters/projects-hero-character";
 import { projectsData } from "@/data/projectsData";
-import { Github, ExternalLink, ArrowRight, Code2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { Github, ExternalLink, ArrowRight, CheckCircle2 } from "lucide-react";
 
 export default function ProjectsPage() {
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-brand-orange selection:text-black">
-      <Navbar />
+    <div className="min-h-screen bg-comic-cream text-black pb-24 font-sans relative overflow-hidden">
+      {/* Halftone Overlay */}
+      <div className="absolute inset-0 bg-halftone opacity-10 pointer-events-none" />
 
-      <main className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 space-y-16">
-        {/* PAGE HEADER */}
-        <section className="text-center space-y-4">
-          <span className="font-mono text-xs font-bold tracking-widest text-brand-orange uppercase">
-            SELECTED ENGINEERING WORK (RESUME PROJECTS)
-          </span>
-          <h1 className="font-display text-4xl sm:text-6xl font-black text-white">
-            PROJECTS
-          </h1>
-          <p className="font-mono text-xs sm:text-sm text-gray-300 max-w-xl mx-auto">
-            Explore Deion&apos;s four official resume projects spanning full-stack web platforms, machine learning security, AI audio processing, and automated enterprise scheduling.
-          </p>
-          <div className="h-0.5 w-24 bg-brand-orange mx-auto shadow-[0_0_10px_#FF5500]" />
-        </section>
+      {/* HEADER BAR */}
+      <section className="relative border-b-4 border-black bg-comic-violet py-8 px-4 shadow-comic-sm">
+        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <Sticker text="CHAPTER 03" variant="yellow" rotate={-2} />
+              <span className="font-mono text-xs font-black uppercase tracking-widest text-black">
+                INVENTOR&apos;S LAB
+              </span>
+            </div>
+            <h1 className="font-comic text-6xl sm:text-8xl font-black tracking-wider text-black text-shadow-yellow uppercase mt-1">
+              MY INVENTIONS
+            </h1>
+            <p className="font-mono text-xs sm:text-sm font-bold text-black border-l-4 border-black pl-3 mt-1">
+              &quot;Things I built when I had an idea and decided to make it real.&quot;
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <ProjectsHeroCharacter />
+            <ActionBurst text="4 INVENTIONS!" color="red" size="md" rotate={8} />
+          </div>
+        </div>
+      </section>
 
-        {/* 2-COLUMN VERTICAL PROJECTS LIST */}
-        <section className="space-y-16">
-          {projectsData.map((project, index) => (
-            <motion.article
+      {/* PROJECTS LIST CONTAINER */}
+      <div className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8 space-y-16">
+        {projectsData.map((project) => {
+          return (
+            <ComicPanel
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch rounded-2xl border border-white/15 bg-surface-card p-6 sm:p-8 hover:border-brand-orange/50 transition-all duration-300 shadow-2xl"
+              bgColor={project.color}
+              shadowSize="xl"
+              badgeText={project.number}
+              badgeBg="bg-black text-white"
+              className="p-6 sm:p-10 overflow-hidden"
             >
-              {/* LEFT COLUMN: LARGE UNIQUE THUMBNAIL */}
-              <div
-                data-cursor-text="OPEN"
-                className="lg:col-span-6 h-64 sm:h-80 lg:h-auto min-h-[260px] w-full overflow-hidden rounded-xl"
-              >
-                <VisualThumbnail type={project.id} className="h-full w-full" />
-              </div>
-
-              {/* RIGHT COLUMN: INFORMATION & CONTENT */}
-              <div className="lg:col-span-6 flex flex-col justify-between space-y-6">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-bold text-brand-orange tracking-widest">
-                      {project.number} — {project.category.toUpperCase()}
-                    </span>
-                    <span className="font-mono text-[11px] text-gray-400 bg-white/5 px-2.5 py-1 rounded border border-white/10">
-                      {project.period}
-                    </span>
+              {/* DESKTOP: LEFT IMAGE, RIGHT CONTENT (NEVER IMAGE ABOVE ON DESKTOP) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                {/* LEFT: LARGE PROJECT IMAGE (lg:col-span-5) */}
+                <div className="lg:col-span-5 relative flex flex-col items-center">
+                  <div className="relative w-full h-64 sm:h-80 rounded-xl border-4 border-black bg-white overflow-hidden shadow-comic-lg">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-halftone opacity-10 pointer-events-none" />
                   </div>
-
-                  <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white">
-                    {project.title}
-                  </h2>
-
-                  <p className="font-mono text-xs sm:text-sm text-gray-300 leading-relaxed">
-                    {project.description}
-                  </p>
+                  
+                  {/* Decorative Comic Arrow Pointer */}
+                  <div className="mt-3 hidden lg:flex items-center gap-2 font-mono text-xs font-black text-black">
+                    <ArrowRight className="h-4 w-4 text-comic-red" />
+                    <span>TECHNICAL ARCHITECTURE →</span>
+                  </div>
                 </div>
 
-                {/* HIGHLIGHTS */}
-                <div className="space-y-2">
-                  <h4 className="font-mono text-[11px] font-bold text-brand-orange uppercase tracking-wider">
-                    KEY ACHIEVEMENTS & FEATURES
-                  </h4>
-                  <ul className="space-y-1.5 font-mono text-xs text-gray-300">
-                    {project.highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-brand-orange mt-0.5">✦</span>
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* TECHNOLOGIES TAGS */}
-                <div className="space-y-2 pt-2 border-t border-white/10">
-                  <div className="flex flex-wrap gap-2">
-                    {project.tools.map((tech) => (
-                      <span
-                        key={tech}
-                        className="font-mono text-[11px] bg-white/5 border border-white/10 text-gray-300 px-2.5 py-1 rounded-md"
-                      >
-                        {tech}
+                {/* RIGHT: PROJECT DETAILS & LABELS (lg:col-span-7) */}
+                <div className="lg:col-span-7 space-y-4">
+                  <div className="flex flex-wrap items-center justify-between border-b-3 border-black pb-2">
+                    <div>
+                      <span className="font-mono text-xs font-black text-black uppercase tracking-widest">
+                        {project.duration}
                       </span>
-                    ))}
+                      <h2 className="font-comic text-4xl sm:text-5xl text-black leading-none">
+                        {project.title}
+                      </h2>
+                    </div>
+                    <Sticker text={project.number} variant="white" rotate={2} />
                   </div>
+
+                  {/* MISSION STATEMENT */}
+                  <div className="bg-white/80 border-2 border-black p-3 rounded shadow-comic-sm">
+                    <span className="font-mono text-[11px] font-black uppercase text-comic-red block">
+                      MISSION:
+                    </span>
+                    <p className="font-mono text-xs sm:text-sm font-bold text-black leading-relaxed">
+                      {project.mission}
+                    </p>
+                  </div>
+
+                  {/* TECH USED LABELS */}
+                  <div>
+                    <span className="font-mono text-[11px] font-black uppercase text-black block mb-1">
+                      TECH USED:
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.techUsed.map((t) => (
+                        <span
+                          key={t}
+                          className="border-2 border-black bg-black text-white px-2 py-0.5 font-mono text-[11px] font-black rounded-sm shadow-comic-sm"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* KEY FEATURES */}
+                  <div>
+                    <span className="font-mono text-[11px] font-black uppercase text-black block mb-1">
+                      KEY FEATURES:
+                    </span>
+                    <ul className="space-y-1.5 font-mono text-xs font-bold text-black">
+                      {project.features.map((feat, fIdx) => (
+                        <li key={fIdx} className="flex items-start gap-2">
+                          <CheckCircle2 className="h-4 w-4 text-comic-red flex-shrink-0 mt-0.5" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* RESULT */}
+                  <div className="border-l-4 border-black pl-3 py-1 font-mono text-xs font-black text-black">
+                    <span className="text-comic-red">RESULT:</span> {project.result}
+                  </div>
+
+                  {/* ACTION BUTTONS */}
+                  <div className="flex flex-wrap items-center gap-3 pt-2">
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <ComicButton variant="dark" size="sm">
+                          <Github className="h-4 w-4" />
+                          <span>GITHUB CODE</span>
+                        </ComicButton>
+                      </a>
+                    )}
+                    {project.liveUrl && (
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                        <ComicButton variant="yellow" size="sm">
+                          <ExternalLink className="h-4 w-4" />
+                          <span>LIVE DEMO</span>
+                        </ComicButton>
+                      </a>
+                    )}
+                  </div>
+
                 </div>
 
-                {/* LINKS */}
-                <div className="flex items-center gap-4 pt-2">
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 font-mono text-xs font-bold text-white transition-all hover:border-brand-orange hover:bg-brand-orange/20"
-                    >
-                      <Github className="h-4 w-4" />
-                      <span>GITHUB REPO</span>
-                    </a>
-                  )}
-
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center gap-2 rounded-full bg-brand-orange px-5 py-2 font-mono text-xs font-bold text-black transition-all hover:bg-white shadow-[0_0_15px_rgba(255,85,0,0.4)]"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                      <span>LIVE DEMO</span>
-                    </a>
-                  )}
-                </div>
               </div>
-            </motion.article>
-          ))}
-        </section>
-      </main>
-
-      <Footer />
+            </ComicPanel>
+          );
+        })}
+      </div>
     </div>
   );
 }

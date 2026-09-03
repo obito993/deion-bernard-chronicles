@@ -3,277 +3,228 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import FaceLogo from "@/components/FaceLogo";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import ComicPanel from "@/components/comic/ComicPanel";
+import SpeechBubble from "@/components/comic/SpeechBubble";
+import Sticker from "@/components/comic/Sticker";
+import ActionBurst from "@/components/comic/ActionBurst";
+import AboutHeroCharacter from "@/components/characters/about-hero-character";
 import { resumeData } from "@/data/resumeData";
-import { motion } from "framer-motion";
-import { User, GraduationCap, Code2, Globe, Music, Award, ArrowRight } from "lucide-react";
+import { GraduationCap, Code, Music, Globe, Award } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-brand-orange selection:text-black">
-      <Navbar />
+    <div className="min-h-screen bg-comic-cream text-black pb-24 font-sans relative overflow-hidden">
+      {/* Halftone background overlay */}
+      <div className="absolute inset-0 bg-halftone opacity-10 pointer-events-none" />
 
-      <main className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 space-y-20">
-        {/* HERO SECTION */}
-        <section className="flex flex-col items-center text-center space-y-6">
-          {/* FACE-SKETCH LOGO (TOUCH TO BLUSH) */}
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.7 }}
-            className="flex flex-col items-center"
-          >
-            <FaceLogo size="xl" />
-            <span className="mt-3 font-mono text-xs text-brand-orange tracking-widest uppercase font-semibold">
-              ✦ TOUCH MY FACE TO MAKE ME BLUSH 😊
-            </span>
-          </motion.div>
-
+      {/* PAGE HEADER */}
+      <section className="relative border-b-4 border-black bg-comic-yellow py-8 px-4 shadow-comic-sm">
+        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between">
           <div>
-            <span className="font-mono text-xs font-bold tracking-widest text-brand-orange uppercase">
-              BIOGRAPHY & PERSONAL PROFILE
-            </span>
-            <h1 className="font-display text-4xl sm:text-6xl font-black text-white mt-1">
-              ABOUT ME
+            <div className="flex items-center gap-2">
+              <Sticker text="CHAPTER 01" variant="red" rotate={-3} />
+              <span className="font-mono text-xs font-black uppercase tracking-widest text-black">
+                THE MAIN CHARACTER DOSSIER
+              </span>
+            </div>
+            <h1 className="font-comic text-6xl sm:text-8xl font-black tracking-wider text-black text-shadow-red uppercase mt-1">
+              MY ORIGIN STORY
             </h1>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-300 mt-2">
-              DEION BERNARD
-            </h2>
-            <p className="font-mono text-sm text-brand-orange mt-2 tracking-widest uppercase font-semibold">
-              Computer Science Graduate • Developer • AI Enthusiast • Creator
-            </p>
           </div>
-          <div className="h-0.5 w-24 bg-brand-orange shadow-[0_0_10px_#FF5500]" />
-        </section>
+          <div className="flex items-center gap-4">
+            <AboutHeroCharacter />
+            <Link href="/resume">
+              <button className="px-5 py-2.5 border-3 border-black bg-white font-comic text-xl text-black shadow-comic hover:bg-comic-violet active:translate-x-1 active:translate-y-1 active:shadow-comic-pressed transition-all">
+                VIEW FULL DOSSIER →
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
 
-        {/* 01. WHO I AM */}
-        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-t border-white/10 pt-12">
-          <div className="md:col-span-4">
-            <span className="font-mono text-xs text-brand-orange font-bold">01 / OVERVIEW</span>
-            <h3 className="font-display text-2xl font-bold text-white mt-1">WHO I AM</h3>
-          </div>
-          <div className="md:col-span-8 space-y-4 font-mono text-sm text-gray-300 leading-relaxed">
-            <p className="text-base text-white font-sans font-medium">
-              {resumeData.personalInfo.objective}
-            </p>
-            <p>
-              I am a driven software developer and Computer Science graduate based in Chennai, India. My core focus spans full-stack web development, artificial intelligence tools, machine learning pipelines, and database architecture.
-            </p>
-            <p>
-              I believe in clean code, intuitive user experiences, continuous learning, and combining technical rigor with creative artistic expression.
-            </p>
-          </div>
-        </section>
-
-        {/* 02. MY JOURNEY & INTERNSHIP */}
-        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-t border-white/10 pt-12">
-          <div className="md:col-span-4">
-            <span className="font-mono text-xs text-brand-orange font-bold">02 / EXPERIENCE</span>
-            <h3 className="font-display text-2xl font-bold text-white mt-1">MY JOURNEY</h3>
-          </div>
-          <div className="md:col-span-8 space-y-6">
-            <div className="rounded-2xl border border-white/15 bg-surface-card p-6 space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
-                <div>
-                  <h4 className="font-display text-xl font-bold text-white">
-                    {resumeData.internship.company}
-                  </h4>
-                  <p className="font-mono text-xs text-brand-orange font-semibold">
-                    {resumeData.internship.role}
-                  </p>
-                </div>
-                <span className="font-mono text-xs text-gray-400 bg-white/5 px-3 py-1 rounded-full border border-white/10 w-fit">
-                  {resumeData.internship.period}
-                </span>
+      {/* MAIN CONTENT GRID */}
+      <div className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8 space-y-12">
+        
+        {/* TOP LAYOUT: LEFT PORTRAIT & RIGHT INTRO PANELS */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* LEFT: LARGE ILLUSTRATED PORTRAIT WITH SPEECH BUBBLE */}
+          <div className="lg:col-span-5 flex flex-col items-center sticky top-24">
+            <ComicPanel bgColor="white" shadowSize="xl" tilt="slight-left" className="p-6 text-center w-full">
+              <div className="mb-4">
+                <SpeechBubble position="bottom-right" bgColor="yellow" speaker="DEION BERNARD">
+                  Hi, I&apos;m Deion. Computer Science Graduate &amp; Creator!
+                </SpeechBubble>
               </div>
-              <ul className="space-y-2 font-mono text-xs text-gray-300">
-                {resumeData.internship.responsibilities.map((resp, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <span className="text-brand-orange mt-1">✦</span>
-                    <span>{resp}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
 
-        {/* 03. EDUCATION */}
-        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-t border-white/10 pt-12">
-          <div className="md:col-span-4">
-            <span className="font-mono text-xs text-brand-orange font-bold">03 / ACADEMICS</span>
-            <h3 className="font-display text-2xl font-bold text-white mt-1">EDUCATION</h3>
-          </div>
-          <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {resumeData.education.map((edu, i) => (
-              <div
-                key={i}
-                className="rounded-xl border border-white/15 bg-surface-card p-6 space-y-3 hover:border-brand-orange/50 transition-colors"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-brand-orange/40 bg-brand-orange/10 text-brand-orange">
-                  <GraduationCap className="h-5 w-5" />
-                </div>
-                <h4 className="font-display text-lg font-bold text-white">
-                  {edu.degree}
-                </h4>
-                <p className="font-mono text-xs text-gray-300">
-                  {edu.institution}
+              <div className="relative mx-auto h-64 w-64 sm:h-72 sm:w-72 rounded-xl border-4 border-black overflow-hidden shadow-comic-lg">
+                <Image
+                  src="/media/deion-about-portrait.jpg"
+                  alt="Deion Bernard Comic Portrait"
+                  fill
+                  className="object-cover object-top"
+                  priority
+                />
+                <div className="absolute inset-0 bg-halftone opacity-10 pointer-events-none" />
+              </div>
+
+              <div className="mt-6 space-y-2">
+                <h3 className="font-comic text-4xl text-black">DEION DANIEL BERNARD</h3>
+                <p className="font-mono text-xs font-black text-gray-700 uppercase">
+                  CHENNAI, INDIA • COMPUTER SCIENCE GRADUATE
                 </p>
-                <span className="inline-block font-mono text-xs font-bold text-brand-orange bg-brand-orange/10 px-3 py-1 rounded">
-                  {edu.score}
-                </span>
+                <div className="flex flex-wrap justify-center gap-2 pt-2">
+                  <Sticker text="TAMIL" variant="yellow" rotate={-2} />
+                  <Sticker text="ENGLISH" variant="violet" rotate={3} />
+                  <Sticker text="FRENCH" variant="red" rotate={-1} />
+                </div>
               </div>
-            ))}
+            </ComicPanel>
           </div>
-        </section>
 
-        {/* 04. TECHNICAL & SOFT SKILLS */}
-        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-t border-white/10 pt-12">
-          <div className="md:col-span-4">
-            <span className="font-mono text-xs text-brand-orange font-bold">04 / CAPABILITIES</span>
-            <h3 className="font-display text-2xl font-bold text-white mt-1">SKILLS</h3>
-          </div>
-          <div className="md:col-span-8 space-y-6">
-            {/* Programming Languages */}
-            <div className="space-y-2">
-              <h4 className="font-mono text-xs font-bold text-brand-orange uppercase">
-                Programming Languages
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {resumeData.technicalSkills.programmingLanguages.map((skill) => (
-                  <span
-                    key={skill}
-                    className="font-mono text-xs bg-white/5 border border-white/10 text-gray-200 px-3.5 py-1.5 rounded-full hover:border-brand-orange hover:text-white transition-colors"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Web Dev */}
-            <div className="space-y-2">
-              <h4 className="font-mono text-xs font-bold text-brand-orange uppercase">
-                Web Development & Frameworks
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {resumeData.technicalSkills.webDevelopment.map((skill) => (
-                  <span
-                    key={skill}
-                    className="font-mono text-xs bg-white/5 border border-white/10 text-gray-200 px-3.5 py-1.5 rounded-full hover:border-brand-orange hover:text-white transition-colors"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Databases & OS */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <h4 className="font-mono text-xs font-bold text-brand-orange uppercase">
-                  Databases
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {resumeData.technicalSkills.databaseManagement.map((db) => (
-                    <span
-                      key={db}
-                      className="font-mono text-xs bg-white/5 border border-white/10 text-gray-200 px-3 py-1 rounded-full"
-                    >
-                      {db}
-                    </span>
+          {/* RIGHT: STORY PANELS */}
+          <div className="lg:col-span-7 space-y-8">
+            
+            {/* PANEL 1: ORIGIN & OBJECTIVE */}
+            <ComicPanel bgColor="paper" shadowSize="lg" badgeText="PANEL 01 • ORIGIN" badgeBg="bg-comic-yellow">
+              <div className="p-6 space-y-4">
+                <div className="flex items-center gap-3 border-b-2 border-black pb-2">
+                  <GraduationCap className="h-6 w-6 text-comic-red" />
+                  <h3 className="font-comic text-3xl text-black">ACADEMIC ORIGIN</h3>
+                </div>
+                <p className="font-mono text-sm font-bold text-gray-800 leading-relaxed">
+                  {resumeData.objective}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  {resumeData.education.map((edu, idx) => (
+                    <div key={idx} className="border-2 border-black bg-white p-3 rounded-lg shadow-comic-sm">
+                      <span className="font-mono text-[10px] font-black text-comic-red">{edu.year}</span>
+                      <h4 className="font-comic text-xl text-black">{edu.degree}</h4>
+                      <p className="font-mono text-xs text-gray-700 font-bold">{edu.institution}</p>
+                      <span className="mt-1 inline-block bg-comic-yellow border border-black px-2 py-0.5 font-mono text-[11px] font-black">
+                        {edu.score}
+                      </span>
+                    </div>
                   ))}
                 </div>
               </div>
+            </ComicPanel>
 
-              <div className="space-y-2">
-                <h4 className="font-mono text-xs font-bold text-brand-orange uppercase">
-                  Soft Skills
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {resumeData.softSkills.map((ss) => (
-                    <span
-                      key={ss}
-                      className="font-mono text-xs bg-brand-orange/10 border border-brand-orange/30 text-brand-orange px-3 py-1 rounded-full font-semibold"
-                    >
-                      {ss}
+            {/* PANEL 2: SKILLS UNLOCKED */}
+            <ComicPanel bgColor="white" shadowSize="lg" badgeText="PANEL 02 • SKILLS UNLOCKED" badgeBg="bg-comic-violet">
+              <div className="p-6 space-y-4">
+                <div className="flex items-center gap-3 border-b-2 border-black pb-2">
+                  <Code className="h-6 w-6 text-black" />
+                  <h3 className="font-comic text-3xl text-black">TECHNICAL ARSENAL</h3>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <span className="font-mono text-xs font-black uppercase text-gray-600 block mb-1">
+                      PROGRAMMING LANGUAGES:
                     </span>
-                  ))}
+                    <div className="flex flex-wrap gap-2">
+                      {resumeData.skills.programming.map((sk) => (
+                        <span key={sk} className="border-2 border-black bg-comic-yellow px-2.5 py-1 font-mono text-xs font-black shadow-comic-sm">
+                          {sk}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="font-mono text-xs font-black uppercase text-gray-600 block mb-1">
+                      WEB &amp; FRAMEWORKS:
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {resumeData.skills.webDev.map((sk) => (
+                        <span key={sk} className="border-2 border-black bg-comic-violet px-2.5 py-1 font-mono text-xs font-black shadow-comic-sm">
+                          {sk}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="font-mono text-xs font-black uppercase text-gray-600 block mb-1">
+                      DATABASES &amp; SYSTEMS:
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {resumeData.skills.database.concat(resumeData.skills.operatingSystems).map((sk) => (
+                        <span key={sk} className="border-2 border-black bg-white px-2.5 py-1 font-mono text-xs font-black shadow-comic-sm">
+                          {sk}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
+            </ComicPanel>
+
+          </div>
+        </div>
+
+        {/* BOTTOM PANELS: CREATIVE MODE, LEARNING MODE, LANGUAGES */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          {/* PANEL 3: CREATIVE MODE */}
+          <ComicPanel bgColor="yellow" shadowSize="lg" tilt="slight-left" badgeText="PANEL 03 • CREATIVE MODE" badgeBg="bg-comic-red text-white">
+            <div className="p-6 space-y-3">
+              <div className="flex items-center gap-2 border-b-2 border-black pb-2">
+                <Music className="h-5 w-5 text-black" />
+                <h3 className="font-comic text-2xl text-black">VOCAL &amp; CARROM</h3>
+              </div>
+              <p className="font-mono text-xs font-bold text-black leading-relaxed">
+                {resumeData.extraCurricular[0]}
+              </p>
+              <p className="font-mono text-xs font-bold text-black leading-relaxed pt-1">
+                {resumeData.extraCurricular[1]}
+              </p>
             </div>
-          </div>
-        </section>
+          </ComicPanel>
 
-        {/* 05. LANGUAGES */}
-        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-t border-white/10 pt-12">
-          <div className="md:col-span-4">
-            <span className="font-mono text-xs text-brand-orange font-bold">05 / COMMUNICATION</span>
-            <h3 className="font-display text-2xl font-bold text-white mt-1">LANGUAGES</h3>
-          </div>
-          <div className="md:col-span-8 grid grid-cols-3 gap-4">
-            {resumeData.languages.map((lang) => (
-              <div
-                key={lang}
-                className="rounded-xl border border-white/15 bg-surface-card p-4 text-center space-y-2 hover:border-brand-orange transition-colors"
-              >
-                <Globe className="h-6 w-6 text-brand-orange mx-auto" />
-                <h4 className="font-display text-lg font-bold text-white">{lang}</h4>
-                <span className="font-mono text-[10px] text-gray-400 uppercase tracking-widest">
-                  Fluent
-                </span>
+          {/* PANEL 4: LEARNING MODE */}
+          <ComicPanel bgColor="violet" shadowSize="lg" badgeText="PANEL 04 • CERTIFICATIONS" badgeBg="bg-comic-yellow">
+            <div className="p-6 space-y-3">
+              <div className="flex items-center gap-2 border-b-2 border-black pb-2">
+                <Award className="h-5 w-5 text-black" />
+                <h3 className="font-comic text-2xl text-black">CERTIFIED KNOWLEDGE</h3>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 06. INTERESTS & EXTRACURRICULARS */}
-        <section id="interests" className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-t border-white/10 pt-12">
-          <div className="md:col-span-4">
-            <span className="font-mono text-xs text-brand-orange font-bold">06 / BEYOND CODE</span>
-            <h3 className="font-display text-2xl font-bold text-white mt-1">INTERESTS & MUSIC</h3>
-          </div>
-          <div className="md:col-span-8 space-y-6">
-            <div className="rounded-2xl border border-white/15 bg-surface-card p-6 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-brand-orange/40 bg-brand-orange/10 text-brand-orange">
-                  <Music className="h-5 w-5" />
-                </div>
-                <div>
-                  <h4 className="font-display text-lg font-bold text-white">
-                    Western Music & Vocal Ensemble
-                  </h4>
-                  <p className="font-mono text-xs text-brand-orange font-semibold">
-                    Tenor & Bass Vocalist — Shamrocks Ensemble
-                  </p>
-                </div>
-              </div>
-              <ul className="space-y-2 font-mono text-xs text-gray-300">
-                {resumeData.extracurriculars.map((ec, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <span className="text-brand-orange mt-0.5">✦</span>
-                    <span>{ec}</span>
+              <ul className="space-y-1.5 font-mono text-xs font-bold text-black">
+                {resumeData.certifications.slice(0, 4).map((c, i) => (
+                  <li key={i} className="flex items-start gap-1.5">
+                    <span className="text-comic-red font-black">✓</span>
+                    <span>{c}</span>
                   </li>
                 ))}
               </ul>
             </div>
+          </ComicPanel>
 
-            <div className="flex justify-end pt-4">
-              <Link
-                href="/resume"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-orange px-6 py-3 font-mono text-xs font-bold text-black hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(255,85,0,0.4)]"
-              >
-                <span>VIEW FULL RESUME</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+          {/* PANEL 5: LANGUAGES */}
+          <ComicPanel bgColor="red" shadowSize="lg" tilt="slight-right" badgeText="PANEL 05 • LANGUAGES" badgeBg="bg-comic-yellow">
+            <div className="p-6 space-y-3 text-white">
+              <div className="flex items-center gap-2 border-b-2 border-black pb-2">
+                <Globe className="h-5 w-5 text-yellow-300" />
+                <h3 className="font-comic text-2xl text-white">TRILINGUAL HERO</h3>
+              </div>
+              <div className="space-y-2 font-sans font-black text-sm">
+                <div className="border-2 border-black bg-black p-2.5 text-yellow-300 rounded shadow-comic-sm">
+                  ENGLISH — Fluent Professional
+                </div>
+                <div className="border-2 border-black bg-black p-2.5 text-white rounded shadow-comic-sm">
+                  TAMIL (வணக்கம்) — Native
+                </div>
+                <div className="border-2 border-black bg-black p-2.5 text-comic-violet rounded shadow-comic-sm">
+                  FRENCH (Bonjour) — Conversational
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
-      </main>
+          </ComicPanel>
 
-      <Footer />
+        </div>
+
+      </div>
     </div>
   );
 }

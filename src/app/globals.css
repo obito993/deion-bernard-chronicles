@@ -3,10 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #050505;
-  --foreground: #f3f4f6;
-  --accent-orange: #ff5500;
-  --accent-red: #e50914;
+  --bg-cream: #FFFDF5;
+  --ink-black: #000000;
 }
 
 * {
@@ -15,52 +13,129 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #050505;
-  color: #f3f4f6;
+  background-color: #FFFDF5;
+  color: #000000;
 }
 
 body {
-  background-color: #050505;
-  color: #f3f4f6;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #FFFDF5;
+  color: #000000;
+  font-family: var(--font-space), system-ui, sans-serif;
   overflow-x: hidden;
-  selection-background-color: #ff5500;
-  selection-color: #ffffff;
 }
 
 ::selection {
-  background-color: #ff5500;
-  color: #ffffff;
+  background-color: #FFD93D;
+  color: #000000;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Comic Style */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: #FFFDF5;
+  border-left: 3px solid #000000;
 }
 ::-webkit-scrollbar-thumb {
-  background: #222222;
-  border-radius: 4px;
+  background: #000000;
+  border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff5500;
+  background: #FF6B6B;
 }
 
-/* Grain / Noise Overlay Effect */
-.bg-noise {
-  background-image: radial-gradient(rgba(255, 85, 0, 0.05) 1px, transparent 0);
-  background-size: 24px 24px;
+/* INFINITE MOVING CARDS AUTOMATIC SCROLL ANIMATION */
+@keyframes scroll {
+  to {
+    transform: translate(calc(-50% - 0.75rem));
+  }
 }
 
-/* Red Cinema Grain Overlay */
-.bg-cinema-noise {
-  background-image: radial-gradient(rgba(229, 9, 20, 0.07) 1px, transparent 0);
-  background-size: 20px 20px;
+.animate-scroll {
+  animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 }
 
-/* Hide scrollbar utility */
+/* Halftone Pattern Overlays */
+.bg-halftone {
+  background-image: radial-gradient(#000000 15%, transparent 16%);
+  background-size: 12px 12px;
+}
+
+.bg-halftone-dense {
+  background-image: radial-gradient(#000000 20%, transparent 21%);
+  background-size: 8px 8px;
+}
+
+.bg-halftone-red {
+  background-image: radial-gradient(#FF6B6B 20%, transparent 21%);
+  background-size: 10px 10px;
+}
+
+.bg-halftone-yellow {
+  background-image: radial-gradient(#FFD93D 25%, transparent 26%);
+  background-size: 10px 10px;
+}
+
+.bg-halftone-violet {
+  background-image: radial-gradient(#C4B5FD 25%, transparent 26%);
+  background-size: 10px 10px;
+}
+
+/* Comic Paper Texture */
+.bg-paper {
+  background-color: #FFFDF5;
+  background-image: radial-gradient(#000000 8%, transparent 9%), radial-gradient(#000000 8%, transparent 9%);
+  background-position: 0 0, 6px 6px;
+  background-size: 12px 12px;
+}
+
+/* Speed Lines Background */
+.bg-speed-lines {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(0, 0, 0, 0.04) 10px,
+    rgba(0, 0, 0, 0.04) 20px
+  );
+}
+
+/* Comic Text Shadows */
+.text-stroke-black {
+  -webkit-text-stroke: 2px #000000;
+}
+
+.text-stroke-black-lg {
+  -webkit-text-stroke: 4px #000000;
+}
+
+.text-shadow-comic {
+  text-shadow: 3px 3px 0px #000000;
+}
+
+.text-shadow-comic-lg {
+  text-shadow: 5px 5px 0px #000000;
+}
+
+.text-shadow-red {
+  text-shadow: 4px 4px 0px #FF6B6B;
+}
+
+.text-shadow-yellow {
+  text-shadow: 4px 4px 0px #FFD93D;
+}
+
+/* Hard Ink Border Utility */
+.border-ink {
+  border: 3px solid #000000;
+}
+
+.border-ink-lg {
+  border: 4px solid #000000;
+}
+
+/* Hide Scrollbar */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -69,16 +144,7 @@ body {
   scrollbar-width: none;
 }
 
-/* Typography Accent Glow */
-.text-orange-glow {
-  text-shadow: 0 0 20px rgba(255, 85, 0, 0.5);
-}
-
-.text-red-glow {
-  text-shadow: 0 0 25px rgba(229, 9, 20, 0.6);
-}
-
-/* Horizontal Scroll Container */
+/* Horizontal Scroll Snap */
 .horizontal-scroll-container {
   display: flex;
   overflow-x: auto;

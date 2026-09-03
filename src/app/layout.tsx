@@ -1,22 +1,39 @@
 import type { Metadata } from "next";
+import { Space_Grotesk, Bangers } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import PageTransition from "@/components/PageTransition";
+import DockAfterIntro from "@/components/navigation/DockAfterIntro";
+import Footer from "@/components/Footer";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-space",
+  display: "swap",
+});
+
+const bangers = Bangers({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-bangers",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Deion Bernard — Personal Portfolio World",
+  title: "THE DEION BERNARD CHRONICLES — Interactive Comic Portfolio",
   description:
-    "Official portfolio of Deion Daniel Bernard. Computer Science Graduate, Full-Stack Developer, AI Enthusiast, and Tenor Vocalist. Tamil • French • English.",
+    "Official interactive graphic novel portfolio of Deion Daniel Bernard. Computer Science Graduate, Full-Stack Developer, AI Enthusiast, and Vocalist.",
   keywords: [
     "Deion Bernard",
-    "Developer Portfolio",
+    "Comic Portfolio",
+    "The Deion Bernard Chronicles",
     "Computer Science Graduate",
-    "AI Enthusiast",
-    "Next.js Developer",
-    "Chennai Developer",
+    "Developer Portfolio",
+    "Interactive Graphic Novel",
   ],
   icons: {
-    icon: "/deion-sketch-logo.jpg",
+    icon: "/media/spiderman-intro-stinger.jpg",
   },
 };
 
@@ -26,10 +43,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body className="bg-black text-white antialiased selection:bg-brand-orange selection:text-black">
+    <html lang="en" className={`${spaceGrotesk.variable} ${bangers.variable} scroll-smooth`}>
+      <body className="bg-comic-cream text-comic-ink antialiased selection:bg-comic-yellow selection:text-comic-ink min-h-screen flex flex-col font-sans pb-24">
         <CustomCursor />
-        <PageTransition>{children}</PageTransition>
+        <main className="flex-1">
+          <PageTransition>{children}</PageTransition>
+        </main>
+        <DockAfterIntro />
+        <Footer />
       </body>
     </html>
   );

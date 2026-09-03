@@ -1,217 +1,192 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import ComicPanel from "@/components/comic/ComicPanel";
+import ComicButton from "@/components/comic/ComicButton";
+import SpeechBubble from "@/components/comic/SpeechBubble";
+import ActionBurst from "@/components/comic/ActionBurst";
+import Sticker from "@/components/comic/Sticker";
+import ContactHeroCharacter from "@/components/characters/contact-hero-character";
 import { resumeData } from "@/data/resumeData";
-import { Mail, Phone, MapPin, Github, Linkedin, Send, CheckCircle2, Terminal as TerminalIcon } from "lucide-react";
-import Image from "next/image";
+import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-react";
 
 export default function ContactPage() {
-  const [formState, setFormState] = useState({ name: "", email: "", subject: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormState({ name: "", email: "", subject: "", message: "" });
-    }, 4000);
+    if (!formData.name || !formData.email || !formData.message) return;
+    setIsSubmitted(true);
   };
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-brand-orange selection:text-black">
-      <Navbar />
+    <div className="min-h-screen bg-comic-cream text-black pb-24 font-sans relative overflow-hidden">
+      {/* Halftone Overlay */}
+      <div className="absolute inset-0 bg-halftone opacity-10 pointer-events-none" />
 
-      <main className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 space-y-16">
-        {/* PAGE HEADER */}
-        <section className="text-center space-y-4">
-          <span className="font-mono text-xs font-bold tracking-widest text-brand-orange uppercase">
-            CONNECT & COLLABORATE
-          </span>
-          <h1 className="font-display text-4xl sm:text-6xl font-black text-white">
-            CONTACT DEION
-          </h1>
-          <p className="font-mono text-xs sm:text-sm text-gray-300 max-w-xl mx-auto">
-            Whether discussing engineering opportunities, AI projects, web applications, vocal performances, or general inquiries, feel free to reach out directly.
-          </p>
-          <div className="h-0.5 w-24 bg-brand-orange mx-auto shadow-[0_0_10px_#FF5500]" />
-        </section>
-
-        {/* 2-COLUMN CONTACT GRID */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* LEFT: DIRECT CONTACT DETAILS */}
-          <div className="lg:col-span-5 space-y-8 rounded-2xl border border-white/15 bg-surface-card p-6 sm:p-8">
-            <div className="flex items-center gap-4 border-b border-white/10 pb-6">
-              <div className="relative h-14 w-14 overflow-hidden rounded-full border border-brand-orange shadow-[0_0_15px_rgba(255,85,0,0.5)]">
-                <Image
-                  src="/deion-sketch-logo.jpg"
-                  alt="Deion Sketch Logo"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div>
-                <h3 className="font-display text-lg font-bold text-white">
-                  DEION DANIEL BERNARD
-                </h3>
-                <p className="font-mono text-xs text-brand-orange">
-                  Computer Science Graduate
-                </p>
-              </div>
-            </div>
-
-            <div className="space-y-6 font-mono text-xs text-gray-300">
-              <div className="flex items-center gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-brand-orange/40 bg-brand-orange/10 text-brand-orange">
-                  <Mail className="h-5 w-5" />
-                </div>
-                <div>
-                  <span className="text-[10px] text-gray-400 uppercase tracking-widest block">EMAIL ADDRESS</span>
-                  <a href={`mailto:${resumeData.personalInfo.email}`} className="text-white hover:text-brand-orange transition-colors font-bold text-sm">
-                    {resumeData.personalInfo.email}
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-brand-orange/40 bg-brand-orange/10 text-brand-orange">
-                  <Phone className="h-5 w-5" />
-                </div>
-                <div>
-                  <span className="text-[10px] text-gray-400 uppercase tracking-widest block">PHONE / WHATSAPP</span>
-                  <a href={`tel:${resumeData.personalInfo.phone}`} className="text-white hover:text-brand-orange transition-colors font-bold text-sm">
-                    {resumeData.personalInfo.phone}
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-brand-orange/40 bg-brand-orange/10 text-brand-orange">
-                  <MapPin className="h-5 w-5" />
-                </div>
-                <div>
-                  <span className="text-[10px] text-gray-400 uppercase tracking-widest block">LOCATION</span>
-                  <span className="text-white font-bold text-sm">
-                    {resumeData.personalInfo.location}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* SOCIAL BUTTONS */}
-            <div className="pt-4 border-t border-white/10 space-y-3">
-              <span className="font-mono text-[10px] text-gray-400 uppercase tracking-widest block">
-                OFFICIAL ONLINE PROFILES
+      {/* HEADER BAR */}
+      <section className="relative border-b-4 border-black bg-comic-red py-8 px-4 text-white shadow-comic-sm">
+        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <Sticker text="CHAPTER 07" variant="yellow" rotate={-2} />
+              <span className="font-mono text-xs font-black uppercase tracking-widest text-yellow-300">
+                TEAM-UP FINALE
               </span>
-              <div className="flex items-center gap-3">
-                <a
-                  href={resumeData.personalInfo.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 font-mono text-xs text-white hover:border-brand-orange hover:bg-brand-orange/20 transition-all"
-                >
-                  <Github className="h-4 w-4" />
-                  <span>GITHUB</span>
-                </a>
-                <a
-                  href={resumeData.personalInfo.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 font-mono text-xs text-white hover:border-brand-orange hover:bg-brand-orange/20 transition-all"
-                >
-                  <Linkedin className="h-4 w-4" />
-                  <span>LINKEDIN</span>
-                </a>
-              </div>
             </div>
+            <h1 className="font-comic text-6xl sm:text-8xl font-black tracking-wider text-white text-shadow-comic uppercase mt-1">
+              LET&apos;S TEAM UP!
+            </h1>
           </div>
-
-          {/* RIGHT: INTERACTIVE CONTACT FORM */}
-          <div className="lg:col-span-7 rounded-2xl border border-white/15 bg-surface-card p-6 sm:p-8 space-y-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <span className="font-mono text-xs font-bold text-brand-orange tracking-widest flex items-center gap-1.5">
-                <TerminalIcon className="h-4 w-4" />
-                SEND A MESSAGE
-              </span>
-              <span className="font-mono text-[10px] text-gray-400">INPUT FORM</span>
-            </div>
-
-            {submitted ? (
-              <div className="rounded-xl border border-green-500/40 bg-green-950/20 p-8 text-center space-y-3">
-                <CheckCircle2 className="h-12 w-12 text-green-400 mx-auto animate-bounce" />
-                <h3 className="font-display text-xl font-bold text-white">
-                  MESSAGE DISPATCHED SUCCESSFULLY!
-                </h3>
-                <p className="font-mono text-xs text-gray-300">
-                  Thank you for reaching out. Deion will respond to your email at <strong className="text-brand-orange">{formState.email || "your address"}</strong> shortly.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 font-mono text-xs">
-                <div>
-                  <label className="block text-gray-300 mb-1 font-bold">YOUR NAME</label>
-                  <input
-                    type="text"
-                    required
-                    value={formState.name}
-                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder="e.g. Alex Rivera"
-                    className="w-full rounded-lg border border-white/15 bg-black px-4 py-3 text-white focus:border-brand-orange focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-300 mb-1 font-bold">YOUR EMAIL</label>
-                  <input
-                    type="email"
-                    required
-                    value={formState.email}
-                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    placeholder="e.g. alex@example.com"
-                    className="w-full rounded-lg border border-white/15 bg-black px-4 py-3 text-white focus:border-brand-orange focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-300 mb-1 font-bold">SUBJECT</label>
-                  <input
-                    type="text"
-                    required
-                    value={formState.subject}
-                    onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
-                    placeholder="Project Inquiry / Opportunity"
-                    className="w-full rounded-lg border border-white/15 bg-black px-4 py-3 text-white focus:border-brand-orange focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-300 mb-1 font-bold">MESSAGE</label>
-                  <textarea
-                    rows={4}
-                    required
-                    value={formState.message}
-                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    placeholder="Write your message here..."
-                    className="w-full rounded-lg border border-white/15 bg-black px-4 py-3 text-white focus:border-brand-orange focus:outline-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-brand-orange py-3.5 font-mono text-xs font-bold text-black hover:bg-white transition-all shadow-[0_0_20px_rgba(255,85,0,0.4)]"
-                >
-                  <Send className="h-4 w-4" />
-                  <span>TRANSMIT MESSAGE</span>
-                </button>
-              </form>
-            )}
+          <div className="flex items-center gap-4">
+            <ContactHeroCharacter submitted={isSubmitted} />
+            <ActionBurst text="FINALE ISSUE!" color="yellow" size="md" rotate={8} />
           </div>
         </div>
-      </main>
+      </section>
 
-      <Footer />
+      {/* MAIN CONTACT CONTAINER */}
+      <div className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8 space-y-12">
+        
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* LEFT: SPEECH BUBBLES & DIRECT CONTACT DETAILS */}
+          <div className="lg:col-span-5 space-y-6">
+            
+            <div className="space-y-4">
+              <SpeechBubble position="bottom-left" bgColor="yellow" speaker="DEION BERNARD">
+                Got an idea? Let&apos;s build something epic together!
+              </SpeechBubble>
+              <SpeechBubble position="bottom-right" bgColor="cream" speaker="CREATOR MODE">
+                I&apos;m available for full-stack software roles, AI projects, and innovative teams.
+              </SpeechBubble>
+            </div>
+
+            <ComicPanel bgColor="paper" shadowSize="lg" className="p-6 space-y-4 border-3 border-black">
+              <h3 className="font-comic text-3xl text-black border-b-2 border-black pb-2">
+                DIRECT CONTACT DETAILS
+              </h3>
+
+              <div className="space-y-3 font-mono text-xs sm:text-sm font-bold text-black">
+                <div className="flex items-center gap-3 border-2 border-black bg-white p-3 rounded shadow-comic-sm">
+                  <Phone className="h-5 w-5 text-comic-red flex-shrink-0" />
+                  <div>
+                    <span className="block text-[10px] text-gray-500 uppercase">PHONE NUMBER</span>
+                    <span>{resumeData.contact.phone}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 border-2 border-black bg-white p-3 rounded shadow-comic-sm">
+                  <Mail className="h-5 w-5 text-comic-violet flex-shrink-0" />
+                  <div>
+                    <span className="block text-[10px] text-gray-500 uppercase">DIRECT EMAIL</span>
+                    <span>{resumeData.contact.email}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 border-2 border-black bg-white p-3 rounded shadow-comic-sm">
+                  <MapPin className="h-5 w-5 text-comic-red flex-shrink-0" />
+                  <div>
+                    <span className="block text-[10px] text-gray-500 uppercase">LOCATION</span>
+                    <span>{resumeData.contact.location}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-2 flex gap-3">
+                <a href={resumeData.contact.github} target="_blank" rel="noopener noreferrer" className="flex-1">
+                  <button className="w-full py-2 border-2 border-black bg-black text-white font-mono text-xs font-black rounded shadow-comic-sm hover:bg-comic-red flex items-center justify-center gap-2">
+                    <Github className="h-4 w-4" />
+                    <span>GITHUB</span>
+                  </button>
+                </a>
+                <a href={resumeData.contact.linkedin} target="_blank" rel="noopener noreferrer" className="flex-1">
+                  <button className="w-full py-2 border-2 border-black bg-comic-yellow text-black font-mono text-xs font-black rounded shadow-comic-sm hover:bg-white flex items-center justify-center gap-2">
+                    <Linkedin className="h-4 w-4" />
+                    <span>LINKEDIN</span>
+                  </button>
+                </a>
+              </div>
+
+            </ComicPanel>
+
+          </div>
+
+          {/* RIGHT: COMIC CONTACT FORM */}
+          <div className="lg:col-span-7">
+            <ComicPanel bgColor="white" shadowSize="xl" badgeText="COMIC MESSAGE FORM" badgeBg="bg-comic-yellow">
+              <div className="p-6 sm:p-10 space-y-6">
+                
+                {isSubmitted ? (
+                  <div className="py-12 text-center space-y-4 animate-pop-in">
+                    <ActionBurst text="WHOOSH!" color="yellow" size="lg" rotate={-5} />
+                    <h2 className="font-comic text-5xl text-black">MESSAGE SENT!</h2>
+                    <p className="font-mono text-sm font-bold text-gray-800">
+                      Thanks for reaching out! Deion will respond to your message shortly.
+                    </p>
+                    <ComicButton onClick={() => setIsSubmitted(false)} variant="red" size="md">
+                      <span>SEND ANOTHER MESSAGE</span>
+                    </ComicButton>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                      <label className="font-mono text-xs font-black uppercase text-black block mb-1">
+                        YOUR NAME:
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="e.g. Peter Parker"
+                        className="w-full rounded-lg border-3 border-black bg-comic-paper p-3 font-mono text-sm font-bold text-black focus:bg-white focus:outline-none shadow-comic-sm"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="font-mono text-xs font-black uppercase text-black block mb-1">
+                        YOUR EMAIL:
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="e.g. peter@dailybugle.com"
+                        className="w-full rounded-lg border-3 border-black bg-comic-paper p-3 font-mono text-sm font-bold text-black focus:bg-white focus:outline-none shadow-comic-sm"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="font-mono text-xs font-black uppercase text-black block mb-1">
+                        YOUR MESSAGE:
+                      </label>
+                      <textarea
+                        rows={5}
+                        required
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        placeholder="Let's build an amazing project together..."
+                        className="w-full rounded-lg border-3 border-black bg-comic-paper p-3 font-mono text-sm font-bold text-black focus:bg-white focus:outline-none shadow-comic-sm"
+                      />
+                    </div>
+
+                    <ComicButton type="submit" variant="yellow" size="lg" className="w-full">
+                      <Send className="h-5 w-5" />
+                      <span>SEND IT!</span>
+                    </ComicButton>
+                  </form>
+                )}
+
+              </div>
+            </ComicPanel>
+          </div>
+
+        </div>
+
+      </div>
     </div>
   );
 }
