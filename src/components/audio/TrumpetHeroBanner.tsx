@@ -33,7 +33,7 @@ export default function TrumpetHeroBanner() {
     if (showTrumpetBanner && introSeen) {
       const timer = setTimeout(() => {
         dismissTrumpetBanner();
-      }, 3500);
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [showTrumpetBanner, introSeen, dismissTrumpetBanner]);
@@ -50,16 +50,21 @@ export default function TrumpetHeroBanner() {
             initial={{ opacity: 0 }}
             animate={{ opacity: [0, 0.4, 0.15] }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="absolute inset-0 bg-halftone pointer-events-none"
           />
 
-          {/* MAIN COMIC IMPACT BANNER */}
+          {/* MAIN COMIC IMPACT BANNER WITH SMOOTH FADE OUT */}
           <motion.div
             initial={{ scale: 0.3, rotate: -8, opacity: 0 }}
             animate={{ scale: [0.3, 1.1, 1], rotate: [-8, 2, 0], opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0, y: -40 }}
-            transition={{ type: "spring", stiffness: 350, damping: 22 }}
+            exit={{ opacity: 0, scale: 0.95, y: -20 }}
+            transition={{
+              type: "spring",
+              stiffness: 350,
+              damping: 22,
+              opacity: { duration: 0.8, ease: "easeOut" },
+            }}
             className="relative max-w-xl w-full rounded-2xl border-4 border-black bg-comic-yellow p-6 sm:p-8 shadow-[10px_10px_0px_#000000] text-center pointer-events-auto"
           >
             {/* ACTION BURST BADGE */}
