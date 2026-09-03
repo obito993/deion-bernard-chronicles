@@ -134,6 +134,18 @@ export default function MoviesPage() {
                     </p>
                   </div>
 
+                  <div className="pt-2">
+                    <a
+                      href={movie.imdbUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-xl border-3 border-black bg-comic-yellow px-5 py-2.5 font-comic text-lg text-black shadow-comic hover:bg-white active:translate-x-1 active:translate-y-1 active:shadow-comic-pressed transition-all"
+                    >
+                      <Film className="h-5 w-5" />
+                      <span>KNOW MORE ABOUT {movie.title} (IMDb) ↗</span>
+                    </a>
+                  </div>
+
                 </div>
 
               </div>

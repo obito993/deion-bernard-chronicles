@@ -7,6 +7,7 @@ export interface MovieItem {
   whyILikeIt: string;
   image: string;
   color: "red" | "dark" | "yellow";
+  imdbUrl: string;
 }
 
 export const moviesData: MovieItem[] = [
@@ -21,6 +22,7 @@ export const moviesData: MovieItem[] = [
       "A masterpiece of scientific curiosity, space exploration, emotion, and Hans Zimmer's incredible score. It inspires my passion for science and pushing boundaries.",
     image: "/media/interstellar.jpg",
     color: "dark",
+    imdbUrl: "https://www.imdb.com/title/tt0816692/?ref_=nv_sr_srsg_0_tt_7_nm_1_in_0_q_int",
   },
   {
     id: "titanic",
@@ -33,6 +35,7 @@ export const moviesData: MovieItem[] = [
       "Unmatched cinematic scale, timeless storytelling, and brilliant production design. A classic example of storytelling that touches generations.",
     image: "/media/titanic.jpg",
     color: "red",
+    imdbUrl: "https://www.imdb.com/title/tt0120338/?ref_=nv_sr_srsg_3_tt_5_nm_3_in_0_q_tit",
   },
   {
     id: "inception",
@@ -45,6 +48,7 @@ export const moviesData: MovieItem[] = [
       "Mind-bending logical architecture, layered dream levels, and precision pacing. It feels like watching complex algorithm design rendered visually.",
     image: "/media/inception.jpg",
     color: "dark",
+    imdbUrl: "https://www.imdb.com/title/tt1375666/?ref_=nv_sr_srsg_0_tt_8_nm_0_in_0_q_inception",
   },
   {
     id: "avengers-endgame",
@@ -57,6 +61,7 @@ export const moviesData: MovieItem[] = [
       "The ultimate comic book climax! Over a decade of interconnected storytelling coming together with epic stakes, heart, and iconic comic-book battles.",
     image: "/media/endgame.jpg",
     color: "red",
+    imdbUrl: "https://www.imdb.com/title/tt4154796/?ref_=nv_sr_srsg_0_tt_7_nm_1_in_0_q_avengers%20",
   },
   {
     id: "shutter-island",
@@ -69,6 +74,7 @@ export const moviesData: MovieItem[] = [
       "Atmospheric noir mystery, incredible plot twists, and deep psychological storytelling that keeps you thinking long after the credits roll.",
     image: "/media/shutter-island.jpg",
     color: "dark",
+    imdbUrl: "https://www.imdb.com/title/tt1130884/?ref_=nv_sr_srsg_0_tt_8_nm_0_in_0_q_shutter",
   },
   {
     id: "spiderman-no-way-home",
@@ -81,5 +87,6 @@ export const moviesData: MovieItem[] = [
       "Pure comic book joy! Multiverse storytelling, nostalgic character team-ups, and emotional growth for the ultimate relatable superhero.",
     image: "/media/spiderman.jpg",
     color: "yellow",
+    imdbUrl: "https://www.imdb.com/title/tt10872600/?ref_=nv_sr_srsg_3_tt_8_nm_0_in_0_q_spider%20man%20n",
   },
 ];
