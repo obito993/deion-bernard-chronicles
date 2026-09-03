@@ -210,10 +210,10 @@ export default function AboutPage() {
               </div>
               <div className="space-y-2 font-sans font-black text-sm">
                 <div className="border-2 border-black bg-black p-2.5 text-yellow-300 rounded shadow-comic-sm">
-                  ENGLISH — Fluent Professional
+                  ENGLISH — Native Language
                 </div>
                 <div className="border-2 border-black bg-black p-2.5 text-white rounded shadow-comic-sm">
-                  TAMIL (வணக்கம்) — Native
+                  TAMIL (வணக்கம்) — Known / Spoken
                 </div>
                 <div className="border-2 border-black bg-black p-2.5 text-comic-violet rounded shadow-comic-sm">
                   FRENCH (Bonjour) — Conversational

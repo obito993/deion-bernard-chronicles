@@ -15,13 +15,13 @@ export const resumeData = {
       degree: "BACHELOR OF COMPUTER SCIENCE",
       institution: "Patrician College of Arts and Science, Chennai",
       score: "CGPA: 8.5 / 10",
-      year: "2022 - 2025",
+      year: "2023 - 2026",
     },
     {
       degree: "HIGHER SECONDARY (CLASS XII)",
       institution: "Bosco Academy Mat Hr Sec School, Chennai",
       score: "Percentage: 74%",
-      year: "2021 - 2022",
+      year: "2022 - 2023",
     },
   ],
   internship: {
