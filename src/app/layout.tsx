@@ -37,6 +37,8 @@ export const metadata: Metadata = {
   },
 };
 
+import SpiderManPageIntro from "@/components/characters/SpiderManPageIntro";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -46,6 +48,7 @@ export default function RootLayout({
     <html lang="en" className={`${spaceGrotesk.variable} ${bangers.variable} scroll-smooth`}>
       <body className="bg-comic-cream text-comic-ink antialiased selection:bg-comic-yellow selection:text-comic-ink min-h-screen flex flex-col font-sans pb-24">
         <CustomCursor />
+        <SpiderManPageIntro />
         <main className="flex-1">
           <PageTransition>{children}</PageTransition>
         </main>
