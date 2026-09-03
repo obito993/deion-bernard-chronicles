@@ -38,6 +38,9 @@ export const metadata: Metadata = {
 };
 
 import SpiderManPageIntro from "@/components/characters/SpiderManPageIntro";
+import { HeroAudioProvider } from "@/context/HeroAudioContext";
+import TrumpetHeroBanner from "@/components/audio/TrumpetHeroBanner";
+import ComicMusicControl from "@/components/audio/ComicMusicControl";
 
 export default function RootLayout({
   children,
@@ -47,13 +50,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${bangers.variable} scroll-smooth`}>
       <body className="bg-comic-cream text-comic-ink antialiased selection:bg-comic-yellow selection:text-comic-ink min-h-screen flex flex-col font-sans pb-24">
-        <CustomCursor />
-        <SpiderManPageIntro />
-        <main className="flex-1">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <DockAfterIntro />
-        <Footer />
+        <HeroAudioProvider>
+          <CustomCursor />
+          <SpiderManPageIntro />
+          <TrumpetHeroBanner />
+          <main className="flex-1">
+            <PageTransition>{children}</PageTransition>
+          </main>
+          <ComicMusicControl />
+          <DockAfterIntro />
+          <Footer />
+        </HeroAudioProvider>
       </body>
     </html>
   );
