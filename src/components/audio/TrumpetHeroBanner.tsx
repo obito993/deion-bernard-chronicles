@@ -1,25 +1,49 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useHeroAudio } from "@/context/HeroAudioContext";
 import ActionBurst from "@/components/comic/ActionBurst";
 
 export default function TrumpetHeroBanner() {
   const { showTrumpetBanner, dismissTrumpetBanner } = useHeroAudio();
+  const [introSeen, setIntroSeen] = useState(false);
 
   useEffect(() => {
-    if (showTrumpetBanner) {
+    // Check if intro animation has finished
+    const checkIntro = () => {
+      if (typeof window !== "undefined" && sessionStorage.getItem("deion_comic_intro_seen")) {
+        setIntroSeen(true);
+        return true;
+      }
+      return false;
+    };
+
+    if (!checkIntro()) {
+      const interval = setInterval(() => {
+        if (checkIntro()) {
+          clearInterval(interval);
+        }
+      }, 300);
+      return () => clearInterval(interval);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (showTrumpetBanner && introSeen) {
       const timer = setTimeout(() => {
         dismissTrumpetBanner();
       }, 3500);
       return () => clearTimeout(timer);
     }
-  }, [showTrumpetBanner, dismissTrumpetBanner]);
+  }, [showTrumpetBanner, introSeen, dismissTrumpetBanner]);
+
+  // Render ONLY after the intro has finished and trumpet trigger fired
+  const isVisible = showTrumpetBanner && introSeen;
 
   return (
     <AnimatePresence>
-      {showTrumpetBanner && (
+      {isVisible && (
         <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center p-4 select-none overflow-hidden">
           {/* HALFTONE FLASH & SPEED LINES OVERLAY */}
           <motion.div
@@ -33,10 +57,10 @@ export default function TrumpetHeroBanner() {
           {/* MAIN COMIC IMPACT BANNER */}
           <motion.div
             initial={{ scale: 0.3, rotate: -8, opacity: 0 }}
-            animate={{ scale: [0.3, 1.1, 1], rotate: [ -8, 2, 0], opacity: 1 }}
+            animate={{ scale: [0.3, 1.1, 1], rotate: [-8, 2, 0], opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0, y: -40 }}
             transition={{ type: "spring", stiffness: 350, damping: 22 }}
-            className="relative max-w-xl w-full rounded-2xl border-4 border-black bg-comic-yellow p-6 sm:p-8 shadow-[10px_10px_0px_#000000] text-center"
+            className="relative max-w-xl w-full rounded-2xl border-4 border-black bg-comic-yellow p-6 sm:p-8 shadow-[10px_10px_0px_#000000] text-center pointer-events-auto"
           >
             {/* ACTION BURST BADGE */}
             <div className="absolute -top-6 -left-6 z-20">
