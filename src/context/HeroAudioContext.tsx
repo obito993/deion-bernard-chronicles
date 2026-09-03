@@ -5,6 +5,12 @@ import React, { createContext, useContext, useEffect, useRef, useState } from "r
 // Easily editable timestamp (in seconds) for when trumpets enter the hero theme MP3
 export const HERO_THEME_TRUMPET_TIME = 8.0;
 
+// All background soundtrack tracks
+export const SOUNDTRACK_TRACKS = [
+  { id: "hero-theme", label: "HERO THEME", src: "/audio/hero-theme.mp3", emoji: "🦸" },
+  { id: "avengers-theme", label: "AVENGERS THEME", src: "/audio/avengers-theme.mp3", emoji: "⚡" },
+];
+
 interface HeroAudioContextType {
   isPlaying: boolean;
   isMuted: boolean;
@@ -12,12 +18,17 @@ interface HeroAudioContextType {
   currentTime: number;
   duration: number;
   showTrumpetBanner: boolean;
+  currentTrackIndex: number;
+  currentTrack: typeof SOUNDTRACK_TRACKS[number];
   playAudio: () => void;
   pauseAudio: () => void;
   togglePlay: () => void;
   toggleMute: () => void;
   setVolumeLevel: (val: number) => void;
   dismissTrumpetBanner: () => void;
+  nextTrack: () => void;
+  prevTrack: () => void;
+  switchToTrack: (index: number) => void;
 }
 
 const HeroAudioContext = createContext<HeroAudioContextType | null>(null);
@@ -30,11 +41,13 @@ export function HeroAudioProvider({ children }: { children: React.ReactNode }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showTrumpetBanner, setShowTrumpetBanner] = useState(false);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const trumpetTriggeredRef = useRef(false);
+  const wasPlayingRef = useRef(false);
 
   useEffect(() => {
-    // Create single global audio instance pointing to existing MP3
-    const audio = new Audio("/audio/hero-theme.mp3");
+    // Create single global audio instance pointing to hero theme (default)
+    const audio = new Audio(SOUNDTRACK_TRACKS[0].src);
     audio.loop = true;
     audio.volume = volume;
     audioRef.current = audio;
@@ -44,7 +57,7 @@ export function HeroAudioProvider({ children }: { children: React.ReactNode }) {
       setCurrentTime(audio.currentTime);
       setDuration(audio.duration || 0);
 
-      // Check for Trumpet Hero moment
+      // Trumpet Hero Banner only for the hero theme (track 0)
       if (
         audio.currentTime >= HERO_THEME_TRUMPET_TIME &&
         audio.currentTime < HERO_THEME_TRUMPET_TIME + 4 &&
@@ -68,8 +81,6 @@ export function HeroAudioProvider({ children }: { children: React.ReactNode }) {
         await audio.play();
         setIsPlaying(true);
       } catch {
-        // If browser blocks initial autoplay without interaction,
-        // attach a one-time global user-interaction listener so music starts as soon as user touches/clicks anywhere!
         setIsPlaying(false);
         const handleUserInteraction = () => {
           if (audioRef.current && audioRef.current.paused) {
@@ -95,6 +106,46 @@ export function HeroAudioProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  const switchToTrack = (index: number) => {
+    if (!audioRef.current) return;
+    const audio = audioRef.current;
+    const wasPlaying = !audio.paused;
+
+    // Pause + change src + reset
+    audio.pause();
+    const track = SOUNDTRACK_TRACKS[index];
+    audio.src = track.src;
+    audio.currentTime = 0;
+    audio.loop = true;
+
+    // Reset trumpet banner tracking for hero theme
+    trumpetTriggeredRef.current = false;
+    setShowTrumpetBanner(false);
+    setCurrentTime(0);
+    setDuration(0);
+
+    setCurrentTrackIndex(index);
+
+    if (wasPlaying) {
+      audio
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
+    } else {
+      setIsPlaying(false);
+    }
+  };
+
+  const nextTrack = () => {
+    const next = (currentTrackIndex + 1) % SOUNDTRACK_TRACKS.length;
+    switchToTrack(next);
+  };
+
+  const prevTrack = () => {
+    const prev = (currentTrackIndex - 1 + SOUNDTRACK_TRACKS.length) % SOUNDTRACK_TRACKS.length;
+    switchToTrack(prev);
+  };
+
   const playAudio = () => {
     if (audioRef.current) {
       audioRef.current
@@ -106,7 +157,6 @@ export function HeroAudioProvider({ children }: { children: React.ReactNode }) {
 
   const pauseAudio = () => {
     if (audioRef.current) {
-      // Audio stops at current time, preserving position for resume
       audioRef.current.pause();
       setIsPlaying(false);
     }
@@ -155,12 +205,17 @@ export function HeroAudioProvider({ children }: { children: React.ReactNode }) {
         currentTime,
         duration,
         showTrumpetBanner,
+        currentTrackIndex,
+        currentTrack: SOUNDTRACK_TRACKS[currentTrackIndex],
         playAudio,
         pauseAudio,
         togglePlay,
         toggleMute,
         setVolumeLevel,
         dismissTrumpetBanner,
+        nextTrack,
+        prevTrack,
+        switchToTrack,
       }}
     >
       {children}
