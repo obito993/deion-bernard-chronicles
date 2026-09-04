@@ -67,7 +67,7 @@ export default function ComicFloatingDock() {
     },
     {
       title: "CREATIVE SPACE",
-      caption: "BONUS PANEL — ???",
+      caption: "CHAPTER 08 — CREATIVE SPACE",
       icon: <Sparkles className="h-full w-full" />,
       href: "/creative-space",
       group: "bonus",
