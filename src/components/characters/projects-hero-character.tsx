@@ -27,19 +27,19 @@ export default function ProjectsHeroCharacter() {
               className="absolute -top-12 z-30"
             >
               <SpeechBubble position="bottom-left" bgColor="yellow" speaker="THE HULK">
-                BUILD SOMETHING BIG!
+                BUILD SOMETHING BIG! 💥
               </SpeechBubble>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <div className="relative h-28 w-24 sm:h-36 sm:w-28">
+        {/* TRANSPARENT HULK CUTOUT WITH ZERO WHITE BACKGROUND */}
+        <div className="relative h-32 w-28 sm:h-44 sm:w-36 filter drop-shadow-[6px_6px_0px_#000000]">
           <Image
-            src="/media/marvel-hulk.jpg"
+            src="/media/marvel-hulk-transparent.png"
             alt="The Hulk Tech Hero"
             fill
             className="object-contain"
-            style={{ mixBlendMode: "multiply" }}
             priority
           />
         </div>
