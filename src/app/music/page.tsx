@@ -11,31 +11,31 @@ import { musicData } from "@/data/musicData";
 export default function MusicPage() {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Official iTunes high-quality sample preview streams for each track
+  // LOCAL MP3 files — Deion's actual favourite songs from /public/audio/
   const songTracks: SongTrack[] = [
     {
       ...musicData[0],
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/11/23/69/112369f6-6645-e9ec-8019-e06e3efb160d/mzaf_14601922769880394709.plus.aac.p.m4a",
+      previewUrl: "/audio/cant-help-falling-in-love.mp3",
       fullStreamUrl: musicData[0].searchUrl,
     },
     {
       ...musicData[1],
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/c7/ee/8b/c7ee8b9f-d163-f583-1d95-0e480255a28b/mzaf_16782687670938493222.plus.aac.p.m4a",
+      previewUrl: "/audio/unchained-melody.mp3",
       fullStreamUrl: musicData[1].searchUrl,
     },
     {
       ...musicData[2],
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/f8/c5/6b/f8c56ba6-b52a-4cce-3234-f225da838e7d/mzaf_3847569261753735800.plus.aac.p.m4a",
+      previewUrl: "/audio/heaven.mp3",
       fullStreamUrl: musicData[2].searchUrl,
     },
     {
       ...musicData[3],
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/12/cd/f8/12cdf81c-f174-cd45-9a56-9b2388df9e63/mzaf_2642298639219088626.plus.aac.p.m4a",
+      previewUrl: "/audio/i-want-it-that-way.mp3",
       fullStreamUrl: musicData[3].searchUrl,
     },
     {
       ...musicData[4],
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/12/d8/f6/12d8f6c8-007d-b8d9-5026-192dbdafb5ea/mzaf_5588629988674423957.plus.aac.p.m4a",
+      previewUrl: "/audio/let-it-be-me.mp3",
       fullStreamUrl: musicData[4].searchUrl,
     },
   ];

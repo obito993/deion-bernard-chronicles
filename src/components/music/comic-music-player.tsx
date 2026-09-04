@@ -2,10 +2,13 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { Play, Pause, Disc, ExternalLink, Volume2, VolumeX, Music } from "lucide-react";
+import { Play, Pause, Disc, ExternalLink, Volume2, VolumeX } from "lucide-react";
 import Sticker from "@/components/comic/Sticker";
 import ActionBurst from "@/components/comic/ActionBurst";
 import { useHeroAudio } from "@/context/HeroAudioContext";
+
+// After MAX_PREVIEW_SECONDS the song auto-stops (so listener gets a generous taste)
+const MAX_PREVIEW_SECONDS = 65;
 
 export interface SongTrack {
   id: string;
@@ -15,7 +18,7 @@ export interface SongTrack {
   album: string;
   personalNote: string;
   image: string;
-  previewUrl: string; // Licensed/legal preview audio stream URL
+  previewUrl: string;
   fullStreamUrl: string;
   color: "violet" | "yellow" | "red";
 }
@@ -25,11 +28,19 @@ interface ComicMusicPlayerProps {
   onPlaybackChange?: (isPlaying: boolean) => void;
 }
 
+// Helper: format seconds → m:ss
+function formatTime(sec: number): string {
+  if (!isFinite(sec) || isNaN(sec)) return "0:00";
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
 export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusicPlayerProps) {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(30);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
 
   const heroAudio = useHeroAudio();
@@ -37,51 +48,78 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
 
   const currentTrack = tracks[currentTrackIndex];
 
+  // Progress percentage clamped to max preview window
+  const previewMax = duration > 0 ? Math.min(duration, MAX_PREVIEW_SECONDS) : MAX_PREVIEW_SECONDS;
+  const progress = previewMax > 0 ? Math.min((currentTime / previewMax) * 100, 100) : 0;
+
   useEffect(() => {
     if (!audioRef.current) return;
-
     const audio = audioRef.current;
 
     const updateTime = () => {
-      if (audio.duration) {
-        setProgress((audio.currentTime / audio.duration) * 100);
+      setCurrentTime(audio.currentTime);
+      setDuration(audio.duration || 0);
+
+      // Auto-stop at 65 seconds into the song
+      if (audio.currentTime >= MAX_PREVIEW_SECONDS) {
+        audio.pause();
+        audio.currentTime = 0;
+        setCurrentTime(0);
+        setIsPlaying(false);
+        if (onPlaybackChange) onPlaybackChange(false);
+        // Resume hero background theme
+        heroAudio?.playAudio();
       }
     };
 
     const handleEnded = () => {
       setIsPlaying(false);
-      setProgress(0);
+      setCurrentTime(0);
       if (onPlaybackChange) onPlaybackChange(false);
-      // Resume hero background theme when song preview ends!
-      if (heroAudio) {
-        heroAudio.playAudio();
-      }
+      heroAudio?.playAudio();
+    };
+
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration || 0);
     };
 
     audio.addEventListener("timeupdate", updateTime);
     audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
 
     return () => {
       audio.removeEventListener("timeupdate", updateTime);
       audio.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
     };
   }, [onPlaybackChange, heroAudio]);
 
+  const stopAndReset = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setIsPlaying(false);
+    setCurrentTime(0);
+    if (onPlaybackChange) onPlaybackChange(false);
+  };
+
   const togglePlay = (index?: number) => {
     if (index !== undefined && index !== currentTrackIndex) {
+      // Switching to a new track
+      stopAndReset();
       setCurrentTrackIndex(index);
-      setIsPlaying(true);
 
-      // Pause hero background theme when song preview starts!
-      if (heroAudio) {
-        heroAudio.pauseAudio();
-      }
+      // Pause hero theme
+      heroAudio?.pauseAudio();
 
       if (audioRef.current) {
         audioRef.current.src = tracks[index].previewUrl;
+        audioRef.current.currentTime = 0;
         audioRef.current.play().catch(() => setIsPlaying(false));
+        setIsPlaying(true);
+        if (onPlaybackChange) onPlaybackChange(true);
       }
-      if (onPlaybackChange) onPlaybackChange(true);
       return;
     }
 
@@ -89,20 +127,14 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
       audioRef.current?.pause();
       setIsPlaying(false);
       if (onPlaybackChange) onPlaybackChange(false);
-
-      // Resume hero background theme when song preview is paused!
-      if (heroAudio) {
-        heroAudio.playAudio();
-      }
+      heroAudio?.playAudio();
     } else {
-      // Pause hero background theme when song preview starts!
-      if (heroAudio) {
-        heroAudio.pauseAudio();
-      }
+      heroAudio?.pauseAudio();
 
       if (audioRef.current) {
-        if (!audioRef.current.src || audioRef.current.src !== currentTrack.previewUrl) {
+        if (!audioRef.current.src || !audioRef.current.src.includes(currentTrack.previewUrl.replace("/", ""))) {
           audioRef.current.src = currentTrack.previewUrl;
+          audioRef.current.currentTime = 0;
         }
         audioRef.current.play().catch(() => setIsPlaying(false));
         setIsPlaying(true);
@@ -120,17 +152,18 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = Number(e.target.value);
-    setProgress(val);
-    if (audioRef.current && audioRef.current.duration) {
-      audioRef.current.currentTime = (val / 100) * audioRef.current.duration;
+    const newTime = (val / 100) * previewMax;
+    setCurrentTime(newTime);
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
     }
   };
 
   return (
     <div className="relative w-full max-w-4xl mx-auto rounded-2xl border-4 border-black bg-comic-violet text-black p-6 sm:p-8 shadow-comic-xl font-sans select-none bg-paper">
-      
+
       {/* Hidden HTML5 Audio Element */}
-      <audio ref={audioRef} preload="none" />
+      <audio ref={audioRef} preload="auto" />
 
       {/* PLAYER HEADER BAR */}
       <div className="flex flex-wrap items-center justify-between border-b-3 border-black pb-4 mb-6">
@@ -143,18 +176,17 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
               RETRO COMIC RADIO
             </span>
             <h3 className="font-comic text-3xl text-black leading-none mt-1">
-              {isPlaying ? "🎵 NOW PLAYING PREVIEW!" : "RETRO SOUNDTRACK PLAYER"}
+              {isPlaying ? "🎵 NOW PLAYING!" : "RETRO SOUNDTRACK PLAYER"}
             </h3>
           </div>
         </div>
-
         <Sticker text={currentTrack.number} variant="red" rotate={-2} />
       </div>
 
       {/* MAIN PLAYER GRID */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-        
-        {/* LEFT: SPINNING ALBUM COVER */}
+
+        {/* LEFT: ALBUM COVER */}
         <div className="md:col-span-5 relative flex justify-center">
           <div className="relative h-64 w-64 rounded-2xl border-4 border-black bg-black overflow-hidden shadow-comic-lg">
             <Image
@@ -173,7 +205,7 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
 
         {/* RIGHT: TRACK CONTROLS & INFO */}
         <div className="md:col-span-7 space-y-4">
-          
+
           <div className="border-b-2 border-black pb-2">
             <span className="font-mono text-xs font-black uppercase text-gray-700">
               ARTIST: {currentTrack.artist} • {currentTrack.album}
@@ -193,11 +225,13 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
             </p>
           </div>
 
-          {/* PROGRESS BAR */}
+          {/* PROGRESS BAR + TIMESTAMPS */}
           <div className="space-y-1 pt-1">
             <div className="flex justify-between font-mono text-[10px] font-black text-black">
-              <span>{isPlaying ? "PREVIEW PLAYBACK" : "PAUSED"}</span>
-              <span>30S SAMPLE</span>
+              <span>{isPlaying ? "▶ NOW PLAYING" : "⏸ PAUSED"}</span>
+              <span className="tabular-nums">
+                {formatTime(currentTime)} / {formatTime(previewMax)} (65S PREVIEW)
+              </span>
             </div>
             <input
               type="range"
@@ -217,7 +251,7 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
                 className="flex items-center gap-2 rounded-lg border-3 border-black bg-comic-yellow px-5 py-2.5 font-comic text-xl text-black shadow-comic hover:bg-white active:translate-x-1 active:translate-y-1 active:shadow-comic-pressed transition-all"
               >
                 {isPlaying ? <Pause className="h-5 w-5 fill-current" /> : <Play className="h-5 w-5 fill-current" />}
-                <span>{isPlaying ? "PAUSE PREVIEW" : "▶ PLAY PREVIEW"}</span>
+                <span>{isPlaying ? "PAUSE" : "▶ PLAY PREVIEW"}</span>
               </button>
 
               <button
@@ -237,7 +271,6 @@ export default function ComicMusicPlayer({ tracks, onPlaybackChange }: ComicMusi
           </div>
 
         </div>
-
       </div>
 
       {/* TRACK SELECTION LIST */}
