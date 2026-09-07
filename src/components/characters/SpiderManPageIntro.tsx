@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -12,7 +12,6 @@ export default function SpiderManPageIntro() {
   const pathname = usePathname();
   const [animState, setAnimState] = useState<"idle" | "descending" | "greeting" | "ascending" | "done">("idle");
   const [reducedMotion, setReducedMotion] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // Allowed pages for Spider-Man page entry greeting (All 9 pages + blog details)
   const isAllowedPage =
@@ -42,11 +41,6 @@ export default function SpiderManPageIntro() {
     if (reducedMotion || !isAllowedPage) return;
 
     setAnimState("descending");
-
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play().catch(() => {});
-    }
 
     // Sequence timing:
     // 0.0s - 1.2s: Descend from top (-100vh -> center position)
@@ -98,7 +92,7 @@ export default function SpiderManPageIntro() {
               duration: animState === "descending" ? 1.2 : animState === "ascending" ? 1.2 : 0,
               ease: [0.34, 1.35, 0.64, 1], // Natural comic spring bounce
             }}
-            className="relative w-[340px] h-[191px] sm:w-[620px] sm:h-[348px] md:w-[880px] md:h-[495px] flex flex-col items-center pointer-events-none bg-transparent"
+            className="relative w-[320px] h-[180px] sm:w-[600px] sm:h-[338px] md:w-[880px] md:h-[495px] flex flex-col items-center pointer-events-none bg-transparent"
           >
             {/* "HI! 👋" COMIC SPEECH BUBBLE (ANCHORED BESIDE SPIDER-MAN'S HEAD, GUARANTEED INSIDE VIEWPORT) */}
             <AnimatePresence>
@@ -122,26 +116,19 @@ export default function SpiderManPageIntro() {
               )}
             </AnimatePresence>
 
-            {/* VISIBLE SPIDER-MAN CHARACTER + ORIGINAL VIDEO WEB */}
+            {/* 
+              100% UNIVERSAL TRANSPARENT MEDIA:
+              Uses 8-bit alpha transparent WebP to eliminate Safari's video engine black background bug completely.
+            */}
             <div className="relative w-full h-full filter drop-shadow-[6px_6px_0px_#000000] sm:drop-shadow-[8px_8px_0px_#000000] bg-transparent">
-              <video
-                ref={videoRef}
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{ mixBlendMode: "multiply" }}
-                className="w-full h-full object-contain pointer-events-none bg-transparent"
-              >
-                <source src="/animations/spiderman-updown-transparent.webm" type="video/webm" />
-                {/* Fallback transparent WebP with mix-blend-mode: multiply */}
+              <picture className="w-full h-full block bg-transparent">
+                <source srcSet="/animations/spiderman-updown-transparent.webp" type="image/webp" />
                 <img
                   src="/animations/spiderman-updown-transparent.webp"
                   alt="Spider-Man Center Page Entry Greeting"
-                  style={{ mixBlendMode: "multiply" }}
                   className="w-full h-full object-contain pointer-events-none bg-transparent"
                 />
-              </video>
+              </picture>
             </div>
           </motion.div>
         )}
