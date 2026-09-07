@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import IntroAnimation from "@/components/IntroAnimation";
 import HeroStinger from "@/components/characters/hero-stinger";
-import SpiderWebSwing from "@/components/characters/spider-web-swing";
+import SpiderVideoSwing from "@/components/characters/spider-video-swing";
 import TerminalCard from "@/components/TerminalCard";
 import Sticker from "@/components/comic/Sticker";
 import ActionBurst from "@/components/comic/ActionBurst";
@@ -26,8 +26,8 @@ export default function HomePage() {
         <HeroStinger onComplete={() => setStingerFinished(true)} />
       )}
 
-      {/* STEP 3: FULL-SCREEN CINEMATIC SPIDER-MAN WEB SWING */}
-      {introFinished && stingerFinished && <SpiderWebSwing />}
+      {/* STEP 3: FULL-SCREEN CINEMATIC SPIDER-MAN WEB SWING FROM MP4 VIDEO */}
+      {introFinished && stingerFinished && <SpiderVideoSwing />}
 
       <div className="min-h-screen bg-comic-cream text-black pb-24 font-sans relative overflow-hidden">
         {/* Halftone Background Pattern */}
