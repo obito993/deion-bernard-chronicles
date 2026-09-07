@@ -10,20 +10,18 @@ export default function SpiderManPageIntro() {
   const [reducedMotion, setReducedMotion] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // Allowed pages for Spider-Man page entry greeting
-  const allowedPages = [
-    "/",
-    "/about",
-    "/resume",
-    "/projects",
-    "/movies",
-    "/music",
-    "/contact",
-    "/creative-space",
-    "/creative",
-  ];
-
-  const isAllowedPage = allowedPages.includes(pathname);
+  // Allowed pages for Spider-Man page entry greeting (includes /blogs)
+  const isAllowedPage =
+    pathname === "/" ||
+    pathname === "/about" ||
+    pathname === "/resume" ||
+    pathname === "/projects" ||
+    pathname === "/movies" ||
+    pathname === "/music" ||
+    pathname === "/contact" ||
+    pathname === "/creative-space" ||
+    pathname === "/creative" ||
+    pathname.startsWith("/blogs");
 
   // Check reduced motion
   useEffect(() => {
@@ -47,22 +45,22 @@ export default function SpiderManPageIntro() {
     }
 
     // Sequence timing:
-    // 0.0s - 1.2s: Descend from top (-100vh -> 12vh) in CENTER of screen
-    // 1.2s - 3.4s: Stop in center & display medium-small "HI! 👋" speech bubble on RIGHT side of head
-    // 3.4s - 4.7s: Ascend back up (12vh -> -100vh)
-    // 4.7s+: Done (unmounts offscreen)
+    // 0.0s - 1.3s: Descend from top (-100vh -> 15vh) in EXACT CENTER of page
+    // 1.3s - 3.5s: Stop in center & display comic "HI! 👋" speech bubble on RIGHT side of head
+    // 3.5s - 4.8s: Ascend back up (15vh -> -100vh)
+    // 4.8s+: Done (unmounts offscreen)
 
     const timerGreeting = setTimeout(() => {
       setAnimState("greeting");
-    }, 1200);
+    }, 1300);
 
     const timerAscend = setTimeout(() => {
       setAnimState("ascending");
-    }, 3400);
+    }, 3500);
 
     const timerDone = setTimeout(() => {
       setAnimState("done");
-    }, 4700);
+    }, 4800);
 
     return () => {
       clearTimeout(timerGreeting);
@@ -84,41 +82,41 @@ export default function SpiderManPageIntro() {
             initial={{ y: "-100vh", opacity: 0 }}
             animate={
               animState === "descending"
-                ? { y: "12vh", opacity: 1 }
+                ? { y: "15vh", opacity: 1 }
                 : animState === "greeting"
-                ? { y: "12vh", opacity: 1 }
+                ? { y: "15vh", opacity: 1 }
                 : { y: "-100vh", opacity: 0 }
             }
             transition={{
-              duration: animState === "descending" ? 1.2 : animState === "ascending" ? 1.2 : 0,
-              ease: [0.34, 1.56, 0.64, 1], // Natural comic spring bounce
+              duration: animState === "descending" ? 1.3 : animState === "ascending" ? 1.3 : 0,
+              ease: [0.34, 1.4, 0.64, 1], // Natural comic spring bounce
             }}
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[320px] h-[400px] sm:w-[420px] sm:h-[500px] flex flex-col items-center pointer-events-none"
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[420px] h-[520px] sm:w-[580px] sm:h-[700px] md:w-[680px] md:h-[820px] flex flex-col items-center pointer-events-none"
           >
-            {/* MEDIUM-SMALL SPEECH BUBBLE "HI! 👋" (PLACED CORRECTLY ON THE RIGHT SIDE OF SPIDER-MAN'S HEAD) */}
+            {/* "HI! 👋" COMIC SPEECH BUBBLE (ANCHORED EXACTLY ON THE RIGHT SIDE OF SPIDER-MAN'S HEAD) */}
             <AnimatePresence>
               {animState === "greeting" && (
                 <motion.div
                   initial={{ scale: 0, opacity: 0, x: -10 }}
                   animate={{ scale: 1, opacity: 1, x: 0 }}
                   exit={{ scale: 0, opacity: 0, x: -10 }}
-                  transition={{ type: "spring", stiffness: 450, damping: 22 }}
-                  className="absolute right-0 sm:-right-8 top-16 sm:top-20 z-50 pointer-events-none"
+                  transition={{ type: "spring", stiffness: 450, damping: 20 }}
+                  className="absolute right-2 sm:right-8 md:right-14 top-24 sm:top-36 md:top-44 z-50 pointer-events-none"
                 >
-                  <div className="relative rounded-xl border-3 border-black bg-white px-3.5 py-1.5 sm:px-4 sm:py-2 shadow-[3px_3px_0px_#000000]">
-                    <span className="font-comic text-xl sm:text-2xl text-black uppercase tracking-wider block">
+                  <div className="relative rounded-2xl border-4 border-black bg-white px-4 py-2 sm:px-6 sm:py-3 shadow-[5px_5px_0px_#000000]">
+                    <span className="font-comic text-2xl sm:text-4xl text-black uppercase tracking-wider block">
                       HI! 👋
                     </span>
-                    {/* SPEECH BUBBLE TAIL POINTING LEFT TO SPIDER-MAN'S HEAD */}
-                    <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[7px] border-t-transparent border-b-[7px] border-b-transparent border-r-[11px] border-r-black" />
-                    <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-r-[9px] border-r-white" />
+                    {/* SPEECH BUBBLE TAIL POINTING LEFT TOWARD SPIDER-MAN'S HEAD */}
+                    <div className="absolute -left-3.5 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-r-[14px] border-r-black" />
+                    <div className="absolute -left-2.5 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[12px] border-r-white" />
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* MEDIUM-BIG SPIDER-MAN CHARACTER IN CENTER WITH VIDEO WEB */}
-            <div className="relative w-full h-full filter drop-shadow-[6px_6px_0px_#000000]">
+            {/* LARGER SPIDER-MAN CHARACTER IN EXACT CENTER WITH ORIGINAL VIDEO WEB */}
+            <div className="relative w-full h-full filter drop-shadow-[8px_8px_0px_#000000]">
               <video
                 ref={videoRef}
                 autoPlay
