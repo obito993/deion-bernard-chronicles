@@ -47,10 +47,10 @@ export default function SpiderManPageIntro() {
     }
 
     // Sequence timing:
-    // 0.0s - 1.2s: Descend from top (-100vh -> 10vh)
-    // 1.2s - 3.2s: Stop & display "HI! 👋" speech bubble while showing peace sign ✌️
-    // 3.2s - 4.5s: Ascend back up (10vh -> -100vh)
-    // 4.5s+: Done (unmounts offscreen)
+    // 0.0s - 1.2s: Descend from top (-100vh -> 12vh) in CENTER of screen
+    // 1.2s - 3.4s: Stop in center & display medium-small "HI! 👋" speech bubble on RIGHT side of head
+    // 3.4s - 4.7s: Ascend back up (12vh -> -100vh)
+    // 4.7s+: Done (unmounts offscreen)
 
     const timerGreeting = setTimeout(() => {
       setAnimState("greeting");
@@ -58,11 +58,11 @@ export default function SpiderManPageIntro() {
 
     const timerAscend = setTimeout(() => {
       setAnimState("ascending");
-    }, 3200);
+    }, 3400);
 
     const timerDone = setTimeout(() => {
       setAnimState("done");
-    }, 4500);
+    }, 4700);
 
     return () => {
       clearTimeout(timerGreeting);
@@ -84,40 +84,40 @@ export default function SpiderManPageIntro() {
             initial={{ y: "-100vh", opacity: 0 }}
             animate={
               animState === "descending"
-                ? { y: "10vh", opacity: 1 }
+                ? { y: "12vh", opacity: 1 }
                 : animState === "greeting"
-                ? { y: "10vh", opacity: 1 }
+                ? { y: "12vh", opacity: 1 }
                 : { y: "-100vh", opacity: 0 }
             }
             transition={{
               duration: animState === "descending" ? 1.2 : animState === "ascending" ? 1.2 : 0,
               ease: [0.34, 1.56, 0.64, 1], // Natural comic spring bounce
             }}
-            className="absolute top-0 right-4 sm:right-16 md:right-24 w-[280px] h-[340px] sm:w-[380px] sm:h-[450px] flex flex-col items-center pointer-events-none"
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[320px] h-[400px] sm:w-[420px] sm:h-[500px] flex flex-col items-center pointer-events-none"
           >
-            {/* SPEECH BUBBLE "HI! 👋" (POPS IN ONLY DURING GREETING STEP) */}
+            {/* MEDIUM-SMALL SPEECH BUBBLE "HI! 👋" (PLACED CORRECTLY ON THE RIGHT SIDE OF SPIDER-MAN'S HEAD) */}
             <AnimatePresence>
               {animState === "greeting" && (
                 <motion.div
-                  initial={{ scale: 0, opacity: 0, y: 15 }}
-                  animate={{ scale: 1, opacity: 1, y: 0 }}
-                  exit={{ scale: 0, opacity: 0, y: -10 }}
-                  transition={{ type: "spring", stiffness: 450, damping: 20 }}
-                  className="absolute -left-24 top-24 sm:-left-32 sm:top-32 z-50 pointer-events-none"
+                  initial={{ scale: 0, opacity: 0, x: -10 }}
+                  animate={{ scale: 1, opacity: 1, x: 0 }}
+                  exit={{ scale: 0, opacity: 0, x: -10 }}
+                  transition={{ type: "spring", stiffness: 450, damping: 22 }}
+                  className="absolute right-0 sm:-right-8 top-16 sm:top-20 z-50 pointer-events-none"
                 >
-                  <div className="relative rounded-2xl border-3 border-black bg-white px-4 py-2 sm:px-6 sm:py-3 shadow-[4px_4px_0px_#000000]">
-                    <span className="font-comic text-2xl sm:text-4xl text-black uppercase tracking-wider block">
+                  <div className="relative rounded-xl border-3 border-black bg-white px-3.5 py-1.5 sm:px-4 sm:py-2 shadow-[3px_3px_0px_#000000]">
+                    <span className="font-comic text-xl sm:text-2xl text-black uppercase tracking-wider block">
                       HI! 👋
                     </span>
-                    {/* SPEECH BUBBLE TAIL POINTING TO SPIDER-MAN */}
-                    <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-l-[12px] border-l-black" />
-                    <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[10px] border-l-white" />
+                    {/* SPEECH BUBBLE TAIL POINTING LEFT TO SPIDER-MAN'S HEAD */}
+                    <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[7px] border-t-transparent border-b-[7px] border-b-transparent border-r-[11px] border-r-black" />
+                    <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-r-[9px] border-r-white" />
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* TRANSPARENT SPIDER-MAN UP-DOWN VIDEO (ZERO BLACK LINES, ZERO WHITE RECTANGLE) */}
+            {/* MEDIUM-BIG SPIDER-MAN CHARACTER IN CENTER WITH VIDEO WEB */}
             <div className="relative w-full h-full filter drop-shadow-[6px_6px_0px_#000000]">
               <video
                 ref={videoRef}
@@ -131,7 +131,7 @@ export default function SpiderManPageIntro() {
                 {/* Fallback transparent WebP */}
                 <img
                   src="/animations/spiderman-updown-transparent.webp"
-                  alt="Spider-Man Page Entry Greeting"
+                  alt="Spider-Man Center Page Entry Greeting"
                   className="w-full h-full object-contain pointer-events-none"
                 />
               </video>
