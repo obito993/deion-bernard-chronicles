@@ -10,7 +10,7 @@ export default function SpiderManPageIntro() {
   const [reducedMotion, setReducedMotion] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // Allowed pages for Spider-Man page entry greeting (includes /blogs)
+  // Allowed pages for Spider-Man page entry greeting (All 9 pages)
   const isAllowedPage =
     pathname === "/" ||
     pathname === "/about" ||
@@ -45,10 +45,10 @@ export default function SpiderManPageIntro() {
     }
 
     // Sequence timing:
-    // 0.0s - 1.3s: Descend from top (-100vh -> 15vh) in EXACT CENTER of page
-    // 1.3s - 3.5s: Stop in center & display comic "HI! 👋" speech bubble on RIGHT side of head
-    // 3.5s - 4.8s: Ascend back up (15vh -> -100vh)
-    // 4.8s+: Done (unmounts offscreen)
+    // 0.0s - 1.3s: Descend from top (-100vh -> 14vh) so Spider-Man stops in DEAD CENTER of page
+    // 1.3s - 3.6s: Stop in center & display comic "HI! 👋" speech bubble on RIGHT side of head
+    // 3.6s - 4.9s: Ascend back up (14vh -> -100vh)
+    // 4.9s+: Done (unmounts offscreen)
 
     const timerGreeting = setTimeout(() => {
       setAnimState("greeting");
@@ -56,11 +56,11 @@ export default function SpiderManPageIntro() {
 
     const timerAscend = setTimeout(() => {
       setAnimState("ascending");
-    }, 3500);
+    }, 3600);
 
     const timerDone = setTimeout(() => {
       setAnimState("done");
-    }, 4800);
+    }, 4900);
 
     return () => {
       clearTimeout(timerGreeting);
@@ -82,18 +82,24 @@ export default function SpiderManPageIntro() {
             initial={{ y: "-100vh", opacity: 0 }}
             animate={
               animState === "descending"
-                ? { y: "15vh", opacity: 1 }
+                ? { y: "14vh", opacity: 1 }
                 : animState === "greeting"
-                ? { y: "15vh", opacity: 1 }
+                ? { y: "14vh", opacity: 1 }
                 : { y: "-100vh", opacity: 0 }
             }
             transition={{
               duration: animState === "descending" ? 1.3 : animState === "ascending" ? 1.3 : 0,
               ease: [0.34, 1.4, 0.64, 1], // Natural comic spring bounce
             }}
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[420px] h-[520px] sm:w-[580px] sm:h-[700px] md:w-[680px] md:h-[820px] flex flex-col items-center pointer-events-none"
+            /* 
+              MATHEMATICAL CENTER ALIGNMENT:
+              Because Spider-Man's visible body is offset inside the 16:9 video frame at X=63.6% (13.6% to the right of video center),
+              we shift the container left by (50% + 13.6% = 63.6%) so the VISIBLE SPIDER-MAN CHARACTER stops at EXACTLY 50vw (DEAD CENTER OF THE SCREEN).
+            */
+            style={{ left: "50%", transform: "translateX(-63.6%)" }}
+            className="absolute top-0 w-[550px] h-[350px] sm:w-[720px] sm:h-[460px] md:w-[920px] md:h-[580px] flex flex-col items-center pointer-events-none"
           >
-            {/* "HI! 👋" COMIC SPEECH BUBBLE (ANCHORED EXACTLY ON THE RIGHT SIDE OF SPIDER-MAN'S HEAD) */}
+            {/* "HI! 👋" COMIC SPEECH BUBBLE (ANCHORED DIRECTLY ON THE RIGHT SIDE OF SPIDER-MAN'S HEAD) */}
             <AnimatePresence>
               {animState === "greeting" && (
                 <motion.div
@@ -101,7 +107,7 @@ export default function SpiderManPageIntro() {
                   animate={{ scale: 1, opacity: 1, x: 0 }}
                   exit={{ scale: 0, opacity: 0, x: -10 }}
                   transition={{ type: "spring", stiffness: 450, damping: 20 }}
-                  className="absolute right-2 sm:right-8 md:right-14 top-24 sm:top-36 md:top-44 z-50 pointer-events-none"
+                  className="absolute left-[62%] sm:left-[63%] top-[14%] sm:top-[16%] z-50 pointer-events-none"
                 >
                   <div className="relative rounded-2xl border-4 border-black bg-white px-4 py-2 sm:px-6 sm:py-3 shadow-[5px_5px_0px_#000000]">
                     <span className="font-comic text-2xl sm:text-4xl text-black uppercase tracking-wider block">
@@ -115,7 +121,7 @@ export default function SpiderManPageIntro() {
               )}
             </AnimatePresence>
 
-            {/* LARGER SPIDER-MAN CHARACTER IN EXACT CENTER WITH ORIGINAL VIDEO WEB */}
+            {/* VISIBLE SPIDER-MAN CHARACTER + ORIGINAL VIDEO WEB */}
             <div className="relative w-full h-full filter drop-shadow-[8px_8px_0px_#000000]">
               <video
                 ref={videoRef}
