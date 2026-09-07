@@ -78,7 +78,12 @@ export default function SpiderManPageIntro() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none overflow-hidden select-none w-screen h-screen">
+    /* 
+      DEDICATED FULL-VIEWPORT OVERLAY WITH FLEX CENTERING:
+      Using `flex justify-center` on the fixed full-screen viewport container guarantees
+      horizontal centering at X=50vw without relying on CSS transform rules that Framer Motion overrides.
+    */
+    <div className="fixed inset-0 z-50 pointer-events-none overflow-hidden select-none w-screen h-screen flex justify-center items-start">
       <AnimatePresence>
         {(animState === "descending" || animState === "greeting" || animState === "ascending") && (
           <motion.div
@@ -86,23 +91,16 @@ export default function SpiderManPageIntro() {
             initial={{ y: "-100vh", opacity: 0 }}
             animate={
               animState === "descending" || animState === "greeting"
-                ? { y: "8vh", opacity: 1 }
+                ? { y: "6vh", opacity: 1 }
                 : { y: "-100vh", opacity: 0 }
             }
             transition={{
               duration: animState === "descending" ? 1.2 : animState === "ascending" ? 1.2 : 0,
               ease: [0.34, 1.35, 0.64, 1], // Natural comic spring bounce
             }}
-            /* 
-              PERFECT VIEWPORT CENTERING:
-              Spider-Man's visible body (red & blue suit) inside the 16:9 video frame is centered at X=49.7% (636px out of 1280px).
-              Therefore, placing the container at left: 50% with transform: translateX(-50%) places Spider-Man's body center
-              at EXACTLY 50vw (DEAD CENTER OF THE SCREEN).
-            */
-            style={{ left: "50%", transform: "translateX(-50%)" }}
-            className="absolute top-0 w-[460px] h-[258px] sm:w-[680px] sm:h-[382px] md:w-[920px] md:h-[517px] flex flex-col items-center pointer-events-none"
+            className="relative w-[460px] h-[258px] sm:w-[680px] sm:h-[382px] md:w-[920px] md:h-[517px] flex flex-col items-center pointer-events-none"
           >
-            {/* "HI! 👋" COMIC SPEECH BUBBLE (ANCHORED BESIDE SPIDER-MAN'S HEAD, ALWAYS INSIDE VIEWPORT) */}
+            {/* "HI! 👋" COMIC SPEECH BUBBLE (ANCHORED BESIDE SPIDER-MAN'S HEAD, GUARANTEED INSIDE VIEWPORT) */}
             <AnimatePresence>
               {animState === "greeting" && (
                 <motion.div
@@ -110,7 +108,7 @@ export default function SpiderManPageIntro() {
                   animate={{ scale: 1, opacity: 1, x: 0 }}
                   exit={{ scale: 0, opacity: 0, x: -10 }}
                   transition={{ type: "spring", stiffness: 450, damping: 22 }}
-                  className="absolute left-[58%] sm:left-[60%] top-[12%] sm:top-[14%] z-50 pointer-events-none max-w-[38vw] sm:max-w-none"
+                  className="absolute left-[56%] sm:left-[58%] top-[10%] sm:top-[12%] z-50 pointer-events-none max-w-[36vw] sm:max-w-none"
                 >
                   <div className="relative rounded-2xl border-4 border-black bg-white px-3 py-1.5 sm:px-5 sm:py-2.5 shadow-[4px_4px_0px_#000000] sm:shadow-[5px_5px_0px_#000000]">
                     <span className="font-comic text-xl sm:text-3xl md:text-4xl text-black uppercase tracking-wider block whitespace-nowrap">
