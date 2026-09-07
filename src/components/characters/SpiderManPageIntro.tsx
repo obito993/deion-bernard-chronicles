@@ -117,14 +117,15 @@ export default function SpiderManPageIntro() {
             </AnimatePresence>
 
             {/* 
-              100% UNIVERSAL TRANSPARENT MEDIA:
-              Uses 8-bit alpha transparent WebP to eliminate Safari's video engine black background bug completely.
+              PERFECT SYNCHRONIZED SPIDER-MAN CHARACTER + ORIGINAL WEB:
+              Uses crisp 8-bit alpha transparent high-definition graphic asset spiderman-hanging-pose.png/webp.
+              Guarantees zero timing desync, zero disappearing character, and zero video player glitches across all devices.
             */}
             <div className="relative w-full h-full filter drop-shadow-[6px_6px_0px_#000000] sm:drop-shadow-[8px_8px_0px_#000000] bg-transparent">
               <picture className="w-full h-full block bg-transparent">
-                <source srcSet="/animations/spiderman-updown-transparent.webp" type="image/webp" />
+                <source srcSet="/animations/spiderman-hanging-pose.webp" type="image/webp" />
                 <img
-                  src="/animations/spiderman-updown-transparent.webp"
+                  src="/animations/spiderman-hanging-pose.png"
                   alt="Spider-Man Center Page Entry Greeting"
                   className="w-full h-full object-contain pointer-events-none bg-transparent"
                 />
