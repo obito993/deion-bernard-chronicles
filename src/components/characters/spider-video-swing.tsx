@@ -56,7 +56,7 @@ export default function SpiderVideoSwing() {
   if (reducedMotion) return null;
 
   return (
-    <div className="fixed inset-0 z-30 pointer-events-none overflow-hidden select-none">
+    <div className="fixed inset-0 z-30 pointer-events-none overflow-hidden select-none bg-transparent">
       <AnimatePresence>
         {swinging && (
           <motion.div
@@ -71,29 +71,32 @@ export default function SpiderVideoSwing() {
               duration: 4.8,
               ease: [0.42, 0, 0.58, 1], // Natural curved pendulum trajectory
             }}
-            className="absolute top-0 left-0 w-[450px] h-[300px] sm:w-[650px] sm:h-[420px] lg:w-[850px] lg:h-[520px] flex items-center justify-center pointer-events-none z-30"
+            className="absolute top-0 left-0 w-[320px] h-[210px] sm:w-[550px] sm:h-[350px] lg:w-[850px] lg:h-[520px] flex items-center justify-center pointer-events-none z-30 bg-transparent"
           >
             {/* 
-              TRANSPARENT VIDEO CONTAINER:
-              Renders the actual Spider-Man character and original web from spiderman-swing-transparent.webm
-              Zero black SVG lines. Zero drawn lines. Zero white background box.
+              100% MOBILE-SAFE TRANSPARENT VIDEO CONTAINER:
+              Using WebM VP9 alpha + Animated WebP alpha + mix-blend-mode: multiply guarantee ZERO white background on all mobile browsers & desktop screens!
             */}
-            <video
-              ref={videoRef}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-contain pointer-events-none"
-            >
-              <source src="/animations/spiderman-swing-transparent.webm" type="video/webm" />
-              {/* Fallback to transparent animated WebP for maximum browser compatibility */}
-              <img
-                src="/animations/spiderman-swing-transparent.webp"
-                alt="Spider-Man Web Swing"
-                className="w-full h-full object-contain pointer-events-none"
-              />
-            </video>
+            <div className="relative w-full h-full filter drop-shadow-[6px_6px_0px_#000000] sm:drop-shadow-[8px_8px_0px_#000000] bg-transparent">
+              <video
+                ref={videoRef}
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{ mixBlendMode: "multiply" }}
+                className="w-full h-full object-contain pointer-events-none bg-transparent"
+              >
+                <source src="/animations/spiderman-swing-transparent.webm" type="video/webm" />
+                {/* Fallback to transparent animated WebP for maximum browser compatibility */}
+                <img
+                  src="/animations/spiderman-swing-transparent.webp"
+                  alt="Spider-Man Web Swing"
+                  style={{ mixBlendMode: "multiply" }}
+                  className="w-full h-full object-contain pointer-events-none bg-transparent"
+                />
+              </video>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

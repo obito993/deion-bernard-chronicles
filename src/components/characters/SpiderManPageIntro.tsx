@@ -83,7 +83,7 @@ export default function SpiderManPageIntro() {
       Using `flex justify-center` on the fixed full-screen viewport container guarantees
       horizontal centering at X=50vw without relying on CSS transform rules that Framer Motion overrides.
     */
-    <div className="fixed inset-0 z-50 pointer-events-none overflow-hidden select-none w-screen h-screen flex justify-center items-start">
+    <div className="fixed inset-0 z-50 pointer-events-none overflow-hidden select-none w-screen h-screen flex justify-center items-start bg-transparent">
       <AnimatePresence>
         {(animState === "descending" || animState === "greeting" || animState === "ascending") && (
           <motion.div
@@ -98,7 +98,7 @@ export default function SpiderManPageIntro() {
               duration: animState === "descending" ? 1.2 : animState === "ascending" ? 1.2 : 0,
               ease: [0.34, 1.35, 0.64, 1], // Natural comic spring bounce
             }}
-            className="relative w-[460px] h-[258px] sm:w-[680px] sm:h-[382px] md:w-[920px] md:h-[517px] flex flex-col items-center pointer-events-none"
+            className="relative w-[340px] h-[191px] sm:w-[620px] sm:h-[348px] md:w-[880px] md:h-[495px] flex flex-col items-center pointer-events-none bg-transparent"
           >
             {/* "HI! 👋" COMIC SPEECH BUBBLE (ANCHORED BESIDE SPIDER-MAN'S HEAD, GUARANTEED INSIDE VIEWPORT) */}
             <AnimatePresence>
@@ -111,7 +111,7 @@ export default function SpiderManPageIntro() {
                   className="absolute left-[56%] sm:left-[58%] top-[10%] sm:top-[12%] z-50 pointer-events-none max-w-[36vw] sm:max-w-none"
                 >
                   <div className="relative rounded-2xl border-4 border-black bg-white px-3 py-1.5 sm:px-5 sm:py-2.5 shadow-[4px_4px_0px_#000000] sm:shadow-[5px_5px_0px_#000000]">
-                    <span className="font-comic text-xl sm:text-3xl md:text-4xl text-black uppercase tracking-wider block whitespace-nowrap">
+                    <span className="font-comic text-lg sm:text-3xl md:text-4xl text-black uppercase tracking-wider block whitespace-nowrap">
                       HI! 👋
                     </span>
                     {/* SPEECH BUBBLE TAIL POINTING LEFT TOWARD SPIDER-MAN'S HEAD */}
@@ -123,21 +123,23 @@ export default function SpiderManPageIntro() {
             </AnimatePresence>
 
             {/* VISIBLE SPIDER-MAN CHARACTER + ORIGINAL VIDEO WEB */}
-            <div className="relative w-full h-full filter drop-shadow-[8px_8px_0px_#000000]">
+            <div className="relative w-full h-full filter drop-shadow-[6px_6px_0px_#000000] sm:drop-shadow-[8px_8px_0px_#000000] bg-transparent">
               <video
                 ref={videoRef}
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-contain pointer-events-none"
+                style={{ mixBlendMode: "multiply" }}
+                className="w-full h-full object-contain pointer-events-none bg-transparent"
               >
                 <source src="/animations/spiderman-updown-transparent.webm" type="video/webm" />
-                {/* Fallback transparent WebP */}
+                {/* Fallback transparent WebP with mix-blend-mode: multiply */}
                 <img
                   src="/animations/spiderman-updown-transparent.webp"
                   alt="Spider-Man Center Page Entry Greeting"
-                  className="w-full h-full object-contain pointer-events-none"
+                  style={{ mixBlendMode: "multiply" }}
+                  className="w-full h-full object-contain pointer-events-none bg-transparent"
                 />
               </video>
             </div>
