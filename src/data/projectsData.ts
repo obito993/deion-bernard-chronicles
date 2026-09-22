@@ -13,12 +13,34 @@ export interface ProjectItem {
   liveUrl?: string;
   color: "yellow" | "violet" | "red" | "paper";
   rotate: number;
+  badge?: string;
 }
 
 export const projectsData: ProjectItem[] = [
   {
-    id: "ai-tool-box",
+    id: "personal-hub",
     number: "INVENTION #01",
+    title: "PERSONAL HUB",
+    subtitle: "PRODUCTIVITY / WEB APP / AI",
+    duration: "Feb 2025 – Present",
+    mission: "PERSONAL HUB is a personal productivity OS that brings useful tools, utilities, search, study workflows, coding practice, career workflows, AI assistance, and everyday digital resources together in one unified workspace.",
+    techUsed: ["Next.js", "React", "TypeScript", "Tailwind CSS", "AI Integration", "Productivity OS"],
+    features: [
+      "Built a unified personal digital command center connecting tools, utilities, search, and study workflows.",
+      "Integrated AI assistance, coding practice engines, and career workflows for streamlined daily productivity.",
+      "Developed a responsive multi-tool interface with fast resource navigation and centralized digital workspace capabilities.",
+    ],
+    result: "Serves as Deion's primary digital command center and unified personal productivity OS.",
+    image: "/media/project-personalhub.png",
+    githubUrl: "https://github.com/obito993/PERSONAL-HUB",
+    liveUrl: "https://personal-hub-one-steel.vercel.app/",
+    color: "yellow",
+    rotate: -1,
+    badge: "★ TOP PROJECT",
+  },
+  {
+    id: "ai-tool-box",
+    number: "INVENTION #02",
     title: "AI TOOL BOX",
     subtitle: "Comprehensive AI Utility Platform",
     duration: "Jan 2025 – Present",
@@ -34,12 +56,12 @@ export const projectsData: ProjectItem[] = [
     image: "/media/project-aitoolbox.png",
     githubUrl: "",
     liveUrl: "https://aboriginal-smart-tool-core.base44.app/",
-    color: "yellow",
-    rotate: -1,
+    color: "violet",
+    rotate: 1,
   },
   {
     id: "spam-detection-website",
-    number: "INVENTION #02",
+    number: "INVENTION #03",
     title: "SPAM DETECTION WEBSITE",
     subtitle: "Machine Learning Security Filter",
     duration: "Dec 2025 – Apr 2026",
@@ -60,7 +82,7 @@ export const projectsData: ProjectItem[] = [
   },
   {
     id: "virtuoso-ai",
-    number: "INVENTION #03",
+    number: "INVENTION #04",
     title: "VIRTUOSO AI",
     subtitle: "AI Music & Pitch Analysis Platform",
     duration: "Feb 2025 – Present",
@@ -76,12 +98,12 @@ export const projectsData: ProjectItem[] = [
     image: "/media/project-virtuoso.png",
     githubUrl: "https://github.com/obito993/VirtuosoAI",
     liveUrl: "https://ai-music-learning-pl-2sw5.bolt.host/",
-    color: "violet",
+    color: "paper",
     rotate: -1.5,
   },
   {
     id: "automatic-seating-allocation",
-    number: "INVENTION #04",
+    number: "INVENTION #05",
     title: "AUTOMATIC SEATING ALLOCATION",
     subtitle: "Institutional Examination Management Engine",
     duration: "Nov 2025 – May 2026",
@@ -97,7 +119,7 @@ export const projectsData: ProjectItem[] = [
     image: "/media/project-seating.png",
     githubUrl: "https://github.com/obito993/Seating-Allocation-Website-AI",
     liveUrl: "https://019c93ad-db9a-7fba-bf17-0f05b600eb95.arena.site/",
-    color: "paper",
+    color: "yellow",
     rotate: 1,
   },
 ];

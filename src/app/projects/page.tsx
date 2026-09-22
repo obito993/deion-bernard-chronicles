@@ -21,7 +21,7 @@ export default function ProjectsPage() {
     category: p.number,
     description: p.mission,
     href: `#project-${p.id}`,
-    badge: "INVENTION",
+    badge: p.badge || "INVENTION",
     color: p.color === "paper" ? "cream" : p.color,
   }));
 
@@ -49,7 +49,7 @@ export default function ProjectsPage() {
           </div>
           <div className="flex items-center gap-4">
             <ProjectsHeroCharacter />
-            <ActionBurst text="4 INVENTIONS!" color="red" size="md" rotate={8} />
+            <ActionBurst text="5 INVENTIONS!" color="red" size="md" rotate={8} />
           </div>
         </div>
       </section>
@@ -74,7 +74,7 @@ export default function ProjectsPage() {
               <ComicPanel
                 bgColor={project.color}
                 shadowSize="xl"
-                badgeText={project.number}
+                badgeText={project.badge ? `${project.number} • ${project.badge}` : project.number}
                 badgeBg="bg-black text-white"
                 className="p-6 sm:p-10 overflow-hidden border-4 border-black"
               >
@@ -102,7 +102,7 @@ export default function ProjectsPage() {
 
                   {/* RIGHT: PROJECT DETAILS & LABELS (lg:col-span-7) */}
                   <div className="lg:col-span-7 space-y-4">
-                    <div className="flex flex-wrap items-center justify-between border-b-3 border-black pb-2">
+                    <div className="flex flex-wrap items-center justify-between border-b-3 border-black pb-2 gap-2">
                       <div>
                         <span className="font-mono text-xs font-black text-black uppercase tracking-widest">
                           {project.duration}
@@ -111,7 +111,10 @@ export default function ProjectsPage() {
                           {project.title}
                         </h2>
                       </div>
-                      <Sticker text={project.number} variant="white" rotate={2} />
+                      <div className="flex items-center gap-2">
+                        {project.badge && <Sticker text={project.badge} variant="red" rotate={-2} />}
+                        <Sticker text={project.number} variant="white" rotate={2} />
+                      </div>
                     </div>
 
                     {/* MISSION STATEMENT */}
@@ -175,7 +178,7 @@ export default function ProjectsPage() {
                         <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                           <ComicButton variant="yellow" size="sm">
                             <ExternalLink className="h-4 w-4" />
-                            <span>LIVE DEMO</span>
+                            <span>LIVE PROJECT</span>
                           </ComicButton>
                         </a>
                       )}
